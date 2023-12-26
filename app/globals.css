@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "YekanBakhNumb";
+  src: url("/fonts/YekanBakhFaNum-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "YekanBakhNumbBold";
+  src: url("/fonts/YekanBakhFaNum-bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "YekanBakhNumbExtraBold";
+  src: url("/fonts/YekanBakhFaNum-ExtraBold.ttf") format("truetype");
+}
+
+body {
+  font-family: "YekanBakhNumb";
+  direction: rtl;
+  background-color: #fff;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+
+
+/* Hamburger Menu */
+.hamburger {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  transition: all .25s;
+  position: relative;
+}
+
+.hamburger-top, .hamburger-middle, .hamburger-bottom {
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #35323e;
+  transform: rotate(0);
+  transition: all .5s;
+}
+
+.hamburger-middle {
+  transform: translateY(10px);
+}
+
+.hamburger-bottom {
+  transform: translateY(20px);
+}
+
+.open {
+  transform: rotate(90deg);
+}
+
+.open .hamburger-top {
+  transform: rotate(45deg) translateY(6px) translateX(6px);
+}
+
+.open .hamburger-middle {
+  display: none;
+}
+
+.open .hamburger-bottom {
+  transform: rotate(-45deg) translateY(6px) translateX(-6px);
+}
