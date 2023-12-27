@@ -17,11 +17,23 @@
   src: url("/fonts/YekanBakhFaNum-ExtraBold.ttf") format("truetype");
 }
 
+/* @layer components { */
+  .dir-left {
+    direction: ltr;
+    text-align: left;
+  }
+
+  .dir-right {
+    direction: rtl;
+    text-align: right;
+  }
+/* } */
+
 body {
   font-family: "YekanBakhNumb";
   direction: rtl;
   background-color: #fff;
-  max-width: 1440px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
