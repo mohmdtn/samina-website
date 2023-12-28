@@ -17,17 +17,15 @@
   src: url("/fonts/YekanBakhFaNum-ExtraBold.ttf") format("truetype");
 }
 
-/* @layer components { */
+@layer components {
   .dir-left {
     direction: ltr;
-    text-align: left;
   }
 
   .dir-right {
     direction: rtl;
-    text-align: right;
   }
-/* } */
+}
 
 body {
   font-family: "YekanBakhNumb";

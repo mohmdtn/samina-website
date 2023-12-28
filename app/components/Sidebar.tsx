@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link';
 import React, { useState } from 'react'
+import Logo from './Logo';
 
 const Sidebar = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -18,10 +19,7 @@ const Sidebar = () => {
         </div>
 
         {/* Site Logo */}
-        <div className="flex items-center gap-2">
-          <Image src={"/images/logo.svg"} width={40} height={40} alt="samina logo" />
-          <h3 className="text-2xl font-bold text-brand-900">ثمینا</h3>
-        </div>
+        <Logo />
       </section>
 
       <section className={`absolute flex-col h-[calc(100vh-88px)] left-0 right-0 px-3 bg-gray2-25 z-40 border-t ${menuIsOpen ? "flex" : "hidden"}`}>

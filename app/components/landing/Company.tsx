@@ -18,6 +18,8 @@ const items = [
 ]
 
 const Company = () => {
+  const sliderRef = useRef<any>(null);
+
   const settings = {
     infinite: true,
     slidesToShow: 5,
@@ -47,21 +49,32 @@ const Company = () => {
     ]
   };
 
+  // Slider Navigate Functions
+  const nextSlide = () => {
+    if (sliderRef.current)
+      sliderRef.current.slickNext()
+  }
+  const prevSlide = () => {
+    if (sliderRef.current)
+      sliderRef.current.slickPrev()
+  }
+
   return (
     <section className="bg-gray2-25 px-3 lg:px-0 overflow-hidden">
       <section className="max-w-6xl mx-auto pt-16 pb-12">
         {/* Title */}
-        <div className="flex justify-between">
+        <div className="flex justify-between px-4">
           <h4 className="text-xl font-semibold text-black">مجموعه‌هایی که به ما اعتماد کردن</h4>
+          {/* Slider Buttons */}
           <div className="hidden md:flex gap-3">
-            <div className="rounded-full border flex justify-center items-center size-12 cursor-pointer hover:shadow-md duration-150"><Image className="size-4" src={"/icons/angleRight.svg"} width={17} height={17} alt="Angle Icon" /></div>
-            <div className="rounded-full border flex justify-center items-center size-12 cursor-pointer hover:shadow-md duration-150"><Image className="size-4" src={"/icons/angleLeft.svg"} width={17} height={17} alt="Angle Icon" /></div>
+            <div onClick={nextSlide} className="rounded-full border flex justify-center items-center size-12 cursor-pointer hover:shadow-md duration-150"><Image className="size-4" src={"/icons/angleRight.svg"} width={17} height={17} alt="Angle Icon" /></div>
+            <div onClick={prevSlide} className="rounded-full border flex justify-center items-center size-12 cursor-pointer hover:shadow-md duration-150"><Image className="size-4" src={"/icons/angleLeft.svg"} width={17} height={17} alt="Angle Icon" /></div>
           </div>
         </div>
 
         {/* Slider */}
         <div className="md:-mx-11 overflow-hidden pt-10">
-          <Slider {...settings}>
+          <Slider ref={sliderRef} {...settings}>
             {items.map((item) => <div className="h-14" key={item.id}><div className="flex justify-center items-center h-full"><Image src={item.img} width={143} height={48} alt={item.alt} /></div></div>)}
           </Slider>
         </div>
