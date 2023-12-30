@@ -21,7 +21,7 @@ const SocialMedia = () => {
         </div>
 
         {/* Copyright Text */}
-        <h5 className="text-sm text-center md:text-right">تمام حقوق این سایت متعلق به شرکت برنامه‌ نویسان داده پرداز آینده می‌باشد</h5>
+        <h5 className="text-sm text-center md:text-start">تمام حقوق این سایت متعلق به شرکت برنامه‌ نویسان داده پرداز آینده می‌باشد</h5>
 
       </section>
     </section>

@@ -16,7 +16,7 @@ const TeamIntroduction = () => {
 
       {/* Team Description */}
       <div className="max-w-2xl flex-1">
-        <h2 className="font-yekanBakhNumbExtraBold text-balck text-[32px] md:text-[40px] text-center md:text-right mb-6">معرفی تیم</h2>
+        <h2 className="font-yekanBakhNumbExtraBold text-balck text-[32px] md:text-[40px] text-center md:text-start mb-6">معرفی تیم</h2>
         <div className="text-gray2-500 md:leading-7 md:text-lg">
           <p className="mb-9">تیــــــم ثمیـــنا از افرادی قوی، حرفه‌ای و زبــــده در تمامــــــی بخش هـــای خود بهره مــی برد. متخصصینـــی به روز و کارآمد، تا بـهترین و با کیفیت ترین نرم افزار آنلاین حسابداری را در منطقــه تولیــد و عرضــه نمایند. کارشنـــاسانی با تجربه چــــــندین ســـاله و مجهـــز به آخریــن تکنولوژی های روز فن آوری.</p>
           <p>همواره تلاش این تیم ، در چالش های پیش رو، پیــدا کردن بهترین راه حل می باشد. راه کارهــــایی امن و مورد اطمینــــان، تا کاربران ثمینــــا با خیال راحـــت نسبـــت به ثبت اطلاعات حســـاس مالی خود اقدام کنند و هیچگونه نگــــرانی بابت نگهــــداری و حفظ این دیــتا در خیال خود نداشته باشند.</p>

@@ -5,7 +5,7 @@ import Logo from "./Logo";
 
 const Navbar = () => {
   return (
-    <nav className="bg-white px-2 py-6 hidden justify-between max-w-7xl mx-auto md:flex">
+    <nav className="bg-white px-3 md:px-5 lg:px-24 py-6 hidden justify-between md:flex">
       <section className="flex gap-16">
         {/* Site Logo */}
         <Logo />

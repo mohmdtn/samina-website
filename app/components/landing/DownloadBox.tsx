@@ -8,7 +8,7 @@ const DownloadBox = () => {
         
         {/* Section Title */}
         <div className="flex flex-col items-center md:items-start gap-4">
-          <h1 className="font-yekanBakhNumbExtraBold text-[40px] md:text-3xl lg:text-5xl tracking-tighter text-black text-center md:text-right">دانلود اپلیکیشن موبایل</h1>
+          <h1 className="font-yekanBakhNumbExtraBold text-[40px] md:text-3xl lg:text-5xl tracking-tighter text-black text-center md:text-start">دانلود اپلیکیشن موبایل</h1>
         </div>
 
         {/* Download Box */}

@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
 import SocialMedia from './components/SocialMedia'
+import NewNotification from './components/landing/NewNotification'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className=''>
+        <NewNotification />
         <Navbar />
         <Sidebar />
         {children}
