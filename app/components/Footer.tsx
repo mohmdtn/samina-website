@@ -1,13 +1,16 @@
 import Image from "next/image";
 import Logo from "./Logo";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 const Footer = () => {
+  const t = useTranslations('footer');
+
   return (
     <footer className="bg-gray2-25 mt-24 p-5 text-center lg:text-start lg:px-16 lg:py-14 flex flex-col lg:flex-row items-center lg:items-start lg:justify-between">
 
       <section className="max-w-72 flex flex-col items-center lg:items-start">
-        <Logo />
+        <Logo name="ثمینا" />
 
         <div className="flex flex-col gap-3 mt-8">
           {/* Phone Number */}
@@ -24,7 +27,7 @@ const Footer = () => {
         </div>
 
         {/* Address */}
-        <p className="text-black text-sm leading-6 mt-6">آدرس: تهران – خیابان آزادی – ابتدای اسکندری شمالی – پلاک 3 – طبقه اول</p>
+        <p className="text-black text-sm leading-6 mt-6">{t("address")}</p>
       </section>
 
 
@@ -40,19 +43,19 @@ const Footer = () => {
       {/* Links Column */}
       <section className="flex gap-4 md:gap-14 lg:gap-36 mt-12 lg:mt-0">
         <div className="flex flex-col">
-          <h4 className="text-base md:text-lg font-semibold">دسترسی سریع</h4>
-          <Link className="text-sm md:text-base text-gray-600 mt-4" href={"/"}>درباره‌ما</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>درباره ثمینا</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>تماس با ما</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>فرصت های شغلی</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>اپلیکیشن موبایل</Link>
+          <h4 className="text-base md:text-lg font-semibold">{t("firstColTitle")}</h4>
+          <Link className="text-sm md:text-base text-gray-600 mt-4" href={"/"}>{t("firstCol1")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol2")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol3")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol4")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol5")}</Link>
         </div>
         <div className="flex flex-col">
-          <h4 className="text-base md:text-lg font-semibold">منابع آموزشی</h4>
-          <Link className="text-sm md:text-base text-gray-600 mt-4" href={"/"}>آموزش ثمینا</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>سوالات متداول</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>وبلاگ</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>اخبار</Link>
+          <h4 className="text-base md:text-lg font-semibold">{t("secondColTitle")}</h4>
+          <Link className="text-sm md:text-base text-gray-600 mt-4" href={"/"}>{t("secondCol1")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("secondCol2")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("secondCol3")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("secondCol4")}</Link>
         </div>
       </section>
 

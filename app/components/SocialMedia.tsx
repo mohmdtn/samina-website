@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 const items = [
   { id: "media-1", img: "/images/socialmedia/instagram.svg", url: "/", name: "Instagram" },
@@ -11,6 +12,8 @@ const items = [
 ];
 
 const SocialMedia = () => {
+  const t = useTranslations('footer');
+
   return (
     <section className="bg-brand-900 text-white py-5 px-4 md:px-2">
       <section className="md:px-16 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
@@ -21,7 +24,7 @@ const SocialMedia = () => {
         </div>
 
         {/* Copyright Text */}
-        <h5 className="text-sm text-center md:text-start">تمام حقوق این سایت متعلق به شرکت برنامه‌ نویسان داده پرداز آینده می‌باشد</h5>
+        <h5 className="text-sm text-center md:text-start">{t("copyRight")}</h5>
 
       </section>
     </section>

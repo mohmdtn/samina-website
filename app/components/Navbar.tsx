@@ -2,27 +2,30 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Logo from "./Logo";
+import { useTranslations } from 'next-intl';
 
 const Navbar = () => {
+  const t = useTranslations('menu');
+
   return (
     <nav className="bg-white px-3 md:px-5 lg:px-24 py-6 hidden justify-between md:flex">
       <section className="flex gap-16">
         {/* Site Logo */}
-        <Logo />
+        <Logo name="ثمینا"/>
 
         {/* Nav Links */}
         <div className="flex gap-10 text-black text-base font-semibold items-center">
-          <Link href={"/"}>خانه</Link>
-          <Link href={"/"}>محصولات</Link>
-          <Link href={"/"}>تعرفه ها</Link>
-          <Link href={"/"}>پشتیبانی و آموزش</Link>
-          <Link href={"/"}>تماس با ما</Link>
+          <Link href={"/"}>{t("1")}</Link>
+          <Link href={"/"}>{t("2")}</Link>
+          <Link href={"/"}>{t("3")}</Link>
+          <Link href={"/"}>{t("4")}</Link>
+          <Link href={"/"}>{t("5")}</Link>
         </div>
       </section>
 
       {/* Login Button */}
       <Link href={"/login"} className="border rounded-lg py-2 px-3 text-gray2-700 flex justify-center items-center gap-2 text-sm">
-        <Image src={"/icons/login.svg"} width={14} height={14} alt="login icon" />ورود
+        <Image src={"/icons/login.svg"} width={14} height={14} alt="login icon" />{t("loginButton")}
       </Link>
     </nav>
   );

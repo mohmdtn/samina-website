@@ -18,7 +18,7 @@ const FAQ: React.FC<FAQProps> = ({ question, answer, open }) => {
         <h3 className="text-base md:text-lg text-black font-semibold tracking-tight">{question}</h3>
         <Image className={`${!isOpen && "rotate-180"} duration-200`} src={"/icons/angleUp.svg"} width={20} height={20} alt="Angle Up Icon" />
       </div>
-      <p className={`text-sm md:text-base md:leading-[26px] tracking-tight text-gray-500 pt-3 ${isOpen ? "block" : "hidden"}`}>{answer}</p>
+      <p className={`text-sm md:text-base md:leading-[26px] tracking-tight text-gray-500 pt-3 whitespace-pre-line ${isOpen ? "block" : "hidden"}`}>{answer}</p>
     </div>
   );
 };

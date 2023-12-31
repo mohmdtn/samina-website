@@ -5,7 +5,15 @@ import Link from 'next/link';
 import React, { useState } from 'react'
 import Logo from './Logo';
 
-const Sidebar = () => {
+interface SidebarProps {
+  item1: string;
+  item2: string;
+  item3: string;
+  item4: string;
+  item5: string;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ item1, item2, item3, item4, item5 }) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   
   return (
@@ -19,17 +27,17 @@ const Sidebar = () => {
         </div>
 
         {/* Site Logo */}
-        <Logo />
+        <Logo name="ثمینا" />
       </section>
 
       <section className={`absolute flex-col h-[calc(100vh-88px)] left-0 right-0 px-3 bg-gray2-25 z-40 border-t ${menuIsOpen ? "flex" : "hidden"}`}>
         {/* Menu Links */}
         <div className="flex flex-col gap-6 text-black text-lg font-semibold items-start py-6">
-          <Link href={"/"}>خانه</Link>
-          <Link href={"/"}>محصولات</Link>
-          <Link href={"/"}>تعرفه ها</Link>
-          <Link href={"/"}>پشتیبانی و آموزش</Link>
-          <Link href={"/"}>تماس با ما</Link>
+          <Link href={"/"}>{item1}</Link>
+          <Link href={"/"}>{item2}</Link>
+          <Link href={"/"}>{item3}</Link>
+          <Link href={"/"}>{item4}</Link>
+          <Link href={"/"}>{item5}</Link>
         </div>
 
         {/* Register Section */}

@@ -16,7 +16,7 @@ const Article: React.FC<ArticleProps> = ({ img, auther, autherImg, title, desc, 
 
       {/* Article Content */}
       <div className="flex gap-3 md:gap-0 md:flex-col">
-        <Image className="size-20 md:size-auto rounded-2xl md:rounded-none md:w-full" src={img} width={384} height={225} alt={title} />
+        <Image className="size-20 md:size-auto rounded-2xl md:rounded-none md:w-full md:h-[225px]" src={img} width={384} height={225} alt={title} />
         <div className="md:p-4">
           <h3 className="text-base font-semibold md:text-xl text-black mb-2 line-clamp-1">{title}</h3>
           <p className="text-gray2-500 text-sm md:leading-6 line-clamp-2">{desc}</p>

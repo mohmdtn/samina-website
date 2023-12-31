@@ -17,7 +17,7 @@ const items = [
   {id: "company-slide6", img: "/images/company/facebook.png", alt: "facebook Company Image"},
 ]
 
-const Company = () => {
+const Company = ({ title }: { title: string }) => {
   const sliderRef = useRef<any>(null);
 
   const settings = {
@@ -64,7 +64,7 @@ const Company = () => {
       <section className="max-w-6xl mx-auto pt-16 pb-12">
         {/* Title */}
         <div className="flex justify-between px-4">
-          <h4 className="text-xl font-semibold text-black">مجموعه‌هایی که به ما اعتماد کردن</h4>
+          <h4 className="text-xl font-semibold text-black">{title}</h4>
           {/* Slider Buttons */}
           <div className="hidden md:flex gap-3">
             <div onClick={nextSlide} className="rounded-full border flex justify-center items-center size-12 cursor-pointer hover:shadow-md duration-150"><Image className="size-4" src={"/icons/angleRight.svg"} width={17} height={17} alt="Angle Icon" /></div>

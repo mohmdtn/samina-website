@@ -3,17 +3,27 @@
 import Image from "next/image";
 import { useState } from "react";
 
-const items = [
-  {id: 1, name: "داشبورد"},
-  {id: 2, name: "دوره های مالی"},
-  {id: 3, name: "طرف های حساب"},
-  {id: 4, name: "کالا / خدمات"},
-  {id: 5, name: "فاکتور فروش"},
-  {id: 6, name: "نقل و انتقال اسناد"},
-  {id: 7, name: "حسابداری"},
-]
+interface AppPreviewProps {
+  item1: string;
+  item2: string;
+  item3: string;
+  item4: string;
+  item5: string;
+  item6: string;
+  item7: string;
+}
 
-const AppPreview = () => {
+const AppPreview: React.FC<AppPreviewProps> = ({ item1, item2, item3, item4, item5, item6, item7 }) => {
+  const items = [
+    {id: 1, name: item1},
+    {id: 2, name: item2},
+    {id: 3, name: item3},
+    {id: 4, name: item4},
+    {id: 5, name: item5},
+    {id: 6, name: item6},
+    {id: 7, name: item7},
+  ];
+
   const [isActive, setIsActive] = useState(1);
 
   return (

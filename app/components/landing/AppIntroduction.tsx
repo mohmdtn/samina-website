@@ -3,7 +3,12 @@
 import Image from 'next/image'
 import React, { useRef, useState } from 'react'
 
-const AppIntroduction = () => {
+interface AppIntroductionProps {
+  title: string;
+  desc: string;
+}
+
+const AppIntroduction: React.FC<AppIntroductionProps> = ({ title, desc }) => {
   const [isPlay, setIsPlay] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -22,8 +27,8 @@ const AppIntroduction = () => {
     <section className="text-center mt-32 mb-24 px-3 md:px-0">
       {/* Section Title */}
       <div>
-        <h2 className="font-yekanBakhNumbExtraBold text-balck text-[32px] md:text-[40px]">درباره نرم افزار</h2>
-        <p className="text-sm leading-6 text-gray-600 pt-4 pb-6 max-w-xl mx-auto">اگر به دنبال بهترین راه حل در بخش های مدیریت مالی، حسابداری و انبار خود هستید، نرم افزار ثمینا را به شما پیشنهاد می کنیم</p>
+        <h2 className="font-yekanBakhNumbExtraBold text-balck text-[32px] md:text-[40px]">{title}</h2>
+        <p className="text-sm leading-6 text-gray-600 pt-4 pb-6 max-w-xl mx-auto">{desc}</p>
       </div>
 
       {/* Video Player */} 
