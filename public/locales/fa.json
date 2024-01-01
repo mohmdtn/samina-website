@@ -106,6 +106,33 @@
     "desc": "متن تست برای تیتر صفحه سوالات متداول",
     "searchTitle": "دنبال چیزی میگردی؟",
     "placeholder": "جستوجو..."
+  },
+
+  "blogPage": {
+    "title": "جدیدترین مطالب",
+    "option1": "از جدید ترین",
+    "option2": "از قدیمی ترین",
+    "option3": "از پربازدید"
+  },
+
+  "singleBlogPage": {
+    "time": "خواندن این مطلب {time2} دقیقه زمان میبرد",
+    "share": "اشتراک گذاری",
+
+    "commentTitle": "ثبت دیدگاه",
+    "commentInputTitle": "دیدگاه",
+    "commentInputPlaceholder": "نظر خود را تایپ کنید...",
+    "nameInputTitle": "نام",
+    "nameInputPlaceholder": "نام",
+    "emailInputTitle": "ایمیل",
+    "emailInputPlaceholder": "ایمیل",
+    "sendButton": "ارسال",
+    "writer": "(نویسنده)",
+
+    "showMoreButton": "مشاهده بیشتر",
+
+    "relatedPosts": "نوشته های مشابه",
+    "lastPostsTitle": "آخرین پست‌ها"
   }
 
 }

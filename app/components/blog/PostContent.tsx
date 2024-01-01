@@ -1,15 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Slider from "react-slick";
-
-// Import slider css files
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Article from "../blog/Article";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
+import Link from "next/link";
 
 const faItems = [
   {
@@ -183,87 +177,79 @@ const faItems = [
   },
 ];
 
-interface ArticlesProps {
-  title: string;
-  desc: string;
-  button: string;
+interface PostContentProps {
+  id: string;
+  time: string;
+  shareButton: string;
 }
 
-const Articles: React.FC<ArticlesProps> = ({ title, desc, button }) => {
-  const sliderRef = useRef<any>(null);
+const PostContent: React.FC<PostContentProps> = ({ id, time, shareButton }) => {
   const language = useLocale();
-  const [initialItems, setInitialItems] = useState(faItems);
-
-  const settings = {
-    infinite: true,
-    centerMode: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    // autoplay: true,
-    // autoplaySpeed: 2000,
-    rtl: true,
-    responsive: [
-      {
-        breakpoint: 976,
-        settings: {
-          slidesToShow: 2,
-        }
-      },
-    ]
-  };
-
-  // Slider Navigate Functions
-  const nextSlide = () => {
-    if (sliderRef.current)
-      sliderRef.current.slickNext()
-  }
-  const prevSlide = () => {
-    if (sliderRef.current)
-      sliderRef.current.slickPrev()
-  }
+  const [post, setPost] = useState<any>(faItems);
 
   useEffect(() => {
     if (language === "fa")
-      setInitialItems(faItems)
-  }, [language])
+      setPost(faItems.filter(item => item.id === id))
+  }, [language, id])
+
+  // console.log(post)
+
 
   return (
-    <section className="mt-32 px-3 md:px-0 overflow-hidden dir-right">
-      {/* Section Title */}
-      <div className="text-center">
-        <h2 className="font-yekanBakhNumbExtraBold text-balck text-[32px] md:text-[40px]">{title}</h2>
-        <p className="text-sm leading-6 text-gray-600 pt-4 pb-6">{desc}</p>
-      </div>
+    <section>
 
-      {/* Articles */}
-      <div>
-        {/* Slider For Desktop View */}
-        <div className="hidden md:block">
-          <Slider ref={sliderRef} {...settings}>
-            {initialItems.map((item) => <div key={item.id} className="md:px-3"><Article id={item.id} img={item.img} title={item.title} desc={item.desc} date={item.date} auther={item.auther} autherImg={item.autherImg} /></div>)}
-          </Slider>
-        </div>
-
-        {/* Mobile View */}
-        <div className="flex flex-col gap-3 md:hidden">
-          {initialItems.map((item) => <Article id={item.id} key={item.id} img={item.img} title={item.title} desc={item.desc} date={item.date} auther={item.auther} autherImg={item.autherImg} />)}
-        </div>
-
-        <div className="mt-3 md:mt-14 w-full flex justify-center relative mb-3 max-w-[1216px] mx-auto md:py-3">
-          {/* Show More Button */}
-          <Link className="inline-block text-sm text-gray-700 text-center py-[9px] px-5 border border-gray2-300 rounded-lg bg-white w-full md:w-auto" href={`${language}/blog`}>{button}</Link>
-          {/* Slider Button */}
-          <div className="absolute left-3">
-            <div className="hidden md:flex gap-3 select-none">
-              <div onClick={nextSlide} className="rounded-full border flex justify-center items-center size-12 cursor-pointer hover:shadow-md duration-150"><Image className="size-4" src={"/icons/angleRight.svg"} width={17} height={17} alt="Angle Icon" /></div>
-              <div onClick={prevSlide} className="rounded-full border flex justify-center items-center size-12 cursor-pointer hover:shadow-md duration-150"><Image className="size-4" src={"/icons/angleLeft.svg"} width={17} height={17} alt="Angle Icon" /></div>
-            </div>
+      {/* Header of Post */}
+      <section className="text-center md:text-start">
+        <Image className="rounded-3xl max-h-[350px] w-full" src={post[0].img} width={800} height={350} alt={post[0].title} />
+        <h1 className="text-black font-yekanBakhNumbBold md:font-yekanBakhNumbExtraBold text-3xl md:text-2xl tracking-tighter mb-3 mt-8">{post[0].title}</h1>
+        <div className="flex flex-col md:flex-row gap-2 md:gap-4 text-sm text-blue-600">
+          {/* Time For Read */}
+          <div className="flex justify-center items-center gap-2">
+            <Image src={"/icons/clockBlue.svg"} width={16} height={16} alt="Clock Icon" />
+            {time}
+          </div>
+          {/* Date Of Post */}
+          <div className="flex justify-center items-center gap-2">
+            <Image src={"/icons/calendarBlue.svg"} width={16} height={16} alt="Clock Icon" />
+            {post[0].date}
           </div>
         </div>
+      </section>
 
-      </div>
+      {/* Content Of Post */}
+      <section className="text-gray2-500 text-base leading-[26px] tracking-tighter whitespace-pre-line mt-4 border-b pb-6 md:pb-8">
+        {post[0].desc}
+      </section>
+
+      {/* Auther Info */}
+      <section className="py-6 md:py-8 border-b">
+        <div className="flex justify-between items-center flex-col md:flex-row gap-6">
+
+          <div className="flex gap-2 items-center md:order-1">
+            <Image className="rounded-full size-8" src={post[0].autherImg} width={30} height={30} alt={post[0].auther} />
+            <h6 className="text-gray2-500 text-sm">{post[0].auther}</h6>
+          </div>
+
+          {/* Share Button */}
+          <button className="border rounded-lg py-[10px] px-4 text-gray2-700 flex justify-center items-center gap-2 text-sm w-full md:w-auto">
+            <Image src={"/icons/share.svg"} width={14} height={14} alt="Share Icon" />
+            {shareButton}
+          </button>
+
+        </div>
+
+        {/* Post Tags */}
+        <div className="flex flex-col md:flex-row gap-2 mt-2 md:mt-4">
+          <Link href={"/"} className="bg-brand-50 rounded-lg p-2 text-brand-600 inline-block w-full md:w-auto text-center"># تست</Link>
+          <Link href={"/"} className="bg-brand-50 rounded-lg p-2 text-brand-600 inline-block w-full md:w-auto text-center"># تست</Link>
+          <Link href={"/"} className="bg-brand-50 rounded-lg p-2 text-brand-600 inline-block w-full md:w-auto text-center"># تست</Link>
+          <Link href={"/"} className="bg-brand-50 rounded-lg p-2 text-brand-600 inline-block w-full md:w-auto text-center"># تست</Link>
+        </div>
+
+      </section>
+
     </section>
   );
 };
 
-export default Articles;
+export default PostContent;

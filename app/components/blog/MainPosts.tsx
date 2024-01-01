@@ -1,15 +1,9 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Slider from "react-slick";
-
-// Import slider css files
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Article from "../blog/Article";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
+import Article from "./Article";
 
 const faItems = [
   {
@@ -183,43 +177,23 @@ const faItems = [
   },
 ];
 
-interface ArticlesProps {
-  title: string;
-  desc: string;
-  button: string;
+
+interface MainPostsProps {
+  title?: string;
+  option1: string;
+  option2: string;
+  option3: string;
 }
 
-const Articles: React.FC<ArticlesProps> = ({ title, desc, button }) => {
-  const sliderRef = useRef<any>(null);
-  const language = useLocale();
+const MainPosts: React.FC<MainPostsProps> = ({ title, option1, option2, option3 }) => {
   const [initialItems, setInitialItems] = useState(faItems);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState(option1);
+  const language = useLocale();
 
-  const settings = {
-    infinite: true,
-    centerMode: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    // autoplay: true,
-    // autoplaySpeed: 2000,
-    rtl: true,
-    responsive: [
-      {
-        breakpoint: 976,
-        settings: {
-          slidesToShow: 2,
-        }
-      },
-    ]
-  };
-
-  // Slider Navigate Functions
-  const nextSlide = () => {
-    if (sliderRef.current)
-      sliderRef.current.slickNext()
-  }
-  const prevSlide = () => {
-    if (sliderRef.current)
-      sliderRef.current.slickPrev()
+  const selectHandle = (option: string) => {
+    setIsFilterOpen(false);
+    setSelectedFilter(option)
   }
 
   useEffect(() => {
@@ -228,42 +202,37 @@ const Articles: React.FC<ArticlesProps> = ({ title, desc, button }) => {
   }, [language])
 
   return (
-    <section className="mt-32 px-3 md:px-0 overflow-hidden dir-right">
-      {/* Section Title */}
-      <div className="text-center">
-        <h2 className="font-yekanBakhNumbExtraBold text-balck text-[32px] md:text-[40px]">{title}</h2>
-        <p className="text-sm leading-6 text-gray-600 pt-4 pb-6">{desc}</p>
-      </div>
+    <section className="mt-8">
+        
+      {/* Filter Button And Title */}
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-9">
 
-      {/* Articles */}
-      <div>
-        {/* Slider For Desktop View */}
-        <div className="hidden md:block">
-          <Slider ref={sliderRef} {...settings}>
-            {initialItems.map((item) => <div key={item.id} className="md:px-3"><Article id={item.id} img={item.img} title={item.title} desc={item.desc} date={item.date} auther={item.auther} autherImg={item.autherImg} /></div>)}
-          </Slider>
-        </div>
+        {/* titlle */}
+        <h5 className="text-black text-2xl font-yekanBakhNumbBold tracking-tight">{title}</h5>
 
-        {/* Mobile View */}
-        <div className="flex flex-col gap-3 md:hidden">
-          {initialItems.map((item) => <Article id={item.id} key={item.id} img={item.img} title={item.title} desc={item.desc} date={item.date} auther={item.auther} autherImg={item.autherImg} />)}
-        </div>
-
-        <div className="mt-3 md:mt-14 w-full flex justify-center relative mb-3 max-w-[1216px] mx-auto md:py-3">
-          {/* Show More Button */}
-          <Link className="inline-block text-sm text-gray-700 text-center py-[9px] px-5 border border-gray2-300 rounded-lg bg-white w-full md:w-auto" href={`${language}/blog`}>{button}</Link>
-          {/* Slider Button */}
-          <div className="absolute left-3">
-            <div className="hidden md:flex gap-3 select-none">
-              <div onClick={nextSlide} className="rounded-full border flex justify-center items-center size-12 cursor-pointer hover:shadow-md duration-150"><Image className="size-4" src={"/icons/angleRight.svg"} width={17} height={17} alt="Angle Icon" /></div>
-              <div onClick={prevSlide} className="rounded-full border flex justify-center items-center size-12 cursor-pointer hover:shadow-md duration-150"><Image className="size-4" src={"/icons/angleLeft.svg"} width={17} height={17} alt="Angle Icon" /></div>
-            </div>
+        {/* filter button */}
+        <div className="w-full md:w-auto relative">
+          <button className="border rounded-lg flex justify-center items-center gap-2 p-2 px-3 text-sm leading-6 font-semibold text-gray-700 w-full md:w-auto" onClick={() => setIsFilterOpen((prev) => !prev)}>
+            <Image src={"/icons/filter.svg"} width={14} height={14} alt="Filter Icon" />
+            {selectedFilter}
+            <Image src={"/icons/angleDown.svg"} width={14} height={14} alt="Angle Icon" />
+          </button>
+          <div className={`w-full bg-white rounded-md absolute p-2 shadow-md flex-col gap-1 text-gray-700 text-sm ${isFilterOpen ? "flex" : "hidden"}`}>
+            <div className={`w-full hover:bg-gray2-100 text-center cursor-pointer rounded-lg p-2 ${selectedFilter === option1 && "bg-gray2-100"}`} onClick={() => selectHandle(option1)}>{option1}</div>
+            <div className={`w-full hover:bg-gray2-100 text-center cursor-pointer rounded-lg p-2 ${selectedFilter === option2 && "bg-gray2-100"}`} onClick={() => selectHandle(option2)}>{option2}</div>
+            <div className={`w-full hover:bg-gray2-100 text-center cursor-pointer rounded-lg p-2 ${selectedFilter === option3 && "bg-gray2-100"}`} onClick={() => selectHandle(option3)}>{option3}</div>
           </div>
         </div>
 
       </div>
+
+      {/* Posts */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {initialItems.map((item) => <div key={item.id} className="w-full"><Article id={item.id} img={item.img} title={item.title} desc={item.desc} date={item.date} auther={item.auther} autherImg={item.autherImg} /></div>)}
+      </div>
+
     </section>
   );
 };
 
-export default Articles;
+export default MainPosts;
