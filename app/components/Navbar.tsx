@@ -14,7 +14,7 @@ const Navbar = () => {
         <Logo name="ثمینا"/>
 
         {/* Nav Links */}
-        <div className="flex gap-10 text-black text-base font-semibold items-center">
+        <div className="flex md:gap-6 lg:gap-10 text-black text-base font-semibold items-center">
           <Link href={"/"}>{t("1")}</Link>
           <Link href={"/"}>{t("2")}</Link>
           <Link href={"/"}>{t("3")}</Link>

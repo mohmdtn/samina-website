@@ -133,6 +133,25 @@
 
     "relatedPosts": "نوشته های مشابه",
     "lastPostsTitle": "آخرین پست‌ها"
+  },
+
+  "contactUsPage": {
+    "nameInputTitle": "نام",
+    "nameInputPlaceholder": "نام",
+    "phoneInputTitle": "شماره تماس",
+    "phoneInputPlaceholder": "شماره تماس",
+    "subjectInputTitle": "موضوع",
+    "subjectInputPlaceholder": "موضوع",
+    "bodyInputTitle": "پیام شما",
+    "bodyInputPlaceholder": "پیام شما",
+    "sendButton": "ارسال",
+    "address": "آدرس : تهران – خیابان آزادی – ابتدای اسکندری شمالی – پلاک 3 – طبقه اول",
+    "phone": "021 - 66595657",
+    "email": "Info@saminasoft.ir",
+    "activeTime": "ساعت پاسخگویی تلفنی: 9:00 صبح تا 18 بعد از ظهر",
+
+    "successNotif": "پیام شما با موفقیت ارسال شد",
+    "errorNotif": "مشکلی در هنگام ارسال پیام پیش اومده، لطفا مجدد تلاش بفرمایید."
   }
 
 }
