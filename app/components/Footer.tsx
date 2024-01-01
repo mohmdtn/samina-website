@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Logo from "./Logo";
 import Link from "next/link";
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const Footer = () => {
   const t = useTranslations('footer');
+  const language = useLocale();
 
   return (
     <footer className="bg-gray2-25 mt-24 p-5 text-center lg:text-start lg:px-16 lg:py-14 flex flex-col lg:flex-row items-center lg:items-start lg:justify-between">
@@ -46,7 +47,7 @@ const Footer = () => {
           <h4 className="text-base md:text-lg font-semibold">{t("firstColTitle")}</h4>
           <Link className="text-sm md:text-base text-gray-600 mt-4" href={"/"}>{t("firstCol1")}</Link>
           <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol2")}</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol3")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={`/${language}/contact_us`}>{t("firstCol3")}</Link>
           <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol4")}</Link>
           <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol5")}</Link>
         </div>

@@ -2,10 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Logo from "./Logo";
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const Navbar = () => {
   const t = useTranslations('menu');
+  const language = useLocale();
 
   return (
     <nav className="bg-white px-3 md:px-5 lg:px-24 py-6 hidden justify-between md:flex">
@@ -19,7 +20,7 @@ const Navbar = () => {
           <Link href={"/"}>{t("2")}</Link>
           <Link href={"/"}>{t("3")}</Link>
           <Link href={"/"}>{t("4")}</Link>
-          <Link href={"/"}>{t("5")}</Link>
+          <Link href={`/${language}/contact_us`}>{t("5")}</Link>
         </div>
       </section>
 

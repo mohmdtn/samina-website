@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link';
 import React, { useState } from 'react'
 import Logo from './Logo';
+import { useLocale } from 'next-intl';
 
 interface SidebarProps {
   item1: string;
@@ -15,6 +16,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ item1, item2, item3, item4, item5 }) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const language = useLocale();
   
   return (
     <aside className='bg-white relative px-3'>
@@ -37,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ item1, item2, item3, item4, item5 }) 
           <Link href={"/"}>{item2}</Link>
           <Link href={"/"}>{item3}</Link>
           <Link href={"/"}>{item4}</Link>
-          <Link href={"/"}>{item5}</Link>
+          <Link href={`/${language}/contact_us`}>{item5}</Link>
         </div>
 
         {/* Register Section */}
