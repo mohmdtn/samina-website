@@ -11,19 +11,19 @@ const Footer = () => {
     <footer className="bg-gray2-25 mt-24 p-5 text-center lg:text-start lg:px-16 lg:py-14 flex flex-col lg:flex-row items-center lg:items-start lg:justify-between">
 
       <section className="max-w-72 flex flex-col items-center lg:items-start">
-        <Logo name="ثمینا" />
+        <Logo name={t("name")} />
 
         <div className="flex flex-col gap-3 mt-8">
           {/* Phone Number */}
           <div className="flex items-center gap-3">
             <Image src={"/icons/phone.svg"} width={20} height={20} alt="Phone Icon" />
-            <p className="text-black text-base dir-left">021 - 66595657</p>
+            <p className="text-black text-base dir-left">{t("phone")}</p>
           </div>
 
           {/* Email Address */}
           <div className="flex items-center gap-3">
-            <Image src={"/icons/email.svg"} width={20} height={20} alt="Phone Icon" />
-            <p className="text-black text-base">Info@saminasoft.ir</p>
+            <Image src={"/icons/email.svg"} width={20} height={20} alt="Envelope Icon" />
+            <p className="text-black text-base">{t("email")}</p>
           </div>
         </div>
 

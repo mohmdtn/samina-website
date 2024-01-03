@@ -70,7 +70,10 @@
   },
 
   "footer": {
+    "name": "ثمینا",
     "address": "آدرس: تهران – خیابان آزادی – ابتدای اسکندری شمالی – پلاک 3 – طبقه اول",
+    "email": "Info@saminasoft.ir",
+    "phone": "021 - 66595657",
     "firstColTitle": "دسترسی سریع",
     "firstCol1": "درباره‌ما",
     "firstCol2": "درباره ثمینا",
@@ -152,6 +155,66 @@
 
     "successNotif": "پیام شما با موفقیت ارسال شد",
     "errorNotif": "مشکلی در هنگام ارسال پیام پیش اومده، لطفا مجدد تلاش بفرمایید."
+  },
+
+  "registerPage": {
+    "level1": "شروع",
+    "level1Desc": "احراز هویت شماره همراه",
+    "level2": "اطلاعات کلی",
+    "level2Desc": "مشخصات کسب و کار",
+    "level3": "اطلاعات دوره مالی",
+    "level3Desc": "دوره مالی پیش فرض",
+    "level4": "انتخاب اشتراک",
+    "level4Desc": "طرح های اشتراک پلتفرم",
+    "level5": "پرداخت",
+    "level5Desc": "تکمیل و نهایی کردن ثبت نام",
+
+    "section1Title": "ثبت نام در پلتفرم حسابداری آنلاین ثمینا",
+    "section1InputTitle": "نام کاربری",
+    "section1InputHolder": "ایمیل یا شماره همراه خود را وارد کنید",
+    "button": "ارسال کد موقت",
+    "checkbox1": "پذیرش ",
+    "checkbox2": " قوانین و مقررات ",
+    "checkbox3": "پلتفرم سمینا",
+
+    "section2Resend": "ارسال مجدد کد پس از",
+    "section2Button": "تایید",
+    "back": "بازگشت",
+
+    "section3CompanyTitle": "عنوان فروشگاه / شعبه",
+    "section3FirstName": "نام",
+    "section3LastName": "نام خانوادگی",
+    "section3Button": "ادامه",
+
+    "section4InputTitle": "عنوان دوره مالی",
+    "section4InputStart": "تاریخ شروع دوره مالی",
+    "section4InputEnd": "تاریخ پایان دوره مالی",
+    "section4Button": "ادامه"
+  },
+
+  "plans": {
+    "periodTitle1": "سه ماهه",
+    "periodTitle2": "شش ماهه (۳٪ تخفیف)",
+    "periodTitle3": "نه ماهه (۴٪ تخفیف)",
+    "periodTitle4": "یکساله ( ۶٪ تخفیف - پیشنهاد ویژه)",
+
+    "bronze": "برنزی",
+    "silver": "نقره‌ای",
+    "golden": "طلایی",
+    "offline": "(آفلاین) VIP",
+
+    "numberOfAccounts": "تعداد مجاز تعریف طرف حساب",
+    "numberOfUsers": "تعداد مجاز تعریف کاربر",
+    "numberOfStuff": "تعداد مجاز تعریف کالا / خدمات",
+    "numberOfDocuments": "تعداد مجاز تعریف سند حسابداری",
+    "mobileVersion": "نسخه موبایل",
+    "store": "فروشگاه مجازی",
+    "api": "ارائه API",
+    "smsPanel": "پنل اطلاع رسانی پیام کوتاه",
+    "log": "سیستم ثبت رویداد (لاگ)",
+    "toman": "تومان",
+    "unlimite": "نامحدود",
+    "button": "انتخاب پلن"
   }
 
 }

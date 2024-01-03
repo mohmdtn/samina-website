@@ -25,6 +25,18 @@
   .dir-right {
     direction: rtl;
   }
+
+  .plans-period-title {
+    @apply py-2 px-[14px] rounded-md cursor-pointer leading-6 font-semibold w-full md:w-auto;
+  }
+
+  .plans-title {
+    @apply w-[263px] ps-6 py-3 tracking-tight text-base font-semibold text-gray-700 leading-[26px] rounded-s-lg;
+  }
+
+  .plans-item {
+    @apply w-full md:w-[200px] md:h-[50px] flex justify-center items-center ps-6 py-3 tracking-tight text-center text-sm md:text-base text-gray-700 leading-[26px] rounded-s-lg;
+  }
 }
 
 body {
