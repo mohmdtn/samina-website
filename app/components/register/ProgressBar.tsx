@@ -47,7 +47,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   
 
   return (
-    <section className="flex justify-between items-center w-[100px] md:w-[896px] mx-auto pb-20 overflow-hidden">
+    <section className="hidden lg:flex justify-between items-center lg:w-[896px] mx-auto pb-20">
       {/* Level 1 */}
       <State title={level1} desc={level1Desc} state={stateControl(1)} />
       <Line active={lineControl(1)} />

@@ -31,11 +31,11 @@
   }
 
   .plans-title {
-    @apply w-[263px] ps-6 py-3 tracking-tight text-base font-semibold text-gray-700 leading-[26px] rounded-s-lg;
+    @apply md:w-[200px] lg:w-[263px] h-[50px] md:ps-3 lg:ps-6 py-3 tracking-tight md:text-sm lg:text-base font-semibold text-gray-700 leading-[26px] rounded-s-lg;
   }
 
   .plans-item {
-    @apply w-full md:w-[200px] md:h-[50px] flex justify-center items-center ps-6 py-3 tracking-tight text-center text-sm md:text-base text-gray-700 leading-[26px] rounded-s-lg;
+    @apply w-full md:h-[50px] flex flex-col gap-2 justify-center items-center py-3 tracking-tight text-center text-sm md:text-base text-gray-700 leading-[26px];
   }
 }
 

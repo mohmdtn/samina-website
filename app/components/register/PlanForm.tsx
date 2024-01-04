@@ -1,5 +1,6 @@
 // "use client";
 
+import Image from "next/image";
 import Plans from "../Plans";
 
 interface PlanFormProps {
@@ -24,6 +25,7 @@ interface PlanFormProps {
   unlimite: string;
   back: string;
   buttonPlan: string;
+  section4Button: string;
 }
 
 const PlanForm: React.FC<PlanFormProps> = ({
@@ -48,30 +50,43 @@ const PlanForm: React.FC<PlanFormProps> = ({
   unlimite,
   back,
   buttonPlan,
+  section4Button
 }) => {
   return (
-    <Plans
-      periodTitle1={periodTitle1}
-      periodTitle2={periodTitle2}
-      periodTitle3={periodTitle3}
-      periodTitle4={periodTitle4}
-      bronze={bronze}
-      silver={silver}
-      golden={golden}
-      offline={offline}
-      numberOfAccounts={numberOfAccounts}
-      numberOfUsers={numberOfUsers}
-      numberOfStuff={numberOfStuff}
-      numberOfDocuments={numberOfDocuments}
-      mobileVersion={mobileVersion}
-      store={store}
-      api={api}
-      smsPanel={smsPanel}
-      log={log}
-      toman={toman}
-      unlimite={unlimite}
-      buttonPlan={buttonPlan}
-    />
+    <section>
+      <Plans
+        periodTitle1={periodTitle1}
+        periodTitle2={periodTitle2}
+        periodTitle3={periodTitle3}
+        periodTitle4={periodTitle4}
+        bronze={bronze}
+        silver={silver}
+        golden={golden}
+        offline={offline}
+        numberOfAccounts={numberOfAccounts}
+        numberOfUsers={numberOfUsers}
+        numberOfStuff={numberOfStuff}
+        numberOfDocuments={numberOfDocuments}
+        mobileVersion={mobileVersion}
+        store={store}
+        api={api}
+        smsPanel={smsPanel}
+        log={log}
+        toman={toman}
+        unlimite={unlimite}
+        buttonPlan={buttonPlan}
+      />
+
+      {/* Send Button */}
+      <div className="w-full md:w-24 mx-auto mt-12">
+        <button className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6">{section4Button}</button>
+      </div>
+
+      {/* Back Button */}
+      <button className="flex items-center font-semibold gap-1 hover:gap-2 duration-200 text-gray2-700 py-3 mx-auto mt-6">
+        <Image src={"/icons/arrowRight.svg"} width={16} height={16} alt='Arrow Icon' />{back}
+      </button>
+    </section>
   );
 };
 
