@@ -1,6 +1,7 @@
 import axios from "axios";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { SiteContext } from "../context/siteContext";
 
 type DataObject = {
     Id: number;
@@ -71,7 +72,12 @@ const Plans: React.FC<PlansProps> = ({
   const [period, setPeriod] = useState(6);
   const [result, setResult] = useState<DataObject[]>([]);
   const [filteredData, setFilteredData] = useState<DataObject[]>([]);
-  const [selectedPlan, setSelectedBrand] = useState<number>(0);
+  const [selectedPlan, setSelectedPlan] = useState<any>([]);
+  const { setFormsData, formsData } = useContext(SiteContext);
+
+  useEffect(() => {
+    setFormsData({...formsData, planId: selectedPlan.Id, planName: selectedPlan.Title, planPrice: selectedPlan.Price})
+  }, [selectedPlan])
 
   // Request API For Plans
   useEffect(() => {
@@ -85,8 +91,8 @@ const Plans: React.FC<PlansProps> = ({
           },
         })
         .then((res) => setResult(res.data.Data))
-        .catch((error) => console.log(error))
-        .finally(() => console.log("finished"));
+        .catch((error) => alert("خطا در برقراری ارتباط!!"))
+        // .finally(() => console.log("finished"));
     } catch (error) {
       alert("خطا در برقراری ارتباط!!");
     }
@@ -95,8 +101,6 @@ const Plans: React.FC<PlansProps> = ({
   useEffect(() => {
     setFilteredData(result?.filter((a) => a.Period === period))
   }, [period, result]);
-
-  console.log(filteredData);
 
   return (
     <section className="lg:max-w-6xl mx-auto">
@@ -124,14 +128,14 @@ const Plans: React.FC<PlansProps> = ({
 
         {filteredData.map((item) => {
             return (
-              <div key={item.Id} className={`w-full overflow-hidden pb-4 rounded-2xl duration-200 border ${selectedPlan === item.Id ? "border-brand-400" : "border-[#0000]"}`}>
+              <div key={item.Id} className={`w-full overflow-hidden pb-4 rounded-2xl duration-200 border ${selectedPlan.Id === item.Id ? "border-brand-400" : "border-[#0000]"}`}>
                 <div className="mb-4 text-center mx-2 lg:mx-3 md:text-start mt-2">
                   <h5 className="text-lg tracking-tighter">{item.Title}</h5>
                   <div className="py-3">
                     <h3 className="text-xl font-semibold tracking-tighter text-gray2-900">{item.DiscountedPrice} {toman}</h3>
                     <h6 className="text-base text-gray2-900 tracking-tighter"><span className="line-through">{item.Price}</span> <span className="line-through">{toman}</span></h6>
                   </div>
-                  <button onClick={() => setSelectedBrand(item.Id)} className={`rounded-lg text-sm font-semibold py-2 leading-6 w-full text-center duration-200 ${selectedPlan === item.Id ? "text-white bg-brand-600" : "text-brand-600 bg-brand-50"}`}>{buttonPlan}</button>
+                  <button onClick={() => setSelectedPlan(item)} className={`rounded-lg text-sm font-semibold py-2 leading-6 w-full text-center duration-200 ${selectedPlan.Id === item.Id ? "text-white bg-brand-600" : "text-brand-600 bg-brand-50"}`}>{buttonPlan}</button>
                 </div>
       
                 <div className="plans-item bg-gray2-25">

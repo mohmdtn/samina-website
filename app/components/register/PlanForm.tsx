@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Plans from "../Plans";
+import { useContext } from "react";
+import { SiteContext } from "@/app/context/siteContext";
 
 interface PlanFormProps {
   periodTitle1: string;
@@ -52,6 +54,16 @@ const PlanForm: React.FC<PlanFormProps> = ({
   buttonPlan,
   section4Button
 }) => {
+  const { setSectionLevel, setFormsData, formsData } = useContext(SiteContext);
+
+  // Form Validation
+  const submitHandle = () => {
+    if (!formsData.planId)
+      return alert("empty");
+
+    setSectionLevel("pay");
+  };
+
   return (
     <section>
       <Plans
@@ -79,11 +91,11 @@ const PlanForm: React.FC<PlanFormProps> = ({
 
       {/* Send Button */}
       <div className="w-full md:w-24 mx-auto mt-12">
-        <button className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6">{section4Button}</button>
+        <button onClick={submitHandle} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6">{section4Button}</button>
       </div>
 
       {/* Back Button */}
-      <button className="flex items-center font-semibold gap-1 hover:gap-2 duration-200 text-gray2-700 py-3 mx-auto mt-6">
+      <button onClick={() => setSectionLevel("financial")} className="flex items-center font-semibold gap-1 hover:gap-2 duration-200 text-gray2-700 py-3 mx-auto mt-6">
         <Image src={"/icons/arrowRight.svg"} width={16} height={16} alt='Arrow Icon' />{back}
       </button>
     </section>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import NumberForm from "./NumberForm";
 import Image from "next/image";
 import ProgressBar from "./ProgressBar";
@@ -8,6 +8,9 @@ import CodeForm from "./CodeForm";
 import NameForm from "./NameForm";
 import FinancialPeriodForm from "./FinancialPeriodForm";
 import PlanForm from "./PlanForm";
+import PayForm from "./PayForm";
+import { SiteContext } from "@/app/context/siteContext";
+import PayCallback from "./PayCallback";
 
 interface FormLevelsProps {
   level1: string;
@@ -64,6 +67,30 @@ interface FormLevelsProps {
   toman: string;
   unlimite: string;
   buttonPlan: string;
+
+  section6GeneralInfoTtile: string;
+  section6SubscribeInfoTitle: string;
+  section6SubscribeTitle: string;
+  section6StartDate: string;
+  section6EndDate: string;
+  section6PayInfoTitle: string;
+  section6SubscripPrice: string;
+  section6AddDiscount: string;
+  section6TotalPrice: string;
+  section6PayButton: string;
+  section6Tax: string;
+  discountAddButton: string;
+  discountRemoveButton: string;
+  discountSuccess: string;
+  discountError: string;
+
+  payCallbackWelcome: string;
+  payCallbackUsername: string;
+  payCallbackPassword: string;
+  payCallbackTicket: string;
+  payCallbackTeam: string;
+  payCallbackSummaryTitle: string;
+  payCallbackPlan: string;
 }
 
 const FormLevels: React.FC<FormLevelsProps> = ({
@@ -121,9 +148,32 @@ const FormLevels: React.FC<FormLevelsProps> = ({
   toman,
   unlimite,
   buttonPlan,
+
+  section6GeneralInfoTtile,
+  section6SubscribeInfoTitle,
+  section6SubscribeTitle,
+  section6StartDate,
+  section6EndDate,
+  section6PayInfoTitle,
+  section6SubscripPrice,
+  section6AddDiscount,
+  section6TotalPrice,
+  section6PayButton,
+  section6Tax,
+  discountAddButton,
+  discountRemoveButton,
+  discountSuccess,
+  discountError,
+
+  payCallbackWelcome,
+  payCallbackUsername,
+  payCallbackPassword,
+  payCallbackTicket,
+  payCallbackTeam,
+  payCallbackSummaryTitle,
+  payCallbackPlan,
 }) => {
-  const [sectionLevel, setSectionLevel] = useState("plans");
-  const [progressbarLevel, setProgressbarLevel] = useState(4);
+  const { progressbarLevel, sectionLevel } = useContext(SiteContext);
 
   return (
     <section>
@@ -177,7 +227,7 @@ const FormLevels: React.FC<FormLevelsProps> = ({
       </section>
 
 
-      <section className={`${sectionLevel === "finantial" ? "block" : "hidden"}`}>
+      <section className={`${sectionLevel === "financial" ? "block" : "hidden"}`}>
         <FinancialPeriodForm
           section4InputTitle={section4InputTitle}
           section4InputStart={section4InputStart}
@@ -212,6 +262,51 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           back={back}
           buttonPlan={buttonPlan}
           section4Button={section4Button}
+        />
+      </section>
+
+      <section className={`${sectionLevel === "pay" ? "block" : "hidden"}`}>
+        <PayForm
+          section6GeneralInfoTtile={section6GeneralInfoTtile}
+          section6SubscribeInfoTitle={section6SubscribeInfoTitle}
+          section6SubscribeTitle={section6SubscribeTitle}
+          section6StartDate={section6StartDate}
+          section6EndDate={section6EndDate}
+          section6PayInfoTitle={section6PayInfoTitle}
+          section6SubscripPrice={section6SubscripPrice}
+          section6AddDiscount={section6AddDiscount}
+          section6TotalPrice={section6TotalPrice}
+          section6PayButton={section6PayButton}
+          section6Tax={section6Tax}
+          discountAddButton={discountAddButton}
+          discountRemoveButton={discountRemoveButton}
+          discountSuccess={discountSuccess}
+          discountError={discountError}
+          section1InputTitle={section1InputTitle}
+          section3CompanyTitle={section3CompanyTitle}
+          section3FirstName={section3FirstName}
+          section3LastName={section3LastName}
+          section4InputTitle={section4InputTitle}
+          section4InputStart={section4InputStart}
+          section4InputEnd={section4InputEnd}
+          back={back}
+        />
+      </section>
+
+
+      <section className={`${sectionLevel === "callback" ? "block" : "hidden"}`}>
+        <PayCallback
+          payCallbackWelcome={payCallbackWelcome}
+          payCallbackUsername={payCallbackUsername}
+          payCallbackPassword={payCallbackPassword}
+          payCallbackTicket={payCallbackTicket}
+          payCallbackTeam={payCallbackTeam}
+          payCallbackSummaryTitle={payCallbackSummaryTitle}
+          payCallbackPlan={payCallbackPlan}
+          section3CompanyTitle={section3CompanyTitle}
+          section4InputTitle={section4InputTitle}
+          section4InputStart={section4InputStart}
+          section4InputEnd={section4InputEnd}
         />
       </section>
 

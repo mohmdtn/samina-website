@@ -1,4 +1,4 @@
-import FormLevels from "@/app/components/register/FormLevels";
+import Wrapper from "@/app/components/register/Wrapper";
 import { useTranslations } from "next-intl";
 
 export default function Terms() {
@@ -7,7 +7,7 @@ export default function Terms() {
 
   return (
     <main className="px-3 md:px-5 lg:px-24 py-6 overflow-y-hidden">
-      <FormLevels
+      <Wrapper
         level1={t("level1")}
         level1Desc={t("level1Desc")}
         level2={t("level2")}
@@ -62,6 +62,30 @@ export default function Terms() {
         toman={t2("toman")}
         unlimite={t2("unlimite")}
         buttonPlan={t2("button")}
+
+        section6GeneralInfoTtile={t("section6GeneralInfoTtile")}
+        section6SubscribeInfoTitle={t("section6SubscribeInfoTitle")}
+        section6SubscribeTitle={t("section6SubscribeTitle")}
+        section6StartDate={t("section6StartDate")}
+        section6EndDate={t("section6EndDate")}
+        section6PayInfoTitle={t("section6PayInfoTitle")}
+        section6SubscripPrice={t("section6SubscripPrice")}
+        section6AddDiscount={t("section6AddDiscount")}
+        section6TotalPrice={t("section6TotalPrice")}
+        section6PayButton={t("section6PayButton")}
+        section6Tax={t("section6Tax")}
+        discountAddButton={t("discountAddButton")}
+        discountRemoveButton={t("discountRemoveButton")}
+        discountSuccess={t("discountSuccess")}
+        discountError={t("discountError")}
+
+        payCallbackWelcome={t("payCallbackWelcome")}
+        payCallbackUsername={t("payCallbackUsername")}
+        payCallbackPassword={t("payCallbackPassword")}
+        payCallbackTicket={t("payCallbackTicket")}
+        payCallbackTeam={t("payCallbackTeam")}
+        payCallbackSummaryTitle={t("payCallbackSummaryTitle")}
+        payCallbackPlan={t("payCallbackPlan")}
       />
     </main>
   );

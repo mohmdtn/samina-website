@@ -189,7 +189,31 @@
     "section4InputTitle": "عنوان دوره مالی",
     "section4InputStart": "تاریخ شروع دوره مالی",
     "section4InputEnd": "تاریخ پایان دوره مالی",
-    "section4Button": "ادامه"
+    "section4Button": "ادامه",
+
+    "section6GeneralInfoTtile": "اطلاعات کلی",
+    "section6SubscribeInfoTitle": "اطلاعات اشتراک",
+    "section6SubscribeTitle": "عنوان اشتراک",
+    "section6StartDate": "تاریخ شروع",
+    "section6EndDate": "تاریخ پایان",
+    "section6PayInfoTitle": "جزئیات پرداخت",
+    "section6SubscripPrice": "قیمت اشتراک",
+    "section6AddDiscount": "افزودن کد تخفیف",
+    "section6TotalPrice": "هزینه کل ",
+    "section6PayButton": "تایید و پرداخت",
+    "section6Tax": "مالیات بر ارزش افزوده",
+    "discountAddButton": "اعمال",
+    "discountRemoveButton": "حذف",
+    "discountSuccess": "کد تخفیف با موفیت اعمال شد",
+    "discountError": "کد تخفیف اشتباه می‌باشد",
+
+    "payCallbackWelcome": "ضمن عرض خیر مقدم به مناسبت ورود شما به خانواده بزرگ ثمینا ، بدینوسیله اطلاعات ورود به نرم افزار در اختیارتان قرار می گیرد",
+    "payCallbackUsername": "نام کاربری",
+    "payCallbackPassword": "کلمه عبور",
+    "payCallbackTicket": "بدیهـی است پس از ورود به نرم افزار ، ضمن تغییر کلمه عبــور ، می توانید تمامی درخواست های خود را از طریق ثبت تیکـت با واحــد پشتیبانی در میان بگذارید.",
+    "payCallbackTeam": "تیم پشتیبانی ثمینا",
+    "payCallbackSummaryTitle": "خلاصه اطلاعات خرید",
+    "payCallbackPlan": "پلن انتخاب شده"
   },
 
   "plans": {

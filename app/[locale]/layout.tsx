@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import SocialMedia from '../components/SocialMedia'
 import NewNotification from '../components/landing/NewNotification'
 import { useTranslations } from 'next-intl'
+import { SiteProvider } from '../context/siteContext'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,6 +21,7 @@ export default function RootLayout({
   const t = useTranslations('menu');
 
   return (
+    <SiteProvider>
     <html lang="en">
       <body className=''>
         <NewNotification />
@@ -30,5 +32,6 @@ export default function RootLayout({
         <SocialMedia />
       </body>
     </html>
+    </SiteProvider>
   )
 }

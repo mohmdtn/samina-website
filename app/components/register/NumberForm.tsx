@@ -1,6 +1,10 @@
 
-import React from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { Checkbox } from 'antd';
+import Link from "next/link";
+import { useLocale } from "next-intl";
+import { SiteContext } from "@/app/context/siteContext";
+import axios from "axios";
 
 interface NumberFormProps {
   section1InputTitle: string;
@@ -19,23 +23,51 @@ const NumberForm: React.FC<NumberFormProps> = ({
   checkbox2,
   checkbox3,
 }) => {
+  const languge = useLocale();
+  const [checkBox, setCheckBox] = useState(false);
+  const { formsData, setFormsData, setSectionLevel, loading, setLoading } = useContext(SiteContext);
+
+  // Form Validation
+  const submitHandle = () => {
+    if (checkBox === false)
+      return alert("acc the policy");
+    if(formsData.number == "")
+      return alert("empty")
+    if(!formsData.number.match(/^0?9[0-9]{9}$/))
+      return alert("wrong number")
+
+    // Send Number To Get Verify Code
+    try {
+      setLoading(true);
+      axios
+        .post("http://siteapi.saminasoft.ir/SiteSendVerifyCode", { userName: formsData.number })
+        .then(() => setSectionLevel("code"))
+        .catch(() => alert("خطا در برقراری ارتباط!"))
+        .finally(() => setLoading(false));
+      setSectionLevel("code");
+    } catch (error) {
+      setLoading(false);
+      alert("2خطا در برقراری ارتباط!");
+    }
+  };
+
   return (
     <section className="w-full max-w-72 md:max-w-[360px] mx-auto">
 
       {/* Phone */}
       <div className="w-full mb-6">
         <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section1InputTitle}</h5>
-        <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none" placeholder={section1InputHolder} />
+        <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none" value={formsData.number} onChange={(e) => setFormsData({...formsData, number: e.target.value})} placeholder={section1InputHolder} />
       </div>
 
       {/* Send Button */}
       <div className="w-full">
-        <button className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6">{button}</button>
+        <button onClick={submitHandle} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6 disabled:opacity-70" disabled={loading}>{button}</button>
       </div>
 
       {/* CheckBox */}
       <div className="mt-8">
-        <Checkbox><p className="text-sm text-gray-600"><span>{checkbox1}</span><span className="text-brand-600">{checkbox2}</span><span>{checkbox3}</span></p></Checkbox>
+        <Checkbox onClick={() => setCheckBox(prev => !prev)}><p className="text-sm text-gray-600"><span>{checkbox1}</span><Link href={`/${languge}/terms`} className="text-brand-600">{checkbox2}</Link><span>{checkbox3}</span></p></Checkbox>
       </div>
 
     </section>
