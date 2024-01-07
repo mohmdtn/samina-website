@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Plans from "../Plans";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SiteContext } from "@/app/context/siteContext";
 
 interface PlanFormProps {
@@ -10,10 +10,6 @@ interface PlanFormProps {
   periodTitle2: string;
   periodTitle3: string;
   periodTitle4: string;
-  bronze: string;
-  silver: string;
-  golden: string;
-  offline: string;
   numberOfAccounts: string;
   numberOfUsers: string;
   numberOfStuff: string;
@@ -24,10 +20,10 @@ interface PlanFormProps {
   smsPanel: string;
   log: string;
   toman: string;
-  unlimite: string;
   back: string;
   buttonPlan: string;
   section4Button: string;
+  planError: string;
 }
 
 const PlanForm: React.FC<PlanFormProps> = ({
@@ -35,10 +31,6 @@ const PlanForm: React.FC<PlanFormProps> = ({
   periodTitle2,
   periodTitle3,
   periodTitle4,
-  bronze,
-  silver,
-  golden,
-  offline,
   numberOfAccounts,
   numberOfUsers,
   numberOfStuff,
@@ -49,19 +41,28 @@ const PlanForm: React.FC<PlanFormProps> = ({
   smsPanel,
   log,
   toman,
-  unlimite,
   back,
   buttonPlan,
-  section4Button
+  section4Button,
+  planError,
 }) => {
   const { setSectionLevel, setFormsData, formsData } = useContext(SiteContext);
 
+  // Error States
+  const [isPlanError, setIsPlanError] = useState(false);
+
   // Form Validation
   const submitHandle = () => {
-    if (!formsData.planId)
-      return alert("empty");
+    if (!formsData.planId) {
+      setIsPlanError(true);
+    }
+    else {
+      setIsPlanError(false);
+    }
 
-    setSectionLevel("pay");
+    if (formsData.planId) {
+      setSectionLevel("pay");
+    }
   };
 
   return (
@@ -71,10 +72,6 @@ const PlanForm: React.FC<PlanFormProps> = ({
         periodTitle2={periodTitle2}
         periodTitle3={periodTitle3}
         periodTitle4={periodTitle4}
-        bronze={bronze}
-        silver={silver}
-        golden={golden}
-        offline={offline}
         numberOfAccounts={numberOfAccounts}
         numberOfUsers={numberOfUsers}
         numberOfStuff={numberOfStuff}
@@ -85,7 +82,6 @@ const PlanForm: React.FC<PlanFormProps> = ({
         smsPanel={smsPanel}
         log={log}
         toman={toman}
-        unlimite={unlimite}
         buttonPlan={buttonPlan}
       />
 
@@ -93,6 +89,9 @@ const PlanForm: React.FC<PlanFormProps> = ({
       <div className="w-full md:w-24 mx-auto mt-12">
         <button onClick={submitHandle} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6">{section4Button}</button>
       </div>
+
+      {/* Error */}
+      {isPlanError && <h6 className="text-sm mt-[6px] text-center text-red-600">{planError}</h6>}
 
       {/* Back Button */}
       <button onClick={() => setSectionLevel("financial")} className="flex items-center font-semibold gap-1 hover:gap-2 duration-200 text-gray2-700 py-3 mx-auto mt-6">

@@ -1,5 +1,9 @@
+"use client";
+
+import { SiteContext } from "@/app/context/siteContext";
+import axios from "axios";
 import Image from "next/image";
-import React from "react";
+import React, { useContext, useState } from "react";
 
 interface ContactFormProps {
   nameInputTitle: string;
@@ -11,6 +15,7 @@ interface ContactFormProps {
   bodyInputTitle: string;
   bodyInputPlaceholder: string;
   sendButton: string;
+  errorEmpty: string;
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({
@@ -23,7 +28,79 @@ const ContactForm: React.FC<ContactFormProps> = ({
   bodyInputTitle,
   bodyInputPlaceholder,
   sendButton,
+  errorEmpty,
 }) => {
+  const { loading, setLoading, setTicketStatus } = useContext(SiteContext);
+
+  // Input Value States
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+
+  // Error States
+  const [nameError, setNameError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [titleError, setTitleError] = useState(false);
+  const [descError, setDescError] = useState(false);
+
+  const validateHandle = () => {
+    if (name.trim() == "") {
+      setNameError(true);
+    }
+    else {
+      setNameError(false);
+    }
+
+    if (phone.trim() == "") {
+      setPhoneError(true);
+    }
+    else {
+      setPhoneError(false);
+    }
+
+    if (title.trim() == "") {
+      setTitleError(true);
+    }
+    else {
+      setTitleError(false);
+    }
+
+    if (desc.trim() == "") {
+      setDescError(true);
+    }
+    else {
+      setDescError(false);
+    }
+
+    if (name.trim() !== "" && phone.trim() !== "" && title.trim() !== "" && desc.trim() !== "") {
+      submitHandle();
+    }
+  }
+
+  const submitHandle = () => {
+    const data = {
+      id: phone,
+      userName: name,
+      title: title,
+      description: desc,
+      mediaId: 0,
+      referTo: 0,
+    };
+
+    try {
+      setLoading(true);
+      axios
+        .post("http://siteapi.saminasoft.ir/AddSiteTicket", {data})
+        .then(() => setTicketStatus("SUCCESS"))
+        .catch(() => setTicketStatus("ERROR"))
+        .finally(() => setLoading(false));
+    } catch (error) {
+      setLoading(false);
+      alert("2خطا در برقراری ارتباط!");
+    }
+  }
+
   return (
     <section className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10 lg:gap-16">
         {/* Contact Us Form */}
@@ -32,30 +109,34 @@ const ContactForm: React.FC<ContactFormProps> = ({
           {/* Name */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{nameInputTitle}</h5>
-            <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none" placeholder={nameInputPlaceholder} />
+            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none ${nameError && "border-red-500"}`} placeholder={nameInputPlaceholder} value={name} onChange={(e) => setName(e.target.value)} />
+            {nameError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 
           {/* Phone */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{phoneInputTitle}</h5>
-            <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none" placeholder={phoneInputPlaceholder} />
+            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none ${phoneError && "border-red-500"}`} placeholder={phoneInputPlaceholder} value={phone} onChange={(e) => setPhone(e.target.value)} />
+            {phoneError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 
           {/* Subject */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{subjectInputTitle}</h5>
-            <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none" placeholder={subjectInputPlaceholder} />
+            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none ${titleError && "border-red-500"}`} placeholder={subjectInputPlaceholder} value={title} onChange={(e) => setTitle(e.target.value)} />
+            {titleError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 
           {/* Body */}
           <div>
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{bodyInputTitle}</h5>
-            <textarea className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px]" placeholder={bodyInputPlaceholder}></textarea>
+            <textarea className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px] ${descError && "border-red-500"}`} placeholder={bodyInputPlaceholder} onChange={(e) => setDesc(e.target.value)}>{desc}</textarea>
+            {descError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 
           {/* Send Button */}
           <div className="w-full">
-            <button className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6">{sendButton}</button>
+            <button onClick={validateHandle} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6" disabled={loading}>{sendButton}</button>
           </div>
 
         </section>

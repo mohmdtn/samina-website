@@ -8,17 +8,43 @@ interface NameFormProps {
   section3LastName: string;
   section3Button: string;
   back: string;
+  errorEmpty: string;
 }
 
-const NameForm: React.FC<NameFormProps> = ({ section3CompanyTitle, section3FirstName, section3LastName, section3Button, back }) => {
+const NameForm: React.FC<NameFormProps> = ({ section3CompanyTitle, section3FirstName, section3LastName, section3Button, back, errorEmpty }) => {
   const { setSectionLevel, setFormsData, formsData } = useContext(SiteContext);
+
+  // Error States
+  const [companyError, setCompanyError] = useState(false);
+  const [fNameError, setFNameError] = useState(false);
+  const [lNameError, setlNameError] = useState(false);
 
   // Form Validation
   const submitHandle = () => {
-    if (formsData.company == "" || formsData.fName == "" || formsData.lName == "")
-      return alert("empty");
+    if (formsData.company == "") {
+      setCompanyError(true);
+    }
+    else {
+      setCompanyError(false);
+    }
 
-    setSectionLevel("financial");
+    if (formsData.fName == "") {
+      setFNameError(true);
+    }
+    else {
+      setFNameError(false);
+    }
+
+    if (formsData.lName == "") {
+      setlNameError(true);
+    }
+    else {
+      setlNameError(false);
+    }
+      
+    if (formsData.company !== "" && formsData.fName !== "" && formsData.lName !== "") {
+      setSectionLevel("financial");
+    }
   };
 
   return (
@@ -28,19 +54,22 @@ const NameForm: React.FC<NameFormProps> = ({ section3CompanyTitle, section3First
         {/* Company */}
         <div className="w-full">
           <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section3CompanyTitle}</h5>
-          <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none" value={formsData.company} onChange={(e) => setFormsData({...formsData, company: e.target.value})} />
+          <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${companyError && "border-red-500"}`} value={formsData.company} onChange={(e) => setFormsData({...formsData, company: e.target.value})} />
+          {companyError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
         </div>
 
         {/* First Name */}
         <div className="w-full">
           <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section3FirstName}</h5>
-          <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none" value={formsData.fName} onChange={(e) => setFormsData({...formsData, fName: e.target.value})} />
+          <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${fNameError && "border-red-500"}`} value={formsData.fName} onChange={(e) => setFormsData({...formsData, fName: e.target.value})} />
+          {fNameError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
         </div>
 
         {/* Last Name */}
         <div className="w-full">
           <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section3LastName}</h5>
-          <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none" value={formsData.lName} onChange={(e) => setFormsData({...formsData, lName: e.target.value})} />
+          <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${lNameError && "border-red-500"}`} value={formsData.lName} onChange={(e) => setFormsData({...formsData, lName: e.target.value})} />
+          {lNameError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
         </div>
       </div>
 

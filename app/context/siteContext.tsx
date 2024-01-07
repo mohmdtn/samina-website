@@ -13,13 +13,17 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
     periodName: "",
     endDate: "",
     startDate: "",
+    ISOEndDate: "",
+    ISOStartDate: "",
     planId: "",
     planName: "",
     planPrice: "",
+    bankId: "",
   });
   const [sectionLevel, setSectionLevel] = useState<"number" | "code" | "name" | "financial" | "plans" | "pay" | "callback">("number");
   const [progressbarLevel, setProgressbarLevel] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [ticketStatus, setTicketStatus] = useState<"ERROR" | "SUCCESS" | "">("")
 
   useEffect(() => {
     if (sectionLevel === "number" || sectionLevel === "code") 
@@ -47,6 +51,8 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
     sectionLevel,
     setSectionLevel,
     progressbarLevel,
+    ticketStatus,
+    setTicketStatus,
   };
 
   return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

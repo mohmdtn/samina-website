@@ -1,3 +1,5 @@
+"use client";
+
 import axios from "axios";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
@@ -26,11 +28,6 @@ interface PlansProps {
   periodTitle3: string;
   periodTitle4: string;
 
-  bronze: string;
-  silver: string;
-  golden: string;
-  offline: string;
-
   numberOfAccounts: string;
   numberOfUsers: string;
   numberOfStuff: string;
@@ -41,7 +38,6 @@ interface PlansProps {
   smsPanel: string;
   log: string;
   toman: string;
-  unlimite: string;
   buttonPlan: string;
 }
 
@@ -50,11 +46,6 @@ const Plans: React.FC<PlansProps> = ({
     periodTitle2,
     periodTitle3,
     periodTitle4,
-  
-    bronze,
-    silver,
-    golden,
-    offline,
   
     numberOfAccounts,
     numberOfUsers,
@@ -66,7 +57,6 @@ const Plans: React.FC<PlansProps> = ({
     smsPanel,
     log,
     toman,
-    unlimite,
     buttonPlan
 }) => {
   const [period, setPeriod] = useState(6);

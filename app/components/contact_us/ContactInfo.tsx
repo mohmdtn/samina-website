@@ -19,7 +19,7 @@ const ContactInfo = () => {
           <div className="bg-brand-50 rounded-2xl flex justify-center items-center min-w-[75px] size-[75px]">
             <Image src={"/icons/phoneBig.svg"} width={32} height={32} alt="Phone Icon" />
           </div>
-          <h6 className="text-base text-black font-semibold tracking-tight leading-7">{t("phone")}</h6>
+          <h6 className="text-base text-black font-semibold tracking-tight leading-7 dir-left">{t("phone")}</h6>
         </div>
 
         <div className="flex items-center gap-4">

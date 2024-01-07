@@ -75,7 +75,7 @@ const Company = ({ title }: { title: string }) => {
         {/* Slider */}
         <div className="md:-mx-11 overflow-hidden pt-10">
           <Slider ref={sliderRef} {...settings}>
-            {items.map((item) => <div className="h-14" key={item.id}><div className="flex justify-center items-center h-full"><Image src={item.img} width={143} height={48} alt={item.alt} /></div></div>)}
+            {items.map((item) => <div className="h-14" key={item.id}><div className="flex justify-center mx-2 md:mx-0 items-center h-full"><Image src={item.img} width={143} height={48} alt={item.alt} /></div></div>)}
           </Slider>
         </div>
       </section>

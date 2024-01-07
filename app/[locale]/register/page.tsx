@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 export default function Terms() {
   const t = useTranslations("registerPage");
   const t2 = useTranslations("plans");
+  const tErrors = useTranslations("errors");
 
   return (
     <main className="px-3 md:px-5 lg:px-24 py-6 overflow-y-hidden">
@@ -46,10 +47,6 @@ export default function Terms() {
         periodTitle2={t2("periodTitle2")}
         periodTitle3={t2("periodTitle3")}
         periodTitle4={t2("periodTitle4")}
-        bronze={t2("bronze")}
-        silver={t2("silver")}
-        golden={t2("golden")}
-        offline={t2("offline")}
         numberOfAccounts={t2("numberOfAccounts")}
         numberOfUsers={t2("numberOfUsers")}
         numberOfStuff={t2("numberOfStuff")}
@@ -60,8 +57,8 @@ export default function Terms() {
         smsPanel={t2("smsPanel")}
         log={t2("log")}
         toman={t2("toman")}
-        unlimite={t2("unlimite")}
         buttonPlan={t2("button")}
+        planError={t2("planError")}
 
         section6GeneralInfoTtile={t("section6GeneralInfoTtile")}
         section6SubscribeInfoTitle={t("section6SubscribeInfoTitle")}
@@ -78,6 +75,8 @@ export default function Terms() {
         discountRemoveButton={t("discountRemoveButton")}
         discountSuccess={t("discountSuccess")}
         discountError={t("discountError")}
+        section6Error={t("section6Error")}
+        section6BankError={t("section6BankError")}
 
         payCallbackWelcome={t("payCallbackWelcome")}
         payCallbackUsername={t("payCallbackUsername")}
@@ -86,6 +85,10 @@ export default function Terms() {
         payCallbackTeam={t("payCallbackTeam")}
         payCallbackSummaryTitle={t("payCallbackSummaryTitle")}
         payCallbackPlan={t("payCallbackPlan")}
+
+        errorEmpty={tErrors("empty")}
+        errorPolicy={tErrors("policy")}
+        errorCode={tErrors("code")}
       />
     </main>
   );

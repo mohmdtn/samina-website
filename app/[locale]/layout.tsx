@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className=''>
         <NewNotification />
         <Navbar />
-        <Sidebar item1={t("1")} item2={t("2")} item3={t("3")} item4={t("4")} item5={t("5")} />
+        <Sidebar item1={t("1")} item2={t("2")} item3={t("3")} item4={t("4")} item5={t("5")} loginButton={t("loginButton")} signupButton={t("signupButton")} />
         {children}
         <Footer />
         <SocialMedia />

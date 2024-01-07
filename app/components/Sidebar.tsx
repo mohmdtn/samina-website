@@ -12,9 +12,11 @@ interface SidebarProps {
   item3: string;
   item4: string;
   item5: string;
+  loginButton: string;
+  signupButton: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ item1, item2, item3, item4, item5 }) => {
+const Sidebar: React.FC<SidebarProps> = ({ item1, item2, item3, item4, item5, loginButton, signupButton }) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const language = useLocale();
   
@@ -44,9 +46,9 @@ const Sidebar: React.FC<SidebarProps> = ({ item1, item2, item3, item4, item5 }) 
 
         {/* Register Section */}
         <div className="flex w-full flex-col gap-2">
-          <Link href={"/singup"} className="text-white text-sm bg-brand-600 rounded-lg py-[10px] px-6 flex justify-center">ثبت نام رایگان</Link>
-          <Link href={"/login"} className="border rounded-lg py-[10px] px-3 text-gray2-700 flex justify-center items-center gap-2 text-sm">
-            <Image src={"/icons/login.svg"} width={14} height={14} alt="login icon" />ورود
+          <Link href={`/${language}/register`} className="text-white text-sm bg-brand-600 rounded-lg py-[10px] px-6 flex justify-center">{signupButton}</Link>
+          <Link href={`https://app.saminasoft.ir/`} target='_blank' className="border rounded-lg py-[10px] px-3 text-gray2-700 flex justify-center items-center gap-2 text-sm">
+            <Image src={"/icons/login.svg"} width={14} height={14} alt="login icon" />{loginButton}
           </Link>
         </div>
       </section>

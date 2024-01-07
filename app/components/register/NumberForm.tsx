@@ -13,6 +13,8 @@ interface NumberFormProps {
   checkbox1: string;
   checkbox2: string;
   checkbox3: string;
+  errorPolicy: string;
+  errorEmpty: string;
 }
 
 const NumberForm: React.FC<NumberFormProps> = ({
@@ -22,29 +24,30 @@ const NumberForm: React.FC<NumberFormProps> = ({
   checkbox1,
   checkbox2,
   checkbox3,
+  errorPolicy,
+  errorEmpty,
 }) => {
   const languge = useLocale();
   const [checkBox, setCheckBox] = useState(false);
   const { formsData, setFormsData, setSectionLevel, loading, setLoading } = useContext(SiteContext);
+  const [error, setError] = useState({state: false, msg: ""});
 
   // Form Validation
   const submitHandle = () => {
     if (checkBox === false)
-      return alert("acc the policy");
+      return setError({state: true, msg: errorPolicy})
     if(formsData.number == "")
-      return alert("empty")
-    if(!formsData.number.match(/^0?9[0-9]{9}$/))
-      return alert("wrong number")
+      return setError({state: true, msg: errorEmpty})
 
     // Send Number To Get Verify Code
     try {
       setLoading(true);
+      setError({state: false, msg: ""});
       axios
         .post("http://siteapi.saminasoft.ir/SiteSendVerifyCode", { userName: formsData.number })
         .then(() => setSectionLevel("code"))
         .catch(() => alert("خطا در برقراری ارتباط!"))
         .finally(() => setLoading(false));
-      setSectionLevel("code");
     } catch (error) {
       setLoading(false);
       alert("2خطا در برقراری ارتباط!");
@@ -57,7 +60,8 @@ const NumberForm: React.FC<NumberFormProps> = ({
       {/* Phone */}
       <div className="w-full mb-6">
         <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section1InputTitle}</h5>
-        <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none" value={formsData.number} onChange={(e) => setFormsData({...formsData, number: e.target.value})} placeholder={section1InputHolder} />
+        <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} value={formsData.number} onChange={(e) => setFormsData({...formsData, number: e.target.value})} placeholder={section1InputHolder} />
+        {error.state && <h6 className="text-sm mt-[6px] text-red-600">{error.msg}</h6>}
       </div>
 
       {/* Send Button */}

@@ -51,10 +51,7 @@ interface FormLevelsProps {
   periodTitle2: string;
   periodTitle3: string;
   periodTitle4: string;
-  bronze: string;
-  silver: string;
-  golden: string;
-  offline: string;
+
   numberOfAccounts: string;
   numberOfUsers: string;
   numberOfStuff: string;
@@ -65,8 +62,8 @@ interface FormLevelsProps {
   smsPanel: string;
   log: string;
   toman: string;
-  unlimite: string;
   buttonPlan: string;
+  planError: string;
 
   section6GeneralInfoTtile: string;
   section6SubscribeInfoTitle: string;
@@ -83,6 +80,8 @@ interface FormLevelsProps {
   discountRemoveButton: string;
   discountSuccess: string;
   discountError: string;
+  section6Error: string;
+  section6BankError: string;
 
   payCallbackWelcome: string;
   payCallbackUsername: string;
@@ -91,6 +90,10 @@ interface FormLevelsProps {
   payCallbackTeam: string;
   payCallbackSummaryTitle: string;
   payCallbackPlan: string;
+
+  errorEmpty: string;
+  errorPolicy: string;
+  errorCode: string;
 }
 
 const FormLevels: React.FC<FormLevelsProps> = ({
@@ -132,10 +135,6 @@ const FormLevels: React.FC<FormLevelsProps> = ({
   periodTitle2,
   periodTitle3,
   periodTitle4,
-  bronze,
-  silver,
-  golden,
-  offline,
   numberOfAccounts,
   numberOfUsers,
   numberOfStuff,
@@ -146,8 +145,8 @@ const FormLevels: React.FC<FormLevelsProps> = ({
   smsPanel,
   log,
   toman,
-  unlimite,
   buttonPlan,
+  planError,
 
   section6GeneralInfoTtile,
   section6SubscribeInfoTitle,
@@ -164,6 +163,8 @@ const FormLevels: React.FC<FormLevelsProps> = ({
   discountRemoveButton,
   discountSuccess,
   discountError,
+  section6Error,
+  section6BankError,
 
   payCallbackWelcome,
   payCallbackUsername,
@@ -172,6 +173,10 @@ const FormLevels: React.FC<FormLevelsProps> = ({
   payCallbackTeam,
   payCallbackSummaryTitle,
   payCallbackPlan,
+
+  errorEmpty,
+  errorPolicy,
+  errorCode,
 }) => {
   const { progressbarLevel, sectionLevel } = useContext(SiteContext);
 
@@ -204,6 +209,8 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           checkbox1={checkbox1}
           checkbox2={checkbox2}
           checkbox3={checkbox3}
+          errorEmpty={errorEmpty}
+          errorPolicy={errorPolicy}
         />
       </section>
 
@@ -212,6 +219,7 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           section2Resend={section2Resend}
           section2Button={section2Button}
           back={back}
+          errorEmpty={errorEmpty}
         />
       </section>
 
@@ -223,6 +231,7 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           section3LastName={section3LastName}
           section3Button={section3Button}
           back={back}
+          errorEmpty={errorEmpty}
         />
       </section>
 
@@ -234,6 +243,7 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           section4InputEnd={section4InputEnd}
           section4Button={section4Button}
           back={back}
+          errorEmpty={errorEmpty}
         />
       </section>
       
@@ -244,10 +254,6 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           periodTitle2={periodTitle2}
           periodTitle3={periodTitle3}
           periodTitle4={periodTitle4}
-          bronze={bronze}
-          silver={silver}
-          golden={golden}
-          offline={offline}
           numberOfAccounts={numberOfAccounts}
           numberOfUsers={numberOfUsers}
           numberOfStuff={numberOfStuff}
@@ -258,10 +264,10 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           smsPanel={smsPanel}
           log={log}
           toman={toman}
-          unlimite={unlimite}
           back={back}
           buttonPlan={buttonPlan}
           section4Button={section4Button}
+          planError={planError}
         />
       </section>
 
@@ -290,6 +296,8 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           section4InputStart={section4InputStart}
           section4InputEnd={section4InputEnd}
           back={back}
+          section6Error={section6Error}
+          section6BankError={section6BankError}
         />
       </section>
 
