@@ -80,24 +80,31 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
   const submitHandle = () => {
     const data = {
-      id: phone,
-      userName: name,
-      title: title,
-      description: desc,
-      mediaId: 0,
-      referTo: 0,
+      "id": 0,
+      "name": name,
+      "mobile": phone,
+      "title": title,
+      "description": desc,
     };
 
     try {
       setLoading(true);
       axios
-        .post("http://siteapi.saminasoft.ir/AddSiteTicket", {data})
-        .then(() => setTicketStatus("SUCCESS"))
+        .post("http://siteapi.saminasoft.ir/AddSiteTicket", data, {
+          headers: { "Accept-Language": "fa-IR", }
+        })
+        .then(() => {
+          setTicketStatus("SUCCESS");
+          setName("");
+          setPhone("");
+          setTitle("");
+          setDesc("");
+        })
         .catch(() => setTicketStatus("ERROR"))
         .finally(() => setLoading(false));
     } catch (error) {
       setLoading(false);
-      alert("2خطا در برقراری ارتباط!");
+      alert("خطا در برقراری ارتباط!");
     }
   }
 
@@ -109,34 +116,34 @@ const ContactForm: React.FC<ContactFormProps> = ({
           {/* Name */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{nameInputTitle}</h5>
-            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none ${nameError && "border-red-500"}`} placeholder={nameInputPlaceholder} value={name} onChange={(e) => setName(e.target.value)} />
+            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${nameError && "border-red-500"}`} placeholder={nameInputPlaceholder} value={name} onChange={(e) => setName(e.target.value)} />
             {nameError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 
           {/* Phone */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{phoneInputTitle}</h5>
-            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none ${phoneError && "border-red-500"}`} placeholder={phoneInputPlaceholder} value={phone} onChange={(e) => setPhone(e.target.value)} />
+            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${phoneError && "border-red-500"}`} placeholder={phoneInputPlaceholder} value={phone} onChange={(e) => setPhone(e.target.value)} />
             {phoneError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 
           {/* Subject */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{subjectInputTitle}</h5>
-            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none ${titleError && "border-red-500"}`} placeholder={subjectInputPlaceholder} value={title} onChange={(e) => setTitle(e.target.value)} />
+            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${titleError && "border-red-500"}`} placeholder={subjectInputPlaceholder} value={title} onChange={(e) => setTitle(e.target.value)} />
             {titleError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 
           {/* Body */}
           <div>
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{bodyInputTitle}</h5>
-            <textarea className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px] ${descError && "border-red-500"}`} placeholder={bodyInputPlaceholder} onChange={(e) => setDesc(e.target.value)}>{desc}</textarea>
+            <textarea className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px] focus:shadow-md ${descError && "border-red-500"}`} placeholder={bodyInputPlaceholder} onChange={(e) => setDesc(e.target.value)} defaultValue={desc}></textarea>
             {descError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 
           {/* Send Button */}
           <div className="w-full">
-            <button onClick={validateHandle} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6" disabled={loading}>{sendButton}</button>
+            <button onClick={validateHandle} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6 disabled:opacity-70" disabled={loading}>{sendButton}</button>
           </div>
 
         </section>

@@ -37,9 +37,9 @@ interface PayFormProps {
 }
 
 const payProvider = [
-  {id: "pay1", img: "/images/bank-saman.svg",    name: "Bank Saman"},
-  {id: "pay2", img: "/images/asan-pardakht.svg", name: "Asan Pardakht"},
-  {id: "pay3", img: "/images/bank-pasargad.svg", name: "Bank Pasargad"},
+  {id: "1", img: "/images/bank-saman.svg",    name: "Bank Saman"},
+  {id: "2", img: "/images/asan-pardakht.svg", name: "Asan Pardakht"},
+  {id: "3", img: "/images/bank-pasargad.svg", name: "Bank Pasargad"},
 ]
 
 const PayForm: React.FC<PayFormProps> = ({
@@ -94,49 +94,49 @@ const PayForm: React.FC<PayFormProps> = ({
   const [allError, setAllError] = useState(false);
 
   const validateHandle = () => {
-    if (formsData.company == "") {
+    if (formsData.company == false) {
       setCompanyError(true);
     }
     else {
       setCompanyError(false);
     }
 
-    if (formsData.fName == "") {
+    if (formsData.fName == false) {
       setFNameError(true);
     }
     else {
       setFNameError(false);
     }
 
-    if (formsData.lName == "") {
+    if (formsData.lName == false) {
       setlNameError(true);
     }
     else {
       setlNameError(false);
     }
 
-    if (formsData.periodName == "") {
+    if (formsData.periodName == false) {
       setPeriodError(true);
     }
     else {
       setPeriodError(false);
     }
 
-    if (formsData.startDate == "") {
+    if (formsData.startDate == false) {
       setStartDateError(true);
     }
     else {
       setStartDateError(false);
     }
 
-    if (formsData.endDate == "") {
+    if (formsData.endDate == false) {
       setEndDateError(true);
     }
     else {
       setEndDateError(false);
     }
 
-    if (formsData.bankId == "") {
+    if (formsData.bankId == false) {
       setBankError(true);
     }
     else {
@@ -144,25 +144,37 @@ const PayForm: React.FC<PayFormProps> = ({
     }
     setAllError(true);
 
+    // @ts-ignore
+    if (startDate?.toDate) {
+      // @ts-ignore
+      setFormsData({...formsData, ISOStartDate: startDate?.toDate()?.toISOString()});
+    }
+
+    // @ts-ignore
+    if (endDate?.toDate) {
+      // @ts-ignore
+      setFormsData({...formsData, ISOEndDate: endDate?.toDate()?.toISOString()});
+    }
+
     if (
-      formsData.company !== "" &&
-      formsData.fName !== "" &&
-      formsData.lName !== "" &&
-      formsData.periodName !== "" &&
-      formsData.startDate !== "" &&
-      formsData.endDate !== ""
+      formsData.company != false &&
+      formsData.fName != false &&
+      formsData.lName != false &&
+      formsData.periodName != false &&
+      formsData.startDate != false &&
+      formsData.endDate != false
     ) {
       setAllError(false);
     }
 
     if (
-      formsData.company !== "" &&
-      formsData.fName !== "" &&
-      formsData.lName !== "" &&
-      formsData.periodName !== "" &&
-      formsData.startDate !== "" &&
-      formsData.endDate !== "" &&
-      formsData.bankId !== ""
+      formsData.company != false &&
+      formsData.fName != false &&
+      formsData.lName != false &&
+      formsData.periodName != false &&
+      formsData.startDate != false &&
+      formsData.endDate != false &&
+      formsData.bankId != false
     ) {
       submitHandle();
     }
@@ -170,25 +182,29 @@ const PayForm: React.FC<PayFormProps> = ({
 
   const submitHandle = () => {
     const data = {
-      userName            : formsData.number,
-      branchTitle         : "string",
-      name                : formsData.fName,
-      family              : formsData.lName,
-      financialPeriodTitle: formsData.period,
-      startDate           : formsData.ISOStartDate,
-      endDate             : formsData.ISOEndDate,
-      planId              : formsData.planId,
-      buyPrice            : formsData.planPrice,
-      discountedPrice     : formsData.planPrice,
-      payBankId           : formsData.bankId,
-      payCode             : ""
+      "userName"            : formsData.number,
+      "branchTitle"         : "string",
+      "name"                : formsData.fName,
+      "family"              : formsData.lName,
+      "financialPeriodTitle": formsData.periodName,
+      "startDate"           : formsData.ISOStartDate,
+      "endDate"             : formsData.ISOEndDate,
+      "planId"              : formsData.planId,
+      "buyPrice"            : formsData.planPrice,
+      "discountedPrice"     : formsData.planPrice,
+      "payBankId"           : +formsData.bankId,
+      "payCode"             : ""
     }
 
     try {
       setLoading(true);
       axios
-        .post("http://siteapi.saminasoft.ir/SiteRegister", {data})
-        .then(() => setSectionLevel("code"))
+        .post("http://siteapi.saminasoft.ir/SiteRegister", data, {
+          headers: {
+            "Accept-Language": "fa-IR",
+          }
+        })
+        .then(() => setSectionLevel("callback"))
         .catch(() => alert("خطا در برقراری ارتباط!"))
         .finally(() => setLoading(false));
     } catch (error) {
@@ -198,9 +214,14 @@ const PayForm: React.FC<PayFormProps> = ({
   }
 
   useEffect(() => {
-    setFormsData({...formsData, startDate: startDate?.toLocaleString(), endDate: endDate?.toString()});
+    setFormsData({...formsData, startDate: startDate?.toLocaleString()});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startDate, endDate])
+  }, [startDate])
+
+  useEffect(() => {
+    setFormsData({...formsData, endDate: endDate?.toLocaleString()});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [endDate])
 
   return (
     <section className="flex flex-col md:flex-row gap-12 max-w-[770px] mx-auto">
@@ -350,7 +371,7 @@ const PayForm: React.FC<PayFormProps> = ({
 
         {/* Send Button */}
         <div className="w-full mt-5">
-          <button onClick={validateHandle} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6" disabled={loading}>{section6PayButton}</button>
+          <button onClick={validateHandle} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6 disabled:opacity-70" disabled={loading}>{section6PayButton}</button>
         </div>
 
         {allError && <h6 className="text-sm text-center text-red-600 mt-5">{section6Error}</h6>}

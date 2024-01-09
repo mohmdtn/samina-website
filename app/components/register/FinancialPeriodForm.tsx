@@ -35,21 +35,21 @@ const FinancialPeriodForm: React.FC<FinancialPeriodFormProps> = ({
 
   // Form Validation
   const submitHandle = () => {
-    if (formsData.periodName == "") {
+    if (formsData.periodName == false) {
       setPeriodError(true);
     }
     else {
       setPeriodError(false);
     }
 
-    if (formsData.startDate == "") {
+    if (formsData.startDate == false) {
       setStartDateError(true);
     }
     else {
       setStartDateError(false);
     }
 
-    if (formsData.endDate == "") {
+    if (formsData.endDate == false) {
       setEndDateError(true);
     }
     else {
@@ -59,7 +59,7 @@ const FinancialPeriodForm: React.FC<FinancialPeriodFormProps> = ({
     // @ts-ignore
     setFormsData({...formsData, ISOStartDate: startDate?.toDate()?.toISOString(), ISOEndDate: endDate?.toDate()?.toISOString()});
     
-    if (formsData.periodName !== "" && formsData.startDate !== "" && formsData.endDate !== "") {
+    if (formsData.periodName != false && formsData.startDate != false && formsData.endDate != false) {
       setSectionLevel("plans");
     }
   };

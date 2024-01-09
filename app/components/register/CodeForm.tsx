@@ -116,10 +116,10 @@ const CodeForm: React.FC<CodeFormProps> = ({ section2Button, section2Resend, bac
 
       {/* Code */}
       <div className="w-full mb-2 flex justify-center items-center gap-2 md:gap-3 dir-left text-center">
-        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input1Ref} onChange={changeHandle} />
-        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input2Ref} onChange={changeHandle} />
-        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input3Ref} onChange={changeHandle} />
-        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input4Ref} onChange={changeHandle} />
+        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input1Ref} onChange={changeHandle} />
+        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input2Ref} onChange={changeHandle} />
+        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input3Ref} onChange={changeHandle} />
+        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input4Ref} onChange={changeHandle} />
       </div>
       {error.state && <h6 className="text-sm mt-[6px] text-red-600">{error.msg}</h6>}
 

@@ -47,25 +47,83 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   
 
   return (
-    <section className="hidden lg:flex justify-between items-center lg:w-[896px] mx-auto pb-20">
-      {/* Level 1 */}
-      <State title={level1} desc={level1Desc} state={stateControl(1)} />
-      <Line active={lineControl(1)} />
+    <section className="pb-20">
+      <section className="hidden md:flex justify-between items-center md:w-[600px] lg:w-[800px] xl:w-[896px] mx-auto">
+        {/* Level 1 */}
+        <State title={level1} desc={level1Desc} state={stateControl(1)} />
+        <Line active={lineControl(1)} />
 
-      {/* Level 2 */}
-      <State title={level2} desc={level2Desc} state={stateControl(2)} />
-      <Line active={lineControl(2)} />
+        {/* Level 2 */}
+        <State title={level2} desc={level2Desc} state={stateControl(2)} />
+        <Line active={lineControl(2)} />
 
-      {/* Level 3 */}
-      <State title={level3} desc={level3Desc} state={stateControl(3)} />
-      <Line active={lineControl(3)} />
+        {/* Level 3 */}
+        <State title={level3} desc={level3Desc} state={stateControl(3)} />
+        <Line active={lineControl(3)} />
 
-      {/* Level 4 */}
-      <State title={level4} desc={level4Desc} state={stateControl(4)} />
-      <Line active={lineControl(4)} />
+        {/* Level 4 */}
+        <State title={level4} desc={level4Desc} state={stateControl(4)} />
+        <Line active={lineControl(4)} />
 
-      {/* Level 5 */}
-      <State title={level5} desc={level5Desc} state={stateControl(5)} />
+        {/* Level 5 */}
+        <State title={level5} desc={level5Desc} state={stateControl(5)} />
+      </section>
+
+
+      {/* Mobile Progress Bar */}
+      <section className={`md:hidden justify-between items-center ${level === 1 ? "flex " : "hidden"}`}>
+        {/* Level 1 */}
+        <State title={level1} desc={level1Desc} state={stateControl(1)} />
+        <Line active={lineControl(1)} />
+
+        {/* Level 2 */}
+        <State title={level2} desc={level2Desc} state={stateControl(2)} />
+        <Line active={lineControl(2)} width={true} />
+      </section>
+
+      <section className={`md:hidden justify-between items-center ${level === 2 ? "flex " : "hidden"}`}>
+        {/* Level 2 */}
+        <Line active={lineControl(2)} width={true} />
+        <State title={level2} desc={level2Desc} state={stateControl(2)} />
+        <Line active={lineControl(2)} />
+
+        {/* Level 3 */}
+        <State title={level3} desc={level3Desc} state={stateControl(3)} />
+        <Line active={lineControl(3)} width={true} />
+      </section>
+
+      <section className={`md:hidden justify-between items-center ${level === 3 ? "flex " : "hidden"}`}>
+        {/* Level 3 */}
+        <Line active={lineControl(2)} width={true} />
+        <State title={level3} desc={level3Desc} state={stateControl(3)} />
+        <Line active={lineControl(3)} />
+
+        {/* Level 4 */}
+        <State title={level4} desc={level4Desc} state={stateControl(4)} />
+        <Line active={lineControl(4)} width={true} />
+      </section>
+
+      <section className={`md:hidden justify-between items-center ${level === 4 || level === 5 ? "flex " : "hidden"}`}>
+        {/* Level 4 */}
+        <Line active={lineControl(2)} width={true} />
+        <State title={level4} desc={level4Desc} state={stateControl(4)} />
+        <Line active={lineControl(4)} />
+
+        {/* Level 5 */}
+        <State title={level5} desc={level5Desc} state={stateControl(5)} />
+        <div className="pe-[150px]"></div>
+      </section>
+
+      <section className={`md:hidden justify-between items-center ${level === 6 ? "flex " : "hidden"}`}>
+        {/* Level 4 */}
+        <Line active={lineControl(2)} width={true} />
+        <State title={level4} desc={level4Desc} state={stateControl(4)} />
+        <Line active={lineControl(4)} />
+
+        {/* Level 5 */}
+        <State title={level5} desc={level5Desc} state={stateControl(5)} />
+        <div className="pe-[150px]"></div>
+      </section>
     </section>
   );
 };
@@ -81,15 +139,15 @@ const State = ({ title, desc, state }: { title: string; desc: string, state: "PA
 
       <div className="mt-5 absolute whitespace-nowrap text-start md:text-center top-7 right-0 md:right-auto">
         <h4 className={`text-base tracking-tight font-semibold leading-[26px] ${state === "ACTIVE" ? "text-brand-600" : "text-gray-600"}`}>{title}</h4>
-        <h6 className={`text-sm leading-[26px] ${state === "ACTIVE" ? "text-brand-600" : "text-gray-600"}`}>{desc}</h6>
+        <h6 className={`text-sm md:text-xs lg:text-sm leading-[26px] ${state === "ACTIVE" ? "text-brand-600" : "text-gray-600"}`}>{desc}</h6>
       </div>
     </div>
   );
 };
 
-const Line = ({ active } : { active?: boolean }) => {
+const Line = ({ active, width } : { active?: boolean, width?: boolean; }) => {
   return (
-    <div className={`w-full h-[2px] ${active ? "bg-brand-600" : "bg-gray2-200"}`}></div>
+    <div className={`h-[2px] ${active ? "bg-brand-600" : "bg-gray2-200"} ${width ? "w-[200px]" : "w-full"}`}></div>
   )
 }
 

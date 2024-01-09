@@ -38,8 +38,11 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
     else if (sectionLevel === "plans")
       setProgressbarLevel(4)
     
-    else if (sectionLevel === "pay" || sectionLevel === "callback")
+    else if (sectionLevel === "pay")
       setProgressbarLevel(5)
+
+    else if (sectionLevel === "callback")
+      setProgressbarLevel(6)
 
   }, [sectionLevel]);
 

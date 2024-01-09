@@ -21,28 +21,28 @@ const NameForm: React.FC<NameFormProps> = ({ section3CompanyTitle, section3First
 
   // Form Validation
   const submitHandle = () => {
-    if (formsData.company == "") {
+    if (formsData.company == false) {
       setCompanyError(true);
     }
     else {
       setCompanyError(false);
     }
 
-    if (formsData.fName == "") {
+    if (formsData.fName == false) {
       setFNameError(true);
     }
     else {
       setFNameError(false);
     }
 
-    if (formsData.lName == "") {
+    if (formsData.lName == false) {
       setlNameError(true);
     }
     else {
       setlNameError(false);
     }
       
-    if (formsData.company !== "" && formsData.fName !== "" && formsData.lName !== "") {
+    if (formsData.company != false && formsData.fName != false && formsData.lName != false) {
       setSectionLevel("financial");
     }
   };

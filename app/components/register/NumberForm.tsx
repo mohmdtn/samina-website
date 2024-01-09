@@ -36,7 +36,7 @@ const NumberForm: React.FC<NumberFormProps> = ({
   const submitHandle = () => {
     if (checkBox === false)
       return setError({state: true, msg: errorPolicy})
-    if(formsData.number == "")
+    if(formsData.number == false)
       return setError({state: true, msg: errorEmpty})
 
     // Send Number To Get Verify Code
