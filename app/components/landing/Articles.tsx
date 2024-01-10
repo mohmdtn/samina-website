@@ -191,6 +191,7 @@ interface ArticlesProps {
 
 const Articles: React.FC<ArticlesProps> = ({ title, desc, button }) => {
   const sliderRef = useRef<any>(null);
+  const componentRef = useRef<HTMLElement>(null);
   const language = useLocale();
   const [initialItems, setInitialItems] = useState(faItems);
 
@@ -221,6 +222,25 @@ const Articles: React.FC<ArticlesProps> = ({ title, desc, button }) => {
     if (sliderRef.current)
       sliderRef.current.slickPrev()
   }
+
+  // Slider Navigate With Arrow Keys
+  function checkKey(e: any) {
+    if (e.keyCode == '37') {
+      if (sliderRef.current)
+      sliderRef.current.slickNext()
+    }
+    else if (e.keyCode == '39') {
+      if (sliderRef.current)
+      sliderRef.current.slickPrev()
+    }
+  }
+  useEffect(() => {
+    document.body.addEventListener('keyup', checkKey)
+  
+    return () => {
+      document.body.removeEventListener('keyup', checkKey)
+    }
+  })
 
   useEffect(() => {
     if (language === "fa")

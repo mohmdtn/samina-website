@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 
 const SingleBlogPage = ({ params }: { params: { id: string } }) => {
   const t = useTranslations('singleBlogPage');
+  const Terrors = useTranslations('errors');
 
   const comments = [
     {
@@ -325,6 +326,11 @@ const SingleBlogPage = ({ params }: { params: { id: string } }) => {
             emailInputPlaceholder   ={t("emailInputPlaceholder")}
             sendButton              ={t("sendButton")}
             writer                  ={t("writer")} 
+            errorEmail              ={Terrors("email")}
+            errorEmpty              ={Terrors("empty")}
+            errorName               ={Terrors("name")}
+            errorMin                ={Terrors("minLength")}
+            errorMax                ={Terrors("maxLength")}
           />
 
           {/* Comments Section */}

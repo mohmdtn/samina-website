@@ -4,11 +4,11 @@ import { useTranslations } from 'next-intl';
 
 const items = [
   { id: "media-1", img: "/images/socialmedia/instagram.svg", url: "/", name: "Instagram" },
-  { id: "media-2", img: "/images/socialmedia/x.svg",         url: "/", name: "X" },
+  // { id: "media-2", img: "/images/socialmedia/x.svg",         url: "/", name: "X" },
   { id: "media-3", img: "/images/socialmedia/whatsapp.svg",  url: "/", name: "WhatsApp" },
   { id: "media-4", img: "/images/socialmedia/telegram.svg",  url: "/", name: "Telegram" },
-  { id: "media-5", img: "/images/socialmedia/bale.svg",      url: "/", name: "Bale" },
-  { id: "media-6", img: "/images/socialmedia/linkedin.svg",  url: "/", name: "LinkedIn" },
+  // { id: "media-5", img: "/images/socialmedia/bale.svg",      url: "/", name: "Bale" },
+  // { id: "media-6", img: "/images/socialmedia/linkedin.svg",  url: "/", name: "LinkedIn" },
 ];
 
 const SocialMedia = () => {

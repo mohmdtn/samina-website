@@ -16,6 +16,8 @@ interface ContactFormProps {
   bodyInputPlaceholder: string;
   sendButton: string;
   errorEmpty: string;
+  errorPhone: string;
+  errorName: string;
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({
@@ -29,6 +31,8 @@ const ContactForm: React.FC<ContactFormProps> = ({
   bodyInputPlaceholder,
   sendButton,
   errorEmpty,
+  errorPhone,
+  errorName,
 }) => {
   const { loading, setLoading, setTicketStatus } = useContext(SiteContext);
 
@@ -40,23 +44,37 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
   // Error States
   const [nameError, setNameError] = useState(false);
+  const [nameError2, setNameError2] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
+  const [phoneError2, setPhoneError2] = useState(false);
   const [titleError, setTitleError] = useState(false);
   const [descError, setDescError] = useState(false);
 
   const validateHandle = () => {
     if (name.trim() == "") {
       setNameError(true);
+      setNameError2(false);
+    }
+    else if(! /^[\u0600-\u06FF\s]+$/.test(name.trim())) {
+      setNameError2(true);
+      setNameError(false);
     }
     else {
       setNameError(false);
+      setNameError2(false);
     }
 
     if (phone.trim() == "") {
       setPhoneError(true);
+      setPhoneError2(false);
+    }
+    else if (!phone.trim().match(/^0?9[0-9]{9}$/)) {
+      setPhoneError2(true);
+      setPhoneError(false);
     }
     else {
       setPhoneError(false);
+      setPhoneError2(false);
     }
 
     if (title.trim() == "") {
@@ -95,10 +113,10 @@ const ContactForm: React.FC<ContactFormProps> = ({
         })
         .then(() => {
           setTicketStatus("SUCCESS");
-          setName("");
-          setPhone("");
-          setTitle("");
-          setDesc("");
+          // setName("");
+          // setPhone("");
+          // setTitle("");
+          // setDesc("");
         })
         .catch(() => setTicketStatus("ERROR"))
         .finally(() => setLoading(false));
@@ -116,28 +134,30 @@ const ContactForm: React.FC<ContactFormProps> = ({
           {/* Name */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{nameInputTitle}</h5>
-            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${nameError && "border-red-500"}`} placeholder={nameInputPlaceholder} value={name} onChange={(e) => setName(e.target.value)} />
+            <input maxLength={25} minLength={5} type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${nameError && "border-red-500"} ${nameError2 && "border-red-500"}`} placeholder={nameInputPlaceholder} value={name} onChange={(e) => setName(e.target.value)} />
             {nameError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
+            {nameError2 && <h6 className="text-sm mt-[6px] text-red-600">{errorName}</h6>}
           </div>
 
           {/* Phone */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{phoneInputTitle}</h5>
-            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${phoneError && "border-red-500"}`} placeholder={phoneInputPlaceholder} value={phone} onChange={(e) => setPhone(e.target.value)} />
+            <input maxLength={11} type="number" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${phoneError && "border-red-500"} ${phoneError2 && "border-red-500"}`} placeholder={phoneInputPlaceholder} value={phone} onChange={(e) => setPhone(e.target.value)} />
             {phoneError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
+            {phoneError2 && <h6 className="text-sm mt-[6px] text-red-600">{errorPhone}</h6>}
           </div>
 
           {/* Subject */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{subjectInputTitle}</h5>
-            <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${titleError && "border-red-500"}`} placeholder={subjectInputPlaceholder} value={title} onChange={(e) => setTitle(e.target.value)} />
+            <input maxLength={40} minLength={5} type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${titleError && "border-red-500"}`} placeholder={subjectInputPlaceholder} value={title} onChange={(e) => setTitle(e.target.value)} />
             {titleError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 
           {/* Body */}
           <div>
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{bodyInputTitle}</h5>
-            <textarea className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px] focus:shadow-md ${descError && "border-red-500"}`} placeholder={bodyInputPlaceholder} onChange={(e) => setDesc(e.target.value)} defaultValue={desc}></textarea>
+            <textarea maxLength={300} minLength={5} className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px] focus:shadow-md resize-none ${descError && "border-red-500"}`} placeholder={bodyInputPlaceholder} onChange={(e) => setDesc(e.target.value)} defaultValue={desc}></textarea>
             {descError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 

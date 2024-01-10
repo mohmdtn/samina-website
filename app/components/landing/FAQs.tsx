@@ -37,7 +37,7 @@ const FAQs: React.FC<FAQsProps> = ({ button, title }) => {
       
       {/* FAQs */}
       <div className="flex flex-col gap-3">
-        {initialItems.map((item) => <FAQ key={item.id} question={item.question} answer={item.answer} open={true} />)}
+        {initialItems.map((item) => <FAQ key={item.id} question={item.question} answer={item.answer} open={false} />)}
       </div>
 
       {/* Show More Button */}

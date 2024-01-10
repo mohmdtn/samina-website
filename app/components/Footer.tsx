@@ -33,12 +33,12 @@ const Footer = () => {
 
 
       {/* License Colmun */}
-      <section className="grid grid-cols-2 grid-rows-2 gap-4 mt-5 lg:mt-0">
+      {/* <section className="grid grid-cols-2 grid-rows-2 gap-4 mt-5 lg:mt-0">
         <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/samanDehi.png"} width={64} height={64} alt="Samandehi license" /></div>
         <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/ENamad.png"} width={59} height={64} alt="Enamad license" /></div>
         <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/sazmanNezamSenfi.png"} width={80} height={64} alt="Sazmane Nezam Senfi license" /></div>
         <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/etehadieKasbOKar.png"} width={54} height={64} alt="Etehadie Kaso kAr license" /></div>
-      </section>
+      </section> */}
 
 
       {/* Links Column */}

@@ -26,7 +26,7 @@ const TeamIntroduction = () => {
         </div>
         {/* Show More Button */}
         <div className="mt-3 md:mt-6">
-          <Link className="inline-block text-sm text-gray-700 text-center py-[9px] px-5 border border-gray2-300 rounded-lg bg-white w-full md:w-auto" href={"/FAQs"}>{t("button")}</Link>
+          <Link className="inline-block text-sm text-gray-700 text-center py-[9px] px-5 border border-gray2-300 rounded-lg bg-white w-full md:w-auto" href={"/"}>{t("button")}</Link>
         </div>
       </div>
     </section>

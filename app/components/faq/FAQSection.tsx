@@ -146,7 +146,7 @@ const FAQSection: React.FC<FAQPageProps> = ({ title, desc, searchTitle, placehol
           {/* Page Title */}
           <div>
             <h3 className="text-2xl text-black font-bold mb-2 md:mb-4">{title}</h3>
-            <p className="text-gray2-500 leading-[26px] text-sm md:text-base">{desc}</p>
+            {/* <p className="text-gray2-500 leading-[26px] text-sm md:text-base">{desc}</p> */}
           </div>
           {/* Search Box */}
           <div>
@@ -161,7 +161,7 @@ const FAQSection: React.FC<FAQPageProps> = ({ title, desc, searchTitle, placehol
         {/* Site FAQs */}
         <section>
           <div className="flex flex-col gap-3">
-            {initialData.map((item) => <FAQ key={item.id} question={item.question} answer={item.answer} open={true} />)}
+            {initialData.map((item) => <FAQ key={item.id} question={item.question} answer={item.answer} open={false} />)}
           </div>
         </section>
     </main>

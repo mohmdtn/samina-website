@@ -25,7 +25,7 @@ const Navbar = () => {
       </section>
 
       {/* Login Button */}
-      <Link href={`https://app.saminasoft.ir/`} target='_blank' className="border rounded-lg py-2 px-3 text-gray2-700 flex justify-center items-center gap-2 text-sm">
+      <Link href={`https://app.saminasoft.ir/`} className="border rounded-lg py-2 px-3 text-gray2-700 flex justify-center items-center gap-2 text-sm">
         <Image src={"/icons/login.svg"} width={14} height={14} alt="login icon" />{t("loginButton")}
       </Link>
     </nav>

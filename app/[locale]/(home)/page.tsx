@@ -29,6 +29,9 @@ export default function Home() {
       <Company title={Tcompany("title")} />
       <AppIntroduction title={TappIntruduction("title")} desc={TappIntruduction("desc")} />
       <Plans
+        landing={true}
+        title={Tplans("title")}
+        desc={Tplans("desc")}
         periodTitle1={Tplans("periodTitle1")}
         periodTitle2={Tplans("periodTitle2")}
         periodTitle3={Tplans("periodTitle3")}

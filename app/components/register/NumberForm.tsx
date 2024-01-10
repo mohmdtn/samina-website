@@ -15,6 +15,7 @@ interface NumberFormProps {
   checkbox3: string;
   errorPolicy: string;
   errorEmpty: string;
+  errorFiled: string;
 }
 
 const NumberForm: React.FC<NumberFormProps> = ({
@@ -26,6 +27,7 @@ const NumberForm: React.FC<NumberFormProps> = ({
   checkbox3,
   errorPolicy,
   errorEmpty,
+  errorFiled,
 }) => {
   const languge = useLocale();
   const [checkBox, setCheckBox] = useState(false);
@@ -34,23 +36,35 @@ const NumberForm: React.FC<NumberFormProps> = ({
 
   // Form Validation
   const submitHandle = () => {
-    if (checkBox === false)
-      return setError({state: true, msg: errorPolicy})
-    if(formsData.number == false)
-      return setError({state: true, msg: errorEmpty})
+    const phoneRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegex = /^0?9[0-9]{9}$/;
 
-    // Send Number To Get Verify Code
-    try {
-      setLoading(true);
-      setError({state: false, msg: ""});
-      axios
-        .post("http://siteapi.saminasoft.ir/SiteSendVerifyCode", { userName: formsData.number })
-        .then(() => setSectionLevel("code"))
-        .catch(() => alert("خطا در برقراری ارتباط!"))
-        .finally(() => setLoading(false));
-    } catch (error) {
-      setLoading(false);
-      alert("2خطا در برقراری ارتباط!");
+    if (checkBox === false) {
+      setError({state: true, msg: errorPolicy})
+    }
+    
+    if(formsData.number == false) {
+      setError({state: true, msg: errorEmpty})
+    }
+
+    else if (phoneRegex.test(formsData.number) || emailRegex.test(formsData.number)) {
+      // Send Number To Get Verify Code
+      try {
+        setLoading(true);
+        setError({state: false, msg: ""});
+        axios
+          .post("http://siteapi.saminasoft.ir/SiteSendVerifyCode", { userName: formsData.number })
+          .then(() => setSectionLevel("code"))
+          .catch((error) => setError({state: true, msg: error.message}))
+          .finally(() => setLoading(false));
+      } catch (error) {
+        setLoading(false);
+        alert("2خطا در برقراری ارتباط!");
+      }
+    }
+
+    else {
+      setError({state: true, msg: errorFiled});
     }
   };
 

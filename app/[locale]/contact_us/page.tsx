@@ -26,6 +26,8 @@ export default function FAQPage() {
             bodyInputPlaceholder={t("bodyInputPlaceholder")}
             sendButton={t("sendButton")}
             errorEmpty={Terrors("empty")}
+            errorPhone={Terrors("phone")}
+            errorName={Terrors("name")}
         />
 
         {/* map Picture */}

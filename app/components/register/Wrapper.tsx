@@ -47,6 +47,8 @@ interface FormLevelsProps {
   section4InputEnd: string;
   section4Button: string;
 
+  planTitle: string;
+  planDesc: string;
   periodTitle1: string;
   periodTitle2: string;
   periodTitle3: string;
@@ -94,6 +96,10 @@ interface FormLevelsProps {
   errorEmpty: string;
   errorPolicy: string;
   errorCode: string;
+  errorName: string;
+  errorMin: string;
+  errorMax: string;
+  errorFiled: string;
 }
 
 const FormLevels: React.FC<FormLevelsProps> = ({
@@ -131,6 +137,8 @@ const FormLevels: React.FC<FormLevelsProps> = ({
   section4InputEnd,
   section4Button,
 
+  planTitle,
+  planDesc,
   periodTitle1,
   periodTitle2,
   periodTitle3,
@@ -177,6 +185,10 @@ const FormLevels: React.FC<FormLevelsProps> = ({
   errorEmpty,
   errorPolicy,
   errorCode,
+  errorName,
+  errorMin,
+  errorMax,
+  errorFiled,
 }) => {
   const { progressbarLevel, sectionLevel } = useContext(SiteContext);
 
@@ -211,6 +223,7 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           checkbox3={checkbox3}
           errorEmpty={errorEmpty}
           errorPolicy={errorPolicy}
+          errorFiled={errorFiled}
         />
       </section>
 
@@ -232,6 +245,9 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           section3Button={section3Button}
           back={back}
           errorEmpty={errorEmpty}
+          errorName={errorName}
+          errorMin={errorMin}
+          errorMax={errorMax}
         />
       </section>
 
@@ -250,6 +266,8 @@ const FormLevels: React.FC<FormLevelsProps> = ({
 
       <section className={`${sectionLevel === "plans" ? "block" : "hidden"}`}>
         <PlanForm
+          planTitle={planTitle}
+          planDesc={planDesc}
           periodTitle1={periodTitle1}
           periodTitle2={periodTitle2}
           periodTitle3={periodTitle3}

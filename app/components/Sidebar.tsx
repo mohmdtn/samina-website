@@ -47,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ item1, item2, item3, item4, item5, lo
         {/* Register Section */}
         <div className="flex w-full flex-col gap-2">
           <Link onClick={() => setMenuIsOpen(false)} href={`/${language}/register`} className="text-white text-sm bg-brand-600 rounded-lg py-[10px] px-6 flex justify-center">{signupButton}</Link>
-          <Link href={`https://app.saminasoft.ir/`} target='_blank' className="border rounded-lg py-[10px] px-3 text-gray2-700 flex justify-center items-center gap-2 text-sm">
+          <Link href={`https://app.saminasoft.ir/`} className="border rounded-lg py-[10px] px-3 text-gray2-700 flex justify-center items-center gap-2 text-sm">
             <Image src={"/icons/login.svg"} width={14} height={14} alt="login icon" />{loginButton}
           </Link>
         </div>

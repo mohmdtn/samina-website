@@ -23,6 +23,9 @@ type DataObject = {
 }
 
 interface PlansProps {
+  landing?: boolean;
+  title: string;
+  desc: string;
   periodTitle1: string;
   periodTitle2: string;
   periodTitle3: string;
@@ -42,6 +45,9 @@ interface PlansProps {
 }
 
 const Plans: React.FC<PlansProps> = ({
+    landing = false,
+    title,
+    desc,
     periodTitle1,
     periodTitle2,
     periodTitle3,
@@ -93,7 +99,13 @@ const Plans: React.FC<PlansProps> = ({
   }, [period, result]);
 
   return (
-    <section className="lg:max-w-6xl mx-auto">
+    <section className="lg:max-w-6xl mx-auto px-4 md:px-0">
+
+      <div className={`text-center mb-8 md:hidden ${landing ? "block" : "hidden"}`}>
+        <h1 className="text-[32px] text-black font-yekanBakhNumbExtraBold tracking-tighter mb-1">{title}</h1>
+        <h5 className="text-sm text-gray2-500 leading-6">{desc}</h5>
+      </div>
+
       {/* Select Period Section */}
       <section className="flex flex-col md:flex-row gap-2 bg-gray2-100 rounded-lg p-2 w-full md:w-max text-sm mx-auto text-center border border-gray2-100">
         <div className={`plans-period-title ${period == 3 ? "bg-white shadow-md text-brand-600" : "text-gray2-600"}`} onClick={() => setPeriod(3)}>{periodTitle1}</div>
@@ -104,16 +116,22 @@ const Plans: React.FC<PlansProps> = ({
 
       <section className="flex flex-col items-center gap-4 md:gap-0 md:flex-row md:items-end mt-8">
 
-        <section className="hidden md:flex flex-col pb-4">
-          <div className="plans-title bg-gray2-25">{numberOfAccounts}</div>
-          <div className="plans-title">{numberOfUsers}</div>
-          <div className="plans-title bg-gray2-25">{numberOfStuff}</div>
-          <div className="plans-title">{numberOfDocuments}</div>
-          <div className="plans-title bg-gray2-25">{numberOfDocuments}</div>
-          <div className="plans-title">{store}</div>
-          <div className="plans-title bg-gray2-25">{api}</div>
-          <div className="plans-title">{smsPanel}</div>
-          <div className="plans-title bg-gray2-25">{log}</div>
+        <section className="hidden md:flex justify-between flex-col pb-4">
+          <div className={`md:ps-3 lg:ps-6 mb-6 ${!landing && "hidden"}`}>
+            <h1 className="text-[40px] text-black font-yekanBakhNumbExtraBold tracking-tighter mb-1">{title}</h1>
+            <h5 className="text-sm text-gray2-500 leading-6">{desc}</h5>
+          </div>
+          <div className="flex flex-col">
+            <div className="plans-title bg-gray2-25">{numberOfAccounts}</div>
+            <div className="plans-title">{numberOfUsers}</div>
+            <div className="plans-title bg-gray2-25">{numberOfStuff}</div>
+            <div className="plans-title">{numberOfDocuments}</div>
+            <div className="plans-title bg-gray2-25">{numberOfDocuments}</div>
+            <div className="plans-title">{store}</div>
+            <div className="plans-title bg-gray2-25">{api}</div>
+            <div className="plans-title">{smsPanel}</div>
+            <div className="plans-title bg-gray2-25">{log}</div>
+          </div>
         </section>
 
         {filteredData.map((item) => {

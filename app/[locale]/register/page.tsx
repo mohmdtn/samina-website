@@ -43,6 +43,8 @@ export default function Terms() {
         section4InputEnd={t("section4InputEnd")}
         section4Button={t("section4Button")}
 
+        planTitle={t2("title")}
+        planDesc={t2("desc")}
         periodTitle1={t2("periodTitle1")}
         periodTitle2={t2("periodTitle2")}
         periodTitle3={t2("periodTitle3")}
@@ -89,6 +91,10 @@ export default function Terms() {
         errorEmpty={tErrors("empty")}
         errorPolicy={tErrors("policy")}
         errorCode={tErrors("code")}
+        errorName={tErrors("name")}
+        errorMin={tErrors("minLength")}
+        errorMax={tErrors("maxLength")}
+        errorFiled={tErrors("filed")}
       />
     </main>
   );

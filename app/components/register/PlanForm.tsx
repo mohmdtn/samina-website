@@ -6,6 +6,8 @@ import { useContext, useState } from "react";
 import { SiteContext } from "@/app/context/siteContext";
 
 interface PlanFormProps {
+  planTitle: string;
+  planDesc: string;
   periodTitle1: string;
   periodTitle2: string;
   periodTitle3: string;
@@ -27,6 +29,8 @@ interface PlanFormProps {
 }
 
 const PlanForm: React.FC<PlanFormProps> = ({
+  planTitle,
+  planDesc,
   periodTitle1,
   periodTitle2,
   periodTitle3,
@@ -68,6 +72,8 @@ const PlanForm: React.FC<PlanFormProps> = ({
   return (
     <section>
       <Plans
+        title={planTitle}
+        desc={planDesc}
         periodTitle1={periodTitle1}
         periodTitle2={periodTitle2}
         periodTitle3={periodTitle3}
