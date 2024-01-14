@@ -47,6 +47,8 @@ export default function Home() {
         log={Tplans("log")}
         toman={Tplans("toman")}
         buttonPlan={Tplans("button")}
+        loginText={Tplans("login")}
+        login={true}
       />
       <LoginToApp />
       <Articles title={Tarticle("title")} desc={Tarticle("desc")} button={Tarticle("button")} />

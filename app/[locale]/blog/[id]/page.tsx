@@ -316,7 +316,7 @@ const SingleBlogPage = ({ params }: { params: { id: string } }) => {
           <PostContent id={params.id} time={t("time", {time2: 3})} shareButton={t("share")} />
 
           {/* Comment Form */}
-          <CommentForm 
+          {/* <CommentForm 
             commentTitle            ={t("commentTitle")}
             commentInputTitle       ={t("commentInputTitle")}
             commentInputPlaceholder ={t("commentInputPlaceholder")}
@@ -331,10 +331,10 @@ const SingleBlogPage = ({ params }: { params: { id: string } }) => {
             errorName               ={Terrors("name")}
             errorMin                ={Terrors("minLength")}
             errorMax                ={Terrors("maxLength")}
-          />
+          /> */}
 
           {/* Comments Section */}
-          <CommentSection writer={t("writer")} showMoreButton={t("showMoreButton")} comments={comments} />
+          {/* <CommentSection writer={t("writer")} showMoreButton={t("showMoreButton")} comments={comments} /> */}
 
         </section>
 

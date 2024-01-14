@@ -84,7 +84,7 @@ const CodeForm: React.FC<CodeFormProps> = ({ section2Button, section2Resend, bac
       axios
         .post("http://siteapi.saminasoft.ir/SiteApproveVerifyCode", { userName: formsData.number, codeSentByUser: otpCode })
         .then(() => setSectionLevel("name"))
-        .catch((error) => setError({state: true, msg: error.message}))
+        .catch((error) => setError({state: true, msg: error.response.data.message}))
         .finally(() => setLoading(false));
     } catch (error) {
       setLoading(false);

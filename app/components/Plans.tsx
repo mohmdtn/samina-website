@@ -4,6 +4,8 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { SiteContext } from "../context/siteContext";
+import Link from "next/link";
+import { useLocale } from "next-intl";
 
 type DataObject = {
     Id: number;
@@ -42,6 +44,8 @@ interface PlansProps {
   log: string;
   toman: string;
   buttonPlan: string;
+  loginText?: string;
+  login?: boolean;
 }
 
 const Plans: React.FC<PlansProps> = ({
@@ -63,13 +67,16 @@ const Plans: React.FC<PlansProps> = ({
     smsPanel,
     log,
     toman,
-    buttonPlan
+    buttonPlan,
+    loginText,
+    login = false,
 }) => {
   const [period, setPeriod] = useState(6);
   const [result, setResult] = useState<DataObject[]>([]);
   const [filteredData, setFilteredData] = useState<DataObject[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<any>([]);
   const { setFormsData, formsData } = useContext(SiteContext);
+  const language = useLocale();
 
   useEffect(() => {
     setFormsData({...formsData, planId: selectedPlan.Id, planName: selectedPlan.Title, planPrice: selectedPlan.Price})
@@ -143,7 +150,8 @@ const Plans: React.FC<PlansProps> = ({
                     <h3 className="text-xl font-semibold tracking-tighter text-gray2-900">{item.DiscountedPrice} {toman}</h3>
                     <h6 className="text-base text-gray2-900 tracking-tighter"><span className="line-through">{item.Price}</span> <span className="line-through">{toman}</span></h6>
                   </div>
-                  <button onClick={() => setSelectedPlan(item)} className={`rounded-lg text-sm font-semibold py-2 leading-6 w-full text-center duration-200 ${selectedPlan.Id === item.Id ? "text-white bg-brand-600" : "text-brand-600 bg-brand-50"}`}>{buttonPlan}</button>
+                  {!login && <button onClick={() => setSelectedPlan(item)} className={`rounded-lg text-sm font-semibold py-2 leading-6 w-full text-center duration-200 ${selectedPlan.Id === item.Id ? "text-white bg-brand-600" : "text-brand-600 bg-brand-50"}`}>{buttonPlan}</button>}
+                  {login && <Link href={`${language}/register`} className={`rounded-lg text-sm font-semibold py-2 leading-6 w-full text-center duration-200 text-brand-600 bg-brand-50 inline-block`}>{loginText}</Link>}
                 </div>
       
                 <div className="plans-item bg-gray2-25">

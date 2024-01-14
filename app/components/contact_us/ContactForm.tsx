@@ -50,6 +50,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
   const [titleError, setTitleError] = useState(false);
   const [descError, setDescError] = useState(false);
 
+  const numberChange = (e: any) => {
+    const numberRegex = /^[0-9\b]+$/;
+    if (e.target.value === '' || numberRegex.test(e.target.value)) {
+      setPhone(e.target.value)
+    }
+  }
+
   const validateHandle = () => {
     if (name.trim() == "") {
       setNameError(true);
@@ -91,7 +98,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
       setDescError(false);
     }
 
-    if (name.trim() !== "" && phone.trim() !== "" && title.trim() !== "" && desc.trim() !== "") {
+    if (name.trim() !== "" && phone.trim() !== "" && title.trim() !== "" && desc.trim() !== "" && /^[\u0600-\u06FF\s]+$/.test(name.trim()) && phone.trim().match(/^0?9[0-9]{9}$/)) {
       submitHandle();
     }
   }
@@ -113,10 +120,10 @@ const ContactForm: React.FC<ContactFormProps> = ({
         })
         .then(() => {
           setTicketStatus("SUCCESS");
-          // setName("");
-          // setPhone("");
-          // setTitle("");
-          // setDesc("");
+          setName("");
+          setPhone("");
+          setTitle("");
+          setDesc("");
         })
         .catch(() => setTicketStatus("ERROR"))
         .finally(() => setLoading(false));
@@ -142,7 +149,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           {/* Phone */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{phoneInputTitle}</h5>
-            <input maxLength={11} type="number" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${phoneError && "border-red-500"} ${phoneError2 && "border-red-500"}`} placeholder={phoneInputPlaceholder} value={phone} onChange={(e) => setPhone(e.target.value)} />
+            <input maxLength={11} type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${phoneError && "border-red-500"} ${phoneError2 && "border-red-500"}`} placeholder={phoneInputPlaceholder} value={phone} onChange={(e) => numberChange(e)} />
             {phoneError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
             {phoneError2 && <h6 className="text-sm mt-[6px] text-red-600">{errorPhone}</h6>}
           </div>
@@ -157,7 +164,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           {/* Body */}
           <div>
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{bodyInputTitle}</h5>
-            <textarea maxLength={300} minLength={5} className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px] focus:shadow-md resize-none ${descError && "border-red-500"}`} placeholder={bodyInputPlaceholder} onChange={(e) => setDesc(e.target.value)} defaultValue={desc}></textarea>
+            <textarea maxLength={300} minLength={5} className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px] focus:shadow-md resize-none ${descError && "border-red-500"}`} placeholder={bodyInputPlaceholder} onChange={(e) => setDesc(e.target.value)} value={desc}></textarea>
             {descError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
           </div>
 

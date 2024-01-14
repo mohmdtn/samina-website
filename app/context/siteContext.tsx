@@ -24,6 +24,7 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
   const [progressbarLevel, setProgressbarLevel] = useState(1);
   const [loading, setLoading] = useState(false);
   const [ticketStatus, setTicketStatus] = useState<"ERROR" | "SUCCESS" | "">("")
+  const [isFaqOpen, setIsFaqOpen] = useState("faq1")
 
   useEffect(() => {
     if (sectionLevel === "number" || sectionLevel === "code") 
@@ -56,6 +57,8 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
     progressbarLevel,
     ticketStatus,
     setTicketStatus,
+    isFaqOpen,
+    setIsFaqOpen
   };
 
   return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

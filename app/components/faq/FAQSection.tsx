@@ -161,7 +161,7 @@ const FAQSection: React.FC<FAQPageProps> = ({ title, desc, searchTitle, placehol
         {/* Site FAQs */}
         <section>
           <div className="flex flex-col gap-3">
-            {initialData.map((item) => <FAQ key={item.id} question={item.question} answer={item.answer} open={false} />)}
+            {initialData.map((item) => <FAQ key={item.id} id={item.id} question={item.question} answer={item.answer} open={false} />)}
           </div>
         </section>
     </main>

@@ -43,7 +43,7 @@ const NumberForm: React.FC<NumberFormProps> = ({
       setError({state: true, msg: errorPolicy})
     }
     
-    if(formsData.number == false) {
+    else if(formsData.number == false) {
       setError({state: true, msg: errorEmpty})
     }
 
@@ -55,11 +55,11 @@ const NumberForm: React.FC<NumberFormProps> = ({
         axios
           .post("http://siteapi.saminasoft.ir/SiteSendVerifyCode", { userName: formsData.number })
           .then(() => setSectionLevel("code"))
-          .catch((error) => setError({state: true, msg: error.message}))
+          .catch((error) => setError({state: true, msg: error.response.data.message}))
           .finally(() => setLoading(false));
       } catch (error) {
         setLoading(false);
-        alert("2خطا در برقراری ارتباط!");
+        alert("خطا در برقراری ارتباط!");
       }
     }
 
