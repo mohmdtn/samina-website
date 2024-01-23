@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import '../globals.css'
-import Navbar from '../components/Navbar'
-import Sidebar from '../components/Sidebar'
-import Footer from '../components/Footer'
-import SocialMedia from '../components/SocialMedia'
-import NewNotification from '../components/landing/NewNotification'
+import Navbar from '../components/shared/Navbar'
+import Sidebar from '../components/shared/Sidebar'
+import Footer from '../components/shared/Footer'
+import SocialMedia from '../components/shared/SocialMedia'
 import { useTranslations } from 'next-intl'
 import { SiteProvider } from '../context/siteContext'
 
@@ -24,8 +23,7 @@ export default function RootLayout({
   return (
     <SiteProvider>
     <html lang="en">
-      <body className=''>
-        {/* <NewNotification /> */}
+      <body>
         <Navbar />
         <Sidebar item1={t("1")} item2={t("2")} item3={t("3")} item4={t("4")} item5={t("5")} loginButton={t("loginButton")} signupButton={t("signupButton")} />
         {children}

@@ -11,7 +11,7 @@ const Logo: React.FC<LogoProps> = ({ name }) => {
   return (
     <Link href={`/${language}/`}>
       <div className="flex items-center gap-2 cursor-pointer">
-        <Image src={"/images/logo.svg"} width={40} height={40} alt="samina logo" />
+        <Image src={"/images/logo.png"} width={40} height={40} alt="samina logo" />
         <h3 className="text-2xl font-bold text-brand-900">{name}</h3>
       </div>
     </Link>

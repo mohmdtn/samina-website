@@ -1,8 +1,11 @@
-import Alert from '@/app/components/contact_us/Alert';
-import ContactForm from '@/app/components/contact_us/ContactForm';
-import ContactInfo from '@/app/components/contact_us/ContactInfo';
-import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
+import Loading from '@/app/components/shared/Loading';
+
+const DynamicContactForm = dynamic(() => import("@/app/components/contact_us/ContactForm"), {loading: () => <Loading />});
+const DynamicContactInfo = dynamic(() => import("@/app/components/contact_us/ContactInfo"));
+const DynamicAlert = dynamic(() => import("@/app/components/contact_us/Alert"));
 
 export default function FAQPage() {
   const t = useTranslations('contactUsPage');
@@ -11,11 +14,11 @@ export default function FAQPage() {
   return (
     <main>
       {/* Alert Box */}
-      <Alert successNotif={t("successNotif")} errorNotif={t("errorNotif")} />
+      <DynamicAlert successNotif={t("successNotif")} errorNotif={t("errorNotif")} />
       
       <section className="px-3 md:px-5 lg:px-24 py-6">
         {/* Contact form */}
-        <ContactForm
+        <DynamicContactForm
             nameInputTitle={t("nameInputTitle")}
             nameInputPlaceholder={t("nameInputPlaceholder")}
             phoneInputTitle={t("phoneInputTitle")}
@@ -28,6 +31,8 @@ export default function FAQPage() {
             errorEmpty={Terrors("empty")}
             errorPhone={Terrors("phone")}
             errorName={Terrors("name")}
+            errorMin={Terrors("minLength")}
+            errorMax={Terrors("maxLength")}
         />
 
         {/* map Picture */}
@@ -37,7 +42,7 @@ export default function FAQPage() {
         </section>
 
         {/* Samina Info */}
-        <ContactInfo />
+        <DynamicContactInfo />
       </section>
     </main>
   )

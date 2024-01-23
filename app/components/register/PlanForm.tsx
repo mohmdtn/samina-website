@@ -1,7 +1,7 @@
 // "use client";
 
 import Image from "next/image";
-import Plans from "../Plans";
+import Plans from "../shared/Plans";
 import { useContext, useState } from "react";
 import { SiteContext } from "@/app/context/siteContext";
 

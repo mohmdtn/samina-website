@@ -1,9 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import FAQ from "./FAQ";
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { useContext, useEffect, useState } from "react";
 import { useLocale } from 'next-intl';
+import { SiteContext } from "@/app/context/siteContext";
+
+const DynamicFAQ = dynamic(() => import("@/app/components/faq/FAQ"));
 
 const faItems = [
   {
@@ -125,11 +128,16 @@ interface FAQPageProps {
 const FAQSection: React.FC<FAQPageProps> = ({ title, desc, searchTitle, placeholder }) => {
   const [initialData, setInitialData] = useState(faItems);
   const language = useLocale();
+  const { setIsFaqOpen } = useContext(SiteContext);
 
   useEffect(() => {
     if (language === "fa")
       setInitialData(faItems);
   }, [language]);
+
+  useEffect(() => {
+    setIsFaqOpen("faq1");
+  }, [])
 
   const searchHandle = (input: string) => {
     if (language === "fa")
@@ -144,8 +152,8 @@ const FAQSection: React.FC<FAQPageProps> = ({ title, desc, searchTitle, placehol
     <main className="px-3 md:px-5 lg:px-24 py-6">
         <section className="mb-12 flex flex-col md:flex-row gap-4 justify-between">
           {/* Page Title */}
-          <div>
-            <h3 className="text-2xl text-black font-bold mb-2 md:mb-4">{title}</h3>
+          <div className="flex items-center">
+            <h3 className="text-2xl text-black font-bold mb-2 md:mb-0">{title}</h3>
             {/* <p className="text-gray2-500 leading-[26px] text-sm md:text-base">{desc}</p> */}
           </div>
           {/* Search Box */}
@@ -161,7 +169,7 @@ const FAQSection: React.FC<FAQPageProps> = ({ title, desc, searchTitle, placehol
         {/* Site FAQs */}
         <section>
           <div className="flex flex-col gap-3">
-            {initialData.map((item) => <FAQ key={item.id} id={item.id} question={item.question} answer={item.answer} open={false} />)}
+            {initialData.map((item) => <DynamicFAQ key={item.id} id={item.id} question={item.question} answer={item.answer} open={false} />)}
           </div>
         </section>
     </main>

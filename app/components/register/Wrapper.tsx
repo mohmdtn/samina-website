@@ -1,16 +1,19 @@
 "use client";
 
-import React, { useContext, useState } from "react";
-import NumberForm from "./NumberForm";
-import Image from "next/image";
-import ProgressBar from "./ProgressBar";
-import CodeForm from "./CodeForm";
-import NameForm from "./NameForm";
-import FinancialPeriodForm from "./FinancialPeriodForm";
-import PlanForm from "./PlanForm";
-import PayForm from "./PayForm";
+import React, { useContext } from "react";
 import { SiteContext } from "@/app/context/siteContext";
-import PayCallback from "./PayCallback";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import Loading from "../shared/Loading";
+
+const DynamicProgressBar = dynamic(() => import("@/app/components/register/ProgressBar"), {loading: () => <Loading />});
+const DynamicNumberForm = dynamic(() => import("@/app/components/register/NumberForm"), {loading: () => <Loading />});
+const DynamicCodeForm = dynamic(() => import("@/app/components/register/CodeForm"), {loading: () => <Loading />});
+const DynamicNameForm = dynamic(() => import("@/app/components/register/NameForm"), {loading: () => <Loading />});
+const DynamicFinancialPeriodForm = dynamic(() => import("@/app/components/register/FinancialPeriodForm"), {loading: () => <Loading />});
+const DynamicPlanForm = dynamic(() => import("@/app/components/register/PlanForm"), {loading: () => <Loading />});
+const DynamicPayForm = dynamic(() => import("@/app/components/register/PayForm"), {loading: () => <Loading />});
+const DynamicPayCallback = dynamic(() => import("@/app/components/register/PayCallback"), {loading: () => <Loading />});
 
 interface FormLevelsProps {
   level1: string;
@@ -100,6 +103,7 @@ interface FormLevelsProps {
   errorMin: string;
   errorMax: string;
   errorFiled: string;
+  copy: string;
 }
 
 const FormLevels: React.FC<FormLevelsProps> = ({
@@ -189,12 +193,14 @@ const FormLevels: React.FC<FormLevelsProps> = ({
   errorMin,
   errorMax,
   errorFiled,
+
+  copy,
 }) => {
   const { progressbarLevel, sectionLevel } = useContext(SiteContext);
 
   return (
     <section>
-      <ProgressBar
+      <DynamicProgressBar
         level1={level1}
         level1Desc={level1Desc}
         level2={level2}
@@ -213,8 +219,8 @@ const FormLevels: React.FC<FormLevelsProps> = ({
         <h2 className="font-semibold text-xl tracking-tight">{section1Title}</h2>
       </div>
 
-      <section className={`${sectionLevel === "number" ? "block" : "hidden"}`}>
-        <NumberForm
+      {sectionLevel === "number" && (
+        <DynamicNumberForm
           section1InputTitle={section1InputTitle}
           section1InputHolder={section1InputHolder}
           button={button}
@@ -225,20 +231,19 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           errorPolicy={errorPolicy}
           errorFiled={errorFiled}
         />
-      </section>
+      )}
 
-      <section className={`${sectionLevel === "code" ? "block" : "hidden"}`}>
-        <CodeForm
+      {sectionLevel === "code" && (
+        <DynamicCodeForm
           section2Resend={section2Resend}
           section2Button={section2Button}
           back={back}
           errorEmpty={errorEmpty}
         />
-      </section>
+      )}
 
-
-      <section className={`${sectionLevel === "name" ? "block" : "hidden"}`}>
-        <NameForm
+      {sectionLevel === "name" && (
+        <DynamicNameForm
           section3CompanyTitle={section3CompanyTitle}
           section3FirstName={section3FirstName}
           section3LastName={section3LastName}
@@ -249,23 +254,24 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           errorMin={errorMin}
           errorMax={errorMax}
         />
-      </section>
+      )}        
 
-
-      <section className={`${sectionLevel === "financial" ? "block" : "hidden"}`}>
-        <FinancialPeriodForm
+      {sectionLevel === "financial" && (
+        <DynamicFinancialPeriodForm
           section4InputTitle={section4InputTitle}
           section4InputStart={section4InputStart}
           section4InputEnd={section4InputEnd}
           section4Button={section4Button}
           back={back}
           errorEmpty={errorEmpty}
+          errorMin={errorMin}
+          errorMax={errorMax}
         />
-      </section>
+      )}
       
 
-      <section className={`${sectionLevel === "plans" ? "block" : "hidden"}`}>
-        <PlanForm
+      {sectionLevel === "plans" && (
+        <DynamicPlanForm
           planTitle={planTitle}
           planDesc={planDesc}
           periodTitle1={periodTitle1}
@@ -287,10 +293,10 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           section4Button={section4Button}
           planError={planError}
         />
-      </section>
+      )}
 
-      <section className={`${sectionLevel === "pay" ? "block" : "hidden"}`}>
-        <PayForm
+      {sectionLevel === "pay" && (
+        <DynamicPayForm
           section6GeneralInfoTtile={section6GeneralInfoTtile}
           section6SubscribeInfoTitle={section6SubscribeInfoTitle}
           section6SubscribeTitle={section6SubscribeTitle}
@@ -316,12 +322,16 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           back={back}
           section6Error={section6Error}
           section6BankError={section6BankError}
+          errorEmpty={errorEmpty}
+          errorName={errorName}
+          errorMin={errorMin}
+          errorMax={errorMax}
         />
-      </section>
+      )}
 
 
-      <section className={`${sectionLevel === "callback" ? "block" : "hidden"}`}>
-        <PayCallback
+      {sectionLevel === "callback" && (
+        <DynamicPayCallback
           payCallbackWelcome={payCallbackWelcome}
           payCallbackUsername={payCallbackUsername}
           payCallbackPassword={payCallbackPassword}
@@ -333,8 +343,9 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           section4InputTitle={section4InputTitle}
           section4InputStart={section4InputStart}
           section4InputEnd={section4InputEnd}
+          copy={copy}
         />
-      </section>
+      )}
 
     </section>
   );

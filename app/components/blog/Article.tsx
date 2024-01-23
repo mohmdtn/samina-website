@@ -17,12 +17,13 @@ const Article: React.FC<ArticleProps> = ({ id, img, auther, autherImg, title, de
   const language = useLocale();
 
   return (
-    <Link href={`/${language}/blog/${id}`}>
       <article className="bg-gray2-50 rounded-3xl overflow-hidden mx-1 dir-right p-3 md:p-0">
 
         {/* Article Content */}
         <div className="flex gap-3 md:gap-0 md:flex-col">
-          <Image className="size-20 md:size-auto rounded-2xl md:rounded-none md:w-full md:h-[225px]" src={img} width={384} height={225} alt={title} />
+          <Link href={`/${language}/blog/${id}`}>
+            <Image className="min-w-[80px] max-w-[80px] max-h-[80px] min-h-[80px] md:min-w-full md:max-w-full md:max-h-full md:min-h-full md:size-auto rounded-2xl md:rounded-none md:w-full md:h-[225px]" src={img} width={384} height={225} alt={title} />
+          </Link>
           <div className="md:px-4 md:pt-4">
             <h3 className="text-base font-semibold md:text-xl text-black mb-2 line-clamp-1">{title}</h3>
             <p className="text-gray2-500 text-sm md:leading-6 line-clamp-2">{desc}</p>
@@ -45,7 +46,6 @@ const Article: React.FC<ArticleProps> = ({ id, img, auther, autherImg, title, de
           </div>
         </div>
       </article>
-    </Link>
   );
 };
 

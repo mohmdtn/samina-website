@@ -1,16 +1,18 @@
-import Plans from "@/app/components/Plans";
-import AppIntroduction from "../../components/landing/AppIntroduction";
-import AppPreview from "../../components/landing/AppPreview";
-import Articles from "../../components/landing/Articles";
-import Company from "../../components/landing/Company";
-import DownloadBox from "../../components/landing/DownloadBox";
-import FAQs from "../../components/landing/FAQs";
-import Hero from "../../components/landing/Hero";
-import LoginToApp from "../../components/landing/LoginToApp";
-import Property from "../../components/landing/Property";
-import TeamIntroduction from "../../components/landing/TeamIntroduction";
-
+import dynamic from "next/dynamic";
 import { useTranslations } from 'next-intl';
+
+const DynamicHero = dynamic(() => import("@/app/components/landing/Hero"));
+const DynamicAppPreview = dynamic(() => import("@/app/components/landing/AppPreview"));
+const DynamicProperty = dynamic(() => import("@/app/components/landing/Property"));
+const DynamicAppIntroduction = dynamic(() => import("@/app/components/landing/AppIntroduction"));
+const DynamicPlans = dynamic(() => import("@/app/components/shared/Plans"), {ssr: false});
+const DynamicLoginToApp = dynamic(() => import("@/app/components/landing/LoginToApp"));
+const DynamicArticle = dynamic(() => import("@/app/components/landing/Articles"));
+const DynamicFAQs = dynamic(() => import("@/app/components/landing/FAQs"));
+const DynamicTeamIntroduction = dynamic(() => import("@/app/components/landing/TeamIntroduction"));
+
+// const DynamicCompany = dynamic(() => import("@/app/components/landing/Company"));
+// const DynamicDownloadBox = dynamic(() => import("@/app/components/landing/DownloadBox"));
 
 export default function Home() {
   // Mullti Languages For Prop Drilling To Components
@@ -23,12 +25,12 @@ export default function Home() {
 
   return (
     <main>
-      <Hero />
-      <AppPreview item1={TappPreview("1")} item2={TappPreview("2")} item3={TappPreview("3")} item4={TappPreview("4")} item5={TappPreview("5")} item6={TappPreview("6")} item7={TappPreview("7")} />
-      <Property />
-      <Company title={Tcompany("title")} />
-      <AppIntroduction title={TappIntruduction("title")} desc={TappIntruduction("desc")} />
-      <Plans
+      <DynamicHero />
+      <DynamicAppPreview item1={TappPreview("1")} item2={TappPreview("2")} item3={TappPreview("3")} item4={TappPreview("4")} item5={TappPreview("5")} item6={TappPreview("6")} item7={TappPreview("7")} />
+      <DynamicProperty />
+      {/* <DynamicCompany title={Tcompany("title")} /> */}
+      <DynamicAppIntroduction title={TappIntruduction("title")} desc={TappIntruduction("desc")} />
+      <DynamicPlans
         landing={true}
         title={Tplans("title")}
         desc={Tplans("desc")}
@@ -50,11 +52,11 @@ export default function Home() {
         loginText={Tplans("login")}
         login={true}
       />
-      <LoginToApp />
-      <Articles title={Tarticle("title")} desc={Tarticle("desc")} button={Tarticle("button")} />
-      <FAQs title={Tfaq("title")} button={Tfaq("button")} />
-      <TeamIntroduction />
-      <DownloadBox />
+      <DynamicLoginToApp />
+      <DynamicArticle title={Tarticle("title")} desc={Tarticle("desc")} button={Tarticle("button")} />
+      <DynamicFAQs title={Tfaq("title")} button={Tfaq("button")} />
+      <DynamicTeamIntroduction />
+      {/* <DynamicDownloadBox /> */}
     </main>
   );
 }

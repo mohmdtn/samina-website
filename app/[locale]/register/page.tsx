@@ -1,5 +1,8 @@
-import Wrapper from "@/app/components/register/Wrapper";
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
+import Loading from "@/app/components/shared/Loading";
+
+const DynamicWrapper = dynamic(() => import("@/app/components/register/Wrapper"), {loading: () => <Loading />});
 
 export default function Terms() {
   const t = useTranslations("registerPage");
@@ -8,7 +11,7 @@ export default function Terms() {
 
   return (
     <main className="px-3 md:px-5 lg:px-24 py-6 overflow-y-hidden">
-      <Wrapper
+      <DynamicWrapper
         level1={t("level1")}
         level1Desc={t("level1Desc")}
         level2={t("level2")}
@@ -87,6 +90,9 @@ export default function Terms() {
         payCallbackTeam={t("payCallbackTeam")}
         payCallbackSummaryTitle={t("payCallbackSummaryTitle")}
         payCallbackPlan={t("payCallbackPlan")}
+
+        copy={t("copy")}
+
 
         errorEmpty={tErrors("empty")}
         errorPolicy={tErrors("policy")}

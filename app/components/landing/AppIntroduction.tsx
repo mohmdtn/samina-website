@@ -14,7 +14,7 @@ const AppIntroduction: React.FC<AppIntroductionProps> = ({ title, desc }) => {
 
   // Button Action For Puse And Play Video
   const playVideo = () => {
-    setIsPlay(true);
+    setIsPlay(prev => !prev);
     if (videoRef.current) {
       if (videoRef.current.paused)
         videoRef.current.play();
@@ -32,7 +32,7 @@ const AppIntroduction: React.FC<AppIntroductionProps> = ({ title, desc }) => {
       </div>
 
       {/* Video Player */} 
-      <div className="mt-11 w-100 xl:max-w-6xl lg:max-w-4xl md:max-w-2xl sm:max-w-md mx-auto p-4">
+      <div className="mt-6 md:mt-11 w-100 xl:max-w-6xl lg:max-w-4xl md:max-w-2xl sm:max-w-md mx-auto p-4">
         <div className='flex justify-center items-center relative'>
 
           {/* Video Background */}
@@ -42,10 +42,11 @@ const AppIntroduction: React.FC<AppIntroductionProps> = ({ title, desc }) => {
 
           {/* Player */}
           <div className='relative flex justify-center items-center left-2 top-2 sm:left-3 sm:top-3 md:top-5 md:left-5 group'>
-            <video className="rounded-3xl w-[1110px]" width="100%" height="100%" poster="/images/videoPoster.png" ref={videoRef}>
+            <video className="rounded-3xl w-[1110px] h-[496px] md:h-auto object-cover" width="100%" height="100%" poster="/images/videoPoster.png" ref={videoRef}>
               <source src="" type="video/mp4" />
             </video>
-            <Image className={`absolute z-20 cursor-pointer duration-700 ${ "group-hover:opacity-100"} ${isPlay && "opacity-0"}`} src={"images/play.svg"} width={100} height={100} alt="Video Player" onClick={playVideo} />
+            <Image className={`absolute z-20 cursor-pointer duration-700 group-hover:opacity-100 ${isPlay && "opacity-0"}`} src={"images/play.svg"} width={100} height={100} alt="Video Player" onClick={playVideo} />
+            <div className={`h-full w-full absolute z-10 rounded-3xl duration-200 ${isPlay ? "bg-opacity-0" : "bg-black bg-opacity-50"}`}/>
           </div>
 
         </div>

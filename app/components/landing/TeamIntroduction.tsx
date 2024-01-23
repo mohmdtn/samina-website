@@ -12,8 +12,8 @@ const TeamIntroduction = () => {
         <div className="absolute w-full h-full">
           <div className="bg-gray-100 rounded-3xl w-full h-full relative right-2 bottom-2 sm:right-3 sm:bottom-3 md:right-4 md:bottom-4 lg:right-5 lg:bottom-5" />
         </div>
-        <div>
-          <Image className="relative z-10 left-2 top-2 sm:left-3 sm:top-3 md:left-4 md:top-4 lg:left-5 lg:top-5" src={"/images/team-poster.svg"} width={467} height={556} alt="Samina Develop Team" />
+        <div className="relative z-10 left-2 top-2 sm:left-3 sm:top-3 md:left-4 md:top-4 lg:left-5 lg:top-5">
+          <Image src={"/images/team-poster.svg"} width={467} height={556} alt="Samina Develop Team" />
         </div>
       </div>
 

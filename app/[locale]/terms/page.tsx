@@ -1,5 +1,8 @@
-import TermsSection from '@/app/components/terms/TermsSection';
+import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
+import Loading from '@/app/components/shared/Loading';
+
+const DynamicTermsSection = dynamic(() => import("@/app/components/terms/TermsSection"), {loading: () => <Loading />});
 
 export default function Terms() {
   const t = useTranslations('termsPage');
@@ -13,7 +16,7 @@ export default function Terms() {
       </section>
 
       {/* Site Terms */}
-      <TermsSection />
+      <DynamicTermsSection />
     </main>
   );
 }

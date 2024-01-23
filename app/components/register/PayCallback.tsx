@@ -15,6 +15,8 @@ interface PayCallbackProps {
   section4InputTitle: string;
   section4InputStart: string;
   section4InputEnd: string;
+
+  copy: string;
 }
 
 const PayCallback: React.FC<PayCallbackProps> = ({
@@ -29,7 +31,18 @@ const PayCallback: React.FC<PayCallbackProps> = ({
   section4InputTitle,
   section4InputStart,
   section4InputEnd,
+  copy,
 }) => {
+  const userNameCopy = () => {
+    navigator.clipboard.writeText("نام کاربری تست");
+    alert(copy);
+  }
+
+  const passwordCopy = () => {
+    navigator.clipboard.writeText("کلمه عبور تست")
+    alert(copy);
+  }
+
   return (
     <section>
       <h2 className="text-black text-base md:text-lg font-semibold tracking-tight mb-8">{payCallbackWelcome}</h2>
@@ -39,7 +52,7 @@ const PayCallback: React.FC<PayCallbackProps> = ({
         <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{payCallbackUsername}</h5>
         <div className="relative flex items-center">
           <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none pl-8" disabled />
-          <Image src={"/icons/copy.svg"} width={18} height={18} alt="Edit Icon" className="absolute left-3 cursor-pointer" />
+          <Image onClick={() => userNameCopy()} src={"/icons/copy.svg"} width={18} height={18} alt="Edit Icon" className="absolute left-3 cursor-pointer" />
         </div>
       </div>
 
@@ -48,7 +61,7 @@ const PayCallback: React.FC<PayCallbackProps> = ({
         <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{payCallbackPassword}</h5>
         <div className="relative flex items-center">
           <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none pl-8" disabled />
-          <Image src={"/icons/copy.svg"} width={18} height={18} alt="Edit Icon" className="absolute left-3 cursor-pointer" />
+          <Image onClick={() => passwordCopy()} src={"/icons/copy.svg"} width={18} height={18} alt="Edit Icon" className="absolute left-3 cursor-pointer" />
         </div>
       </div>
 

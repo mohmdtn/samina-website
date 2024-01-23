@@ -2,6 +2,7 @@ import Image from "next/image";
 import Logo from "./Logo";
 import Link from "next/link";
 import { useLocale, useTranslations } from 'next-intl';
+import Script from "next/script";
 
 const Footer = () => {
   const t = useTranslations('footer');
@@ -33,12 +34,17 @@ const Footer = () => {
 
 
       {/* License Colmun */}
-      {/* <section className="grid grid-cols-2 grid-rows-2 gap-4 mt-5 lg:mt-0">
-        <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/samanDehi.png"} width={64} height={64} alt="Samandehi license" /></div>
-        <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/ENamad.png"} width={59} height={64} alt="Enamad license" /></div>
-        <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/sazmanNezamSenfi.png"} width={80} height={64} alt="Sazmane Nezam Senfi license" /></div>
-        <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/etehadieKasbOKar.png"} width={54} height={64} alt="Etehadie Kaso kAr license" /></div>
-      </section> */}
+      <section className="grid grid-cols-2 grid-rows-2 gap-4 mt-5 lg:mt-0">
+        {/* <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/samanDehi.png"} width={64} height={64} alt="Samandehi license" /></div> */}
+        <Link target="_blank" referrerPolicy="origin" href={'https://trustseal.enamad.ir/?id=442091&Code=y0c2WWEBauCaCRNVf76t8EpsSwSfmpiM'} className="size-24 bg-white rounded-xl flex justify-center items-center"><Image referrerPolicy="origin" src={"/images/ENamad.png"} width={59} height={64} alt="Enamad license" /></Link>
+        <div className="size-24 bg-white rounded-xl flex justify-center items-center">
+          <div id="zarinpal" className="w-[46px]">
+            <Script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></Script>
+          </div>
+        </div>
+        {/* <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/sazmanNezamSenfi.png"} width={80} height={64} alt="Sazmane Nezam Senfi license" /></div> */}
+        {/* <div className="size-24 bg-white rounded-xl flex justify-center items-center"><Image src={"/images/etehadieKasbOKar.png"} width={54} height={64} alt="Etehadie Kaso kAr license" /></div> */}
+      </section>
 
 
       {/* Links Column */}
@@ -49,14 +55,14 @@ const Footer = () => {
           <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol2")}</Link>
           <Link className="text-sm md:text-base text-gray-600 mt-3" href={`/${language}/contact_us`}>{t("firstCol3")}</Link>
           <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol4")}</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol5")}</Link>
+          {/* <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol5")}</Link> */}
         </div>
         <div className="flex flex-col">
           <h4 className="text-base md:text-lg font-semibold">{t("secondColTitle")}</h4>
           <Link className="text-sm md:text-base text-gray-600 mt-4" href={"/"}>{t("secondCol1")}</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("secondCol2")}</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("secondCol3")}</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("secondCol4")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={`/${language}/faq`}>{t("secondCol2")}</Link>
+          {/* <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("secondCol3")}</Link> */}
+          {/* <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("secondCol4")}</Link> */}
         </div>
       </section>
 

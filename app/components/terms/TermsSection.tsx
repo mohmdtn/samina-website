@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Term from "./Term";
+import dynamic from "next/dynamic";
 import { useLocale } from "next-intl";
 
+const DynamicTerm = dynamic(() => import("@/app/components/terms/Term"));
 
 const faItems = [
   {
@@ -98,7 +99,7 @@ const TermsSection = () => {
 
   return (
     <section>
-      {initialItems.map((item) => <Term key={item.id} question={item.question} answer={item.answer} />)}
+      {initialItems.map((item) => <DynamicTerm key={item.id} question={item.question} answer={item.answer} />)}
     </section>
   );
 };

@@ -6,6 +6,8 @@ import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 import { SiteContext } from "@/app/context/siteContext";
 import axios from "axios";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import InputErrorMessage from "../shared/InputErrorMessage";
 
 interface PayFormProps {
   section6GeneralInfoTtile: string;
@@ -34,6 +36,20 @@ interface PayFormProps {
   back: string;
   section6BankError: string;
   section6Error: string;
+
+  errorEmpty: string;
+  errorName: string;
+  errorMin: string;
+  errorMax: string;
+}
+
+interface IFormInput {
+  companyName: string;
+  firstName: string;
+  lastName: string;
+  periodName: string;
+  startDate: string;
+  endDate: string;
 }
 
 const payProvider = [
@@ -69,6 +85,10 @@ const PayForm: React.FC<PayFormProps> = ({
   back,
   section6BankError,
   section6Error,
+  errorEmpty,
+  errorName,
+  errorMin,
+  errorMax,
 }) => {
   const { setSectionLevel, setFormsData, formsData, loading, setLoading } = useContext(SiteContext);
   const [startDate, setStartDate] = useState<Value>(formsData.startDate);
@@ -83,67 +103,10 @@ const PayForm: React.FC<PayFormProps> = ({
   const [startDateEdit, setstartDateEdit] = useState(false);
   const [endDateEdit, setEndDateEdit] = useState(false);
 
-  // Errors State
-  const [companyError, setCompanyError] = useState(false);
-  const [fNameError, setFNameError] = useState(false);
-  const [lNameError, setlNameError] = useState(false);
-  const [periodError, setPeriodError] = useState(false);
-  const [startDateError, setStartDateError] = useState(false);
-  const [endDateError, setEndDateError] = useState(false);
-  const [bankError, setBankError] = useState(false);
-  const [allError, setAllError] = useState(false);
+  const { register, handleSubmit, formState: { errors }, control, reset } = useForm<IFormInput>();
+  const onSubmit: SubmitHandler<IFormInput> = (data) => handleData(data);
 
-  const validateHandle = () => {
-    if (formsData.company == false) {
-      setCompanyError(true);
-    }
-    else {
-      setCompanyError(false);
-    }
-
-    if (formsData.fName == false) {
-      setFNameError(true);
-    }
-    else {
-      setFNameError(false);
-    }
-
-    if (formsData.lName == false) {
-      setlNameError(true);
-    }
-    else {
-      setlNameError(false);
-    }
-
-    if (formsData.periodName == false) {
-      setPeriodError(true);
-    }
-    else {
-      setPeriodError(false);
-    }
-
-    if (formsData.startDate == false) {
-      setStartDateError(true);
-    }
-    else {
-      setStartDateError(false);
-    }
-
-    if (formsData.endDate == false) {
-      setEndDateError(true);
-    }
-    else {
-      setEndDateError(false);
-    }
-
-    if (formsData.bankId == false) {
-      setBankError(true);
-    }
-    else {
-      setBankError(false);
-    }
-    setAllError(true);
-
+  const handleData = (data: IFormInput) => {
     // @ts-ignore
     if (startDate?.toDate) {
       // @ts-ignore
@@ -156,29 +119,20 @@ const PayForm: React.FC<PayFormProps> = ({
       setFormsData({...formsData, ISOEndDate: endDate?.toDate()?.toISOString()});
     }
 
-    if (
-      formsData.company != false &&
-      formsData.fName != false &&
-      formsData.lName != false &&
-      formsData.periodName != false &&
-      formsData.startDate != false &&
-      formsData.endDate != false
-    ) {
-      setAllError(false);
+    if (formsData.bankId === "") {
+      setBankError(true);
     }
-
-    if (
-      formsData.company != false &&
-      formsData.fName != false &&
-      formsData.lName != false &&
-      formsData.periodName != false &&
-      formsData.startDate != false &&
-      formsData.endDate != false &&
-      formsData.bankId != false
-    ) {
+    else {
+      setBankError(false);
       submitHandle();
     }
   }
+
+  // Errors State
+  const [startDateError, setStartDateError] = useState(false);
+  const [endDateError, setEndDateError] = useState(false);
+  const [bankError, setBankError] = useState(false);
+  const [allError, setAllError] = useState(false);
 
   const submitHandle = () => {
     const data = {
@@ -223,6 +177,17 @@ const PayForm: React.FC<PayFormProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [endDate])
 
+  useEffect(() => {
+    reset({
+      companyName: formsData.company,
+      firstName: formsData.fName,
+      lastName: formsData.lName,
+      periodName: formsData.periodName,
+      startDate: formsData.startDate,
+      endDate: formsData.endDate,
+    })
+  }, [formsData])
+
   return (
     <section className="flex flex-col md:flex-row gap-12 max-w-[770px] mx-auto">
 
@@ -234,61 +199,139 @@ const PayForm: React.FC<PayFormProps> = ({
           {/* Phone */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section1InputTitle}</h5>
-            <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none" disabled value={formsData.number} />
+            <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none disabled:bg-gray2-50" disabled value={formsData.number} />
           </div>
 
           {/* Company */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section3CompanyTitle}</h5>
             <div className="relative flex items-center">
-              <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 ${companyError && "border-red-500"}`} disabled={!companyEdit}  value={formsData.company} onChange={(e) => setFormsData({...formsData, company: e.target.value})} />
+              <input
+                type="text"
+                {...register("companyName", {required: errorEmpty, minLength: {value: 3, message: errorMin}, maxLength: {value: 30, message: errorMax}})} 
+                className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 disabled:bg-gray2-50 ${errors?.companyName && "border-red-500"}`}
+                disabled={!companyEdit}
+                value={formsData.company}
+                onChange={(e) => setFormsData({...formsData, company: e.target.value})}
+              />
               <Image src={"/icons/edit.svg"} width={18} height={18} alt="Edit Icon" className="absolute left-3 cursor-pointer" onClick={() => setCompanyEdit(true)} />
             </div>
+            {errors?.companyName?.message && <InputErrorMessage message={errors?.companyName?.message}/>}
           </div>
 
           {/* First Name */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section3FirstName}</h5>
             <div className="relative flex items-center">
-              <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 ${fNameError && "border-red-500"}`} disabled={!fNameEdit} value={formsData.fName} onChange={(e) => setFormsData({...formsData, fName: e.target.value})} />
+              <input
+                type="text"
+                {...register("firstName", {required: errorEmpty, pattern: {value: /^[\u0600-\u06FF\s]+$/ , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 18, message: errorMax}})}
+                className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 disabled:bg-gray2-50 ${errors?.firstName && "border-red-500"}`}
+                disabled={!fNameEdit}
+                value={formsData.fName}
+                onChange={(e) => setFormsData({...formsData, fName: e.target.value})}
+              />
               <Image src={"/icons/edit.svg"} width={18} height={18} alt="Edit Icon" className="absolute left-3 cursor-pointer" onClick={() => setfNameEdit(true)} />
             </div>
+            {errors?.firstName?.message && <InputErrorMessage message={errors?.firstName?.message}/>}
           </div>
 
           {/* Last Name */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section3LastName}</h5>
             <div className="relative flex items-center">
-              <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 ${lNameError && "border-red-500"}`} disabled={!lNameEdit} value={formsData.lName} onChange={(e) => setFormsData({...formsData, lName: e.target.value})} />
+              <input
+                type="text"
+                {...register("lastName", {required: errorEmpty, pattern: {value: /^[\u0600-\u06FF\s]+$/ , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 20, message: errorMax}})} 
+                className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 disabled:bg-gray2-50 ${errors?.lastName && "border-red-500"}`}
+                disabled={!lNameEdit}
+                value={formsData.lName}
+                onChange={(e) => setFormsData({...formsData, lName: e.target.value})}
+              />
               <Image src={"/icons/edit.svg"} width={18} height={18} alt="Edit Icon" className="absolute left-3 cursor-pointer" onClick={() => setlNameEdit(true)} />
             </div>
+            {errors?.lastName?.message && <InputErrorMessage message={errors?.lastName?.message}/>}
           </div>
 
           {/* Finantional Period Ttile */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section4InputTitle}</h5>
             <div className="relative flex items-center">
-              <input type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 ${periodError && "border-red-500"}`} disabled={!periodEdit} value={formsData.periodName} onChange={(e) => setFormsData({...formsData, periodName: e.target.value})} />
+              <input
+                type="text"
+                {...register("periodName", {required: errorEmpty, minLength: {value: 5, message: errorMin}, maxLength: {value: 30, message: errorMax}})} 
+                className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 disabled:bg-gray2-50 ${errors?.periodName && "border-red-500"}`}
+                disabled={!periodEdit}
+                value={formsData.periodName}
+                onChange={(e) => setFormsData({...formsData, periodName: e.target.value})}
+              />
               <Image src={"/icons/edit.svg"} width={18} height={18} alt="Edit Icon" className="absolute left-3 cursor-pointer" onClick={() => setPeriodEdit(true)} />
             </div>
+            {errors?.periodName?.message && <InputErrorMessage message={errors?.periodName?.message}/>}
           </div>
 
           {/* Start Date */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section4InputStart}</h5>
-            <div className="flex items-center relative">
-              <DatePicker inputClass={`border rounded-lg p-3 pl-8 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${startDateError && "border-red-500"}`} disabled={!startDateEdit} containerClassName="w-full" value={formsData.startDate} calendar={persian} locale={persian_fa} onChange={setStartDate} />
-              <Image className="absolute left-3 cursor-pointer" src={"/icons/edit.svg"} width={18} height={18} alt="Calendar Icon" onClick={() => setstartDateEdit(true)} />
-            </div>
+            <Controller
+              control={control}
+              name="startDate"
+              rules={{required: errorEmpty}}
+              render={({
+                field: { onChange, name, value },
+                formState: { errors }, 
+              }) => (
+                <div className="flex items-center relative">
+                  <DatePicker
+                    inputClass={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md disabled:bg-gray2-50 ${errors?.startDate && "border-red-500"}`}
+                    containerClassName="w-full"
+                    value={value || ""}
+                    onChange={(date) => {
+                      onChange(date);
+                      setStartDate(date);
+                    }} 
+                    calendar={persian} 
+                    locale={persian_fa} 
+                    disabled={!startDateEdit}
+                  />
+                  <Image className="absolute left-3 cursor-pointer" src={"/icons/edit.svg"} width={18} height={18} alt="Calendar Icon" onClick={() => setstartDateEdit(true)} />
+                </div>
+              )
+            }
+            />
+            {errors?.startDate?.message && <InputErrorMessage message={errors?.startDate?.message}/>}
           </div>
 
           {/* End Date */}
           <div className="w-full">
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section4InputEnd}</h5>
-            <div className="flex items-center relative">
-              <DatePicker inputClass={`border rounded-lg p-3 pl-8 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${endDateError && "border-red-500"}`} disabled={!endDateEdit} containerClassName="w-full" value={formsData.endDate} calendar={persian} locale={persian_fa} onChange={setEndDate} />
-              <Image className="absolute left-3 cursor-pointer" src={"/icons/edit.svg"} width={18} height={18} alt="Calendar Icon" onClick={() => setEndDateEdit(true)} />
-            </div>
+            <Controller
+              control={control}
+              name="endDate"
+              rules={{required: errorEmpty}}
+              render={({
+                field: { onChange, name, value },
+                formState: { errors }, 
+              }) => (
+                <div className="flex items-center relative">
+                  <DatePicker
+                    inputClass={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md disabled:bg-gray2-50 ${errors?.endDate && "border-red-500"}`}
+                    containerClassName="w-full"
+                    value={value || ""}
+                    onChange={(date) => {
+                      onChange(date);
+                      setEndDate(date);
+                    }} 
+                    calendar={persian} 
+                    locale={persian_fa} 
+                    disabled={!endDateEdit}
+                  />
+                  <Image className="absolute left-3 cursor-pointer" src={"/icons/edit.svg"} width={18} height={18} alt="Calendar Icon" onClick={() => setEndDateEdit(true)} />
+                </div>
+              )
+            }
+            />
+            {errors?.endDate?.message && <InputErrorMessage message={errors?.endDate?.message}/>}
           </div>
 
         </div>
@@ -358,24 +401,24 @@ const PayForm: React.FC<PayFormProps> = ({
         </div>
 
         {/* Pay Banks */}
-        <div className="flex justify-between mt-6">
-          {payProvider.map((item) => {
-            return (
-              <label htmlFor={item.id} key={item.id} className={`md:size-[108px] size-24 bg-gray2-50 rounded-[10px] flex flex-col justify-center items-center cursor-pointer border ${formsData.bankId === item.id ? "border-brand-500" : "border-[#0000]"}`} onClick={() => setFormsData({...formsData, bankId: item.id})}>
-                <Image src={item.img} width={52} height={44} alt={item.name} className="mb-3" />
-                <input type="radio" name="pay" id={item.id} />
-              </label>
-            )
-          })}
+        <div>
+          <div className="flex justify-between mt-6">
+            {payProvider.map((item) => {
+              return (
+                <label htmlFor={item.id} key={item.id} className={`md:size-[108px] size-24 bg-gray2-50 rounded-[10px] flex flex-col justify-center items-center cursor-pointer border ${formsData.bankId === item.id ? "border-brand-500" : "border-[#0000]"}`} onClick={() => setFormsData({...formsData, bankId: item.id})}>
+                  <Image src={item.img} width={52} height={44} alt={item.name} className="mb-3" />
+                  <input name="pay" type="radio" id={item.id} value={item.id} />
+                </label>
+              )
+            })}
+          </div>
+          {bankError && <h6 className="text-sm text-center text-red-600 mt-5">{section6BankError}</h6>}
         </div>
 
         {/* Send Button */}
         <div className="w-full mt-5">
-          <button onClick={validateHandle} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6 disabled:opacity-70" disabled={loading}>{section6PayButton}</button>
+          <button onClick={handleSubmit(onSubmit)} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6 disabled:opacity-70" disabled={loading}>{section6PayButton}</button>
         </div>
-
-        {allError && <h6 className="text-sm text-center text-red-600 mt-5">{section6Error}</h6>}
-        {!allError && bankError && <h6 className="text-sm text-center text-red-600 mt-5">{section6BankError}</h6>}
 
         {/* Back Button */}
         <button onClick={() => setSectionLevel("plans")} className='flex items-center font-semibold gap-1 hover:gap-2 duration-200 text-gray2-700 py-3 mx-auto mt-6'>

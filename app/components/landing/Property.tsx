@@ -18,10 +18,10 @@ const Property = () => {
         <h2 className="font-yekanBakhNumbExtraBold text-balck text-[32px] md:text-[40px]">{t("title")}</h2>
         <p className="text-sm leading-6 text-gray-600 pt-4 pb-6">{t("desc")}</p>
       </div>
-      <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
+      <div className="flex flex-col md:flex-row gap-9 md:gap-8 lg:gap-14 justify-center items-center">
         {items.map((item) => {
           return (
-            <div className="flex flex-col justify-center gap-3 md:gap-6 items-center max-w-44" key={item.id}>
+            <div className="flex flex-col justify-center gap-3 md:gap-6 items-center w-44" key={item.id}>
               <div className="bg-gray2-25 rounded-3xl p-10"><Image src={item.img} width={96} height={96} alt="App Property" /></div>
               <h4 className="text-sm md:text-base font-semibold leading-6 ">{item.title}</h4>
             </div>

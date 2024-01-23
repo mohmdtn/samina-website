@@ -25,17 +25,40 @@ const CodeForm: React.FC<CodeFormProps> = ({ section2Button, section2Resend, bac
   const input4Ref = useRef<HTMLInputElement>(null);
 
   // Auto Focus to Next Input
-  const changeHandle = () => {
-    if (input1Ref.current?.value.length == 1)
-      input2Ref.current?.focus();
-    if (input2Ref.current?.value.length == 1)
-      input3Ref.current?.focus();
-    if (input3Ref.current?.value.length == 1)
-      input4Ref.current?.focus();
+  const changeHandle = (e: any) => {
+    if (e.keyCode === 8 ) {
 
-    if (input1Ref.current && input2Ref.current && input3Ref.current && input4Ref.current){
-      setOtpCode(input1Ref.current?.value + input2Ref.current?.value + input3Ref.current?.value + input4Ref.current?.value);
-    }  
+      if (document.activeElement === input2Ref.current) {
+        input1Ref.current?.focus();
+      }
+
+      if (document.activeElement === input3Ref.current) {
+        input2Ref.current?.focus();
+      }
+
+      if (document.activeElement === input4Ref.current) {
+        input3Ref.current?.focus();
+      }
+
+    }
+
+    else {
+      if (input1Ref.current?.value.length == 1) {
+        input2Ref.current?.focus();
+      }
+
+      if (input2Ref.current?.value.length == 1) {
+        input3Ref.current?.focus();
+      }
+
+      if (input3Ref.current?.value.length == 1) {
+        input4Ref.current?.focus();
+      }
+
+      if (input1Ref.current && input2Ref.current && input3Ref.current && input4Ref.current){
+        setOtpCode(input1Ref.current?.value + input2Ref.current?.value + input3Ref.current?.value + input4Ref.current?.value);
+      }  
+    }
   }
 
   useEffect(() => {
@@ -55,6 +78,13 @@ const CodeForm: React.FC<CodeFormProps> = ({ section2Button, section2Resend, bac
   useEffect(() => {
     setTimer(120);
     setError({state: false, msg: ""});
+
+    if (input1Ref.current && input2Ref.current && input3Ref.current && input4Ref.current){
+      input1Ref.current.value = "";
+      input2Ref.current.value = "";
+      input3Ref.current.value = "";
+      input4Ref.current.value = "";
+    }  
   }, [sectionLevel])
 
   const formatTime = (time: number) => {
@@ -82,7 +112,9 @@ const CodeForm: React.FC<CodeFormProps> = ({ section2Button, section2Resend, bac
       setLoading(true);
       setError({state: false, msg: ""});
       axios
-        .post("http://siteapi.saminasoft.ir/SiteApproveVerifyCode", { userName: formsData.number, codeSentByUser: otpCode })
+        .post("http://siteapi.saminasoft.ir/SiteApproveVerifyCode", { userName: formsData.number, codeSentByUser: otpCode }, {
+          headers: { 'Accept-Language': 'fa-IR', }
+        })
         .then(() => setSectionLevel("name"))
         .catch((error) => setError({state: true, msg: error.response.data.message}))
         .finally(() => setLoading(false));
@@ -116,10 +148,10 @@ const CodeForm: React.FC<CodeFormProps> = ({ section2Button, section2Resend, bac
 
       {/* Code */}
       <div className="w-full mb-2 flex justify-center items-center gap-2 md:gap-3 dir-left text-center">
-        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input1Ref} onChange={changeHandle} />
-        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input2Ref} onChange={changeHandle} />
-        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input3Ref} onChange={changeHandle} />
-        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input4Ref} onChange={changeHandle} />
+        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input1Ref} onKeyUp={(e) => changeHandle(e)} />
+        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input2Ref} onKeyUp={(e) => changeHandle(e)} />
+        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input3Ref} onKeyUp={(e) => changeHandle(e)} />
+        <input type="text" className={`border rounded-lg p-3 text-5xl md:text-7xl text-center text-gray2-500 placeholder:text-gray2-300 size-16 md:size-20 focus:outline-none duration-200 focus:shadow-md ${error.state && "border-red-500"}`} maxLength={1} placeholder="0" ref={input4Ref} onKeyUp={(e) => changeHandle(e)} />
       </div>
       {error.state && <h6 className="text-sm mt-[6px] text-red-600">{error.msg}</h6>}
 

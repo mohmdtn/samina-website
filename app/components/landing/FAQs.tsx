@@ -36,7 +36,7 @@ const FAQs: React.FC<FAQsProps> = ({ button, title }) => {
       <h2 className="font-yekanBakhNumbExtraBold text-balck text-[32px] md:text-[40px] text-center mb-8">{title}</h2>
       
       {/* FAQs */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 max-w-[1216px] w-full mx-auto">
         {initialItems.map((item) => <FAQ key={item.id} id={item.id} question={item.question} answer={item.answer} open={false} />)}
       </div>
 

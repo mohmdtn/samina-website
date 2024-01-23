@@ -4,6 +4,8 @@ import { SiteContext } from "@/app/context/siteContext";
 import axios from "axios";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import InputErrorMessage from "../shared/InputErrorMessage";
 
 interface ContactFormProps {
   nameInputTitle: string;
@@ -18,6 +20,15 @@ interface ContactFormProps {
   errorEmpty: string;
   errorPhone: string;
   errorName: string;
+  errorMin: string;
+  errorMax: string;
+}
+
+interface IFormInput {
+  name: string;
+  phone: string;
+  title: string;
+  desc: string;
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({
@@ -33,83 +44,21 @@ const ContactForm: React.FC<ContactFormProps> = ({
   errorEmpty,
   errorPhone,
   errorName,
+  errorMin,
+  errorMax,
 }) => {
   const { loading, setLoading, setTicketStatus } = useContext(SiteContext);
 
-  // Input Value States
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>();
+  const onSubmit: SubmitHandler<IFormInput> = (data) => submitHandle(data);
 
-  // Error States
-  const [nameError, setNameError] = useState(false);
-  const [nameError2, setNameError2] = useState(false);
-  const [phoneError, setPhoneError] = useState(false);
-  const [phoneError2, setPhoneError2] = useState(false);
-  const [titleError, setTitleError] = useState(false);
-  const [descError, setDescError] = useState(false);
-
-  const numberChange = (e: any) => {
-    const numberRegex = /^[0-9\b]+$/;
-    if (e.target.value === '' || numberRegex.test(e.target.value)) {
-      setPhone(e.target.value)
-    }
-  }
-
-  const validateHandle = () => {
-    if (name.trim() == "") {
-      setNameError(true);
-      setNameError2(false);
-    }
-    else if(! /^[\u0600-\u06FF\s]+$/.test(name.trim())) {
-      setNameError2(true);
-      setNameError(false);
-    }
-    else {
-      setNameError(false);
-      setNameError2(false);
-    }
-
-    if (phone.trim() == "") {
-      setPhoneError(true);
-      setPhoneError2(false);
-    }
-    else if (!phone.trim().match(/^0?9[0-9]{9}$/)) {
-      setPhoneError2(true);
-      setPhoneError(false);
-    }
-    else {
-      setPhoneError(false);
-      setPhoneError2(false);
-    }
-
-    if (title.trim() == "") {
-      setTitleError(true);
-    }
-    else {
-      setTitleError(false);
-    }
-
-    if (desc.trim() == "") {
-      setDescError(true);
-    }
-    else {
-      setDescError(false);
-    }
-
-    if (name.trim() !== "" && phone.trim() !== "" && title.trim() !== "" && desc.trim() !== "" && /^[\u0600-\u06FF\s]+$/.test(name.trim()) && phone.trim().match(/^0?9[0-9]{9}$/)) {
-      submitHandle();
-    }
-  }
-
-  const submitHandle = () => {
+  const submitHandle = (formData: IFormInput) => {
     const data = {
       "id": 0,
-      "name": name,
-      "mobile": phone,
-      "title": title,
-      "description": desc,
+      "name": formData.name,
+      "mobile": formData.phone,
+      "title": formData.title,
+      "description": formData.desc,
     };
 
     try {
@@ -120,10 +69,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
         })
         .then(() => {
           setTicketStatus("SUCCESS");
-          setName("");
-          setPhone("");
-          setTitle("");
-          setDesc("");
+          reset({
+            name: "",
+            phone: "",
+            title: "",
+            desc: "",
+          });
         })
         .catch(() => setTicketStatus("ERROR"))
         .finally(() => setLoading(false));
@@ -137,42 +88,59 @@ const ContactForm: React.FC<ContactFormProps> = ({
     <section className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10 lg:gap-16">
         {/* Contact Us Form */}
         <section className="md:max-w-2xl w-full md:w-auto flex-1 flex flex-col gap-3 md:gap-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-3 md:gap-5">
+            {/* Name */}
+            <div className="w-full">
+              <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{nameInputTitle}</h5>
+              <input 
+                {...register("name", {required: errorEmpty, pattern: {value: /^[\u0600-\u06FF\s]+$/ , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 18, message: errorMax}})} 
+                type="text" 
+                className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${errors?.name && "border-red-500"}`} 
+                placeholder={nameInputPlaceholder} 
+              />
+              {errors?.name?.message && <InputErrorMessage message={errors?.name?.message}/>}
+            </div>
 
-          {/* Name */}
-          <div className="w-full">
-            <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{nameInputTitle}</h5>
-            <input maxLength={25} minLength={5} type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${nameError && "border-red-500"} ${nameError2 && "border-red-500"}`} placeholder={nameInputPlaceholder} value={name} onChange={(e) => setName(e.target.value)} />
-            {nameError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
-            {nameError2 && <h6 className="text-sm mt-[6px] text-red-600">{errorName}</h6>}
-          </div>
+            {/* Phone */}
+            <div className="w-full">
+              <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{phoneInputTitle}</h5>
+              <input
+                type="text"
+                {...register("phone", {required: errorEmpty, pattern: {value: /^0?9[0-9]{9}$/, message: errorPhone}})}
+                className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${errors?.phone && "border-red-500"}`}
+                placeholder={phoneInputPlaceholder}
+              />
+              {errors?.phone?.message && <InputErrorMessage message={errors?.phone?.message}/>}
+            </div>
 
-          {/* Phone */}
-          <div className="w-full">
-            <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{phoneInputTitle}</h5>
-            <input maxLength={11} type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${phoneError && "border-red-500"} ${phoneError2 && "border-red-500"}`} placeholder={phoneInputPlaceholder} value={phone} onChange={(e) => numberChange(e)} />
-            {phoneError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
-            {phoneError2 && <h6 className="text-sm mt-[6px] text-red-600">{errorPhone}</h6>}
-          </div>
+            {/* Subject */}
+            <div className="w-full">
+              <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{subjectInputTitle}</h5>
+              <input
+                type="text"
+                {...register("title", {required: errorEmpty, minLength: {value: 6, message: errorMin}, maxLength: {value: 40, message: errorMax}})} 
+                className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${errors?.title && "border-red-500"}`}
+                placeholder={subjectInputPlaceholder}
+              />
+              {errors?.title?.message && <InputErrorMessage message={errors?.title?.message}/>}
+            </div>
 
-          {/* Subject */}
-          <div className="w-full">
-            <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{subjectInputTitle}</h5>
-            <input maxLength={40} minLength={5} type="text" className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${titleError && "border-red-500"}`} placeholder={subjectInputPlaceholder} value={title} onChange={(e) => setTitle(e.target.value)} />
-            {titleError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
-          </div>
+            {/* Body */}
+            <div>
+              <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{bodyInputTitle}</h5>
+              <textarea
+                {...register("desc", {required: errorEmpty, minLength: {value: 10, message: errorMin}, maxLength: {value: 300, message: errorMax}})} 
+                className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px] focus:shadow-md resize-none ${errors?.desc && "border-red-500"}`}
+                placeholder={bodyInputPlaceholder}
+              ></textarea>
+              {errors?.desc?.message && <InputErrorMessage message={errors?.desc?.message}/>}
+            </div>
 
-          {/* Body */}
-          <div>
-            <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{bodyInputTitle}</h5>
-            <textarea maxLength={300} minLength={5} className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px] focus:shadow-md resize-none ${descError && "border-red-500"}`} placeholder={bodyInputPlaceholder} onChange={(e) => setDesc(e.target.value)} value={desc}></textarea>
-            {descError && <h6 className="text-sm mt-[6px] text-red-600">{errorEmpty}</h6>}
-          </div>
-
-          {/* Send Button */}
-          <div className="w-full">
-            <button onClick={validateHandle} className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6 disabled:opacity-70" disabled={loading}>{sendButton}</button>
-          </div>
-
+            {/* Send Button */}
+            <div className="w-full">
+              <button type="submit" className="text-center text-white text-sm font-semibold rounded-lg bg-brand-600 w-full p-2 leading-6 disabled:opacity-70" disabled={loading}>{sendButton}</button>
+            </div>
+          </form>
         </section>
 
         {/* Form Poster */}

@@ -22,7 +22,7 @@ const Term: React.FC<TermProps> = ({ question, answer }) => {
       </div>
 
       {/* Term Body */}
-      <div className={`text-gray2-500 text-sm md:text-base mb-5 whitespace-pre-line leading-[26px] tracking-tight ${isOpen ? "block" : "hidden"}`}>{answer}</div>
+      <div className={`text-gray2-500 text-sm md:text-base mb-5 whitespace-pre-line leading-[26px] tracking-tight text-justify ${isOpen ? "block" : "hidden"}`}>{answer}</div>
 
     </section>
   );

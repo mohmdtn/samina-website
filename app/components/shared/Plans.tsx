@@ -3,7 +3,7 @@
 import axios from "axios";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
-import { SiteContext } from "../context/siteContext";
+import { SiteContext } from "../../context/siteContext";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 
@@ -71,7 +71,7 @@ const Plans: React.FC<PlansProps> = ({
     loginText,
     login = false,
 }) => {
-  const [period, setPeriod] = useState(6);
+  const [period, setPeriod] = useState(12);
   const [result, setResult] = useState<DataObject[]>([]);
   const [filteredData, setFilteredData] = useState<DataObject[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<any>([]);
@@ -106,7 +106,7 @@ const Plans: React.FC<PlansProps> = ({
   }, [period, result]);
 
   return (
-    <section className="lg:max-w-6xl mx-auto px-4 md:px-0">
+    <section className="lg:max-w-6xl mx-auto px-4 md:px-0" id="plans">
 
       <div className={`text-center mb-8 md:hidden ${landing ? "block" : "hidden"}`}>
         <h1 className="text-[32px] text-black font-yekanBakhNumbExtraBold tracking-tighter mb-1">{title}</h1>
@@ -114,7 +114,7 @@ const Plans: React.FC<PlansProps> = ({
       </div>
 
       {/* Select Period Section */}
-      <section className="flex flex-col md:flex-row gap-2 bg-gray2-100 rounded-lg p-2 w-full md:w-max text-sm mx-auto text-center border border-gray2-100">
+      <section className="flex flex-col md:flex-row gap-2 bg-gray2-50 rounded-lg p-[6px] w-full md:w-max text-sm mx-auto text-center border border-gray2-100">
         <div className={`plans-period-title ${period == 3 ? "bg-white shadow-md text-brand-600" : "text-gray2-600"}`} onClick={() => setPeriod(3)}>{periodTitle1}</div>
         <div className={`plans-period-title ${period == 6 ? "bg-white shadow-md text-brand-600" : "text-gray2-600"}`} onClick={() => setPeriod(6)}>{periodTitle2}</div>
         <div className={`plans-period-title ${period == 9 ? "bg-white shadow-md text-brand-600" : "text-gray2-600"}`} onClick={() => setPeriod(9)}>{periodTitle3}</div>
