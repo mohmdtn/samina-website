@@ -219,7 +219,7 @@ const FormLevels: React.FC<FormLevelsProps> = ({
         <h2 className="font-semibold text-xl tracking-tight">{section1Title}</h2>
       </div>
 
-      {sectionLevel === "number" && (
+      <section className={`${sectionLevel === "number" ? "block" : "hidden"}`}>
         <DynamicNumberForm
           section1InputTitle={section1InputTitle}
           section1InputHolder={section1InputHolder}
@@ -231,18 +231,18 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           errorPolicy={errorPolicy}
           errorFiled={errorFiled}
         />
-      )}
+      </section>
 
-      {sectionLevel === "code" && (
+      <section className={`${sectionLevel === "code" ? "block" : "hidden"}`}>
         <DynamicCodeForm
           section2Resend={section2Resend}
           section2Button={section2Button}
           back={back}
           errorEmpty={errorEmpty}
         />
-      )}
+      </section>
 
-      {sectionLevel === "name" && (
+      <section className={`${sectionLevel === "name" ? "block" : "hidden"}`}>
         <DynamicNameForm
           section3CompanyTitle={section3CompanyTitle}
           section3FirstName={section3FirstName}
@@ -254,9 +254,9 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           errorMin={errorMin}
           errorMax={errorMax}
         />
-      )}        
+      </section>
 
-      {sectionLevel === "financial" && (
+      <section className={`${sectionLevel === "financial" ? "block" : "hidden"}`}>
         <DynamicFinancialPeriodForm
           section4InputTitle={section4InputTitle}
           section4InputStart={section4InputStart}
@@ -267,10 +267,9 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           errorMin={errorMin}
           errorMax={errorMax}
         />
-      )}
-      
+      </section>
 
-      {sectionLevel === "plans" && (
+      <section className={`${sectionLevel === "plans" ? "block" : "hidden"}`}>
         <DynamicPlanForm
           planTitle={planTitle}
           planDesc={planDesc}
@@ -293,9 +292,9 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           section4Button={section4Button}
           planError={planError}
         />
-      )}
+      </section>
 
-      {sectionLevel === "pay" && (
+      <section className={`${sectionLevel === "pay" ? "block" : "hidden"}`}>
         <DynamicPayForm
           section6GeneralInfoTtile={section6GeneralInfoTtile}
           section6SubscribeInfoTitle={section6SubscribeInfoTitle}
@@ -327,10 +326,9 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           errorMin={errorMin}
           errorMax={errorMax}
         />
-      )}
+      </section>
 
-
-      {sectionLevel === "callback" && (
+      <section className={`${sectionLevel === "callback" ? "block" : "hidden"}`}>
         <DynamicPayCallback
           payCallbackWelcome={payCallbackWelcome}
           payCallbackUsername={payCallbackUsername}
@@ -345,7 +343,7 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           section4InputEnd={section4InputEnd}
           copy={copy}
         />
-      )}
+      </section>
 
     </section>
   );
