@@ -13,7 +13,7 @@ interface CodeFormProps{
 }
 
 const CodeForm: React.FC<CodeFormProps> = ({ section2Button, section2Resend, back, errorEmpty }) => {
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState(60);
   const { formsData, setSectionLevel, loading, setLoading, sectionLevel } = useContext(SiteContext);
   const [error, setError] = useState({state: false, msg: ""});
   const [otpCode, setOtpCode] = useState('');
@@ -76,7 +76,7 @@ const CodeForm: React.FC<CodeFormProps> = ({ section2Button, section2Resend, bac
   }, [timer]);
 
   useEffect(() => {
-    setTimer(120);
+    setTimer(60);
     setError({state: false, msg: ""});
 
     if (input1Ref.current && input2Ref.current && input3Ref.current && input4Ref.current){
@@ -130,10 +130,12 @@ const CodeForm: React.FC<CodeFormProps> = ({ section2Button, section2Resend, bac
     try {
       setLoading(true);
       axios
-        .post("http://siteapi.saminasoft.ir/SiteSendVerifyCode", { userName: formsData.number })
+        .get("http://siteapi.saminasoft.ir/IsUserExists", { params: {
+          username: formsData.number
+        } })
         .then(() => {
           setSendAgin(false);
-          setTimer(120);
+          setTimer(60);
         })
         .catch(() => alert("خطا در برقراری ارتباط!"))
         .finally(() => setLoading(false));

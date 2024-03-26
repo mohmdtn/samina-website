@@ -101,6 +101,7 @@ export default function Terms() {
         errorMin={tErrors("minLength")}
         errorMax={tErrors("maxLength")}
         errorFiled={tErrors("filed")}
+        errorsingedInBefore={tErrors("singedInBefore")}
       />
     </main>
   );

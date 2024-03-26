@@ -30,7 +30,7 @@ const FAQ: React.FC<FAQProps> = ({ question, answer, open, id }) => {
         <h3 className="text-base md:text-lg text-black font-semibold tracking-tight">{question}</h3>
         <Image className={`${isFaqOpen === id && "rotate-180"} duration-200`} src={"/icons/angleDown.svg"} width={20} height={20} alt="Angle Up Icon" />
       </div>
-      <p className={`text-sm md:text-base md:leading-[26px] tracking-tight text-gray-500 whitespace-pre-line duration-200 overflow-hidden ${isFaqOpen === id ? "max-h-[200vh] pt-3" : "max-h-0"}`}>{answer}</p>
+      <p className={`text-sm md:text-base md:leading-[26px] text-justify tracking-tight text-gray-500 whitespace-pre-line duration-200 overflow-hidden ${isFaqOpen === id ? "max-h-[200vh] pt-3" : "max-h-0"}`}>{answer}</p>
     </div>
   );
 };

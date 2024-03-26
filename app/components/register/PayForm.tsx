@@ -5,9 +5,11 @@ import type{Value} from "react-multi-date-picker"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 import { SiteContext } from "@/app/context/siteContext";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import InputErrorMessage from "../shared/InputErrorMessage";
+import { useRouter } from "next/navigation";
+import { formatNumberWithCommas } from "@/app/utils/formatedWithComma";
 
 interface PayFormProps {
   section6GeneralInfoTtile: string;
@@ -53,9 +55,10 @@ interface IFormInput {
 }
 
 const payProvider = [
-  {id: "1", img: "/images/bank-saman.svg",    name: "Bank Saman"},
-  {id: "2", img: "/images/asan-pardakht.svg", name: "Asan Pardakht"},
-  {id: "3", img: "/images/bank-pasargad.svg", name: "Bank Pasargad"},
+  // {id: "1", img: "/images/bank-saman.svg",    name: "Bank Saman"},
+  // {id: "2", img: "/images/asan-pardakht.svg", name: "Asan Pardakht"},
+  // {id: "3", img: "/images/bank-pasargad.svg", name: "Bank Pasargad"},
+  {id: "4", img: "/images/bank-zarinpal.png", name: "ZarinPal"},
 ]
 
 const PayForm: React.FC<PayFormProps> = ({
@@ -90,6 +93,7 @@ const PayForm: React.FC<PayFormProps> = ({
   errorMin,
   errorMax,
 }) => {
+  const router = useRouter();
   const { setSectionLevel, setFormsData, formsData, loading, setLoading } = useContext(SiteContext);
   const [startDate, setStartDate] = useState<Value>(formsData.startDate);
   const [endDate, setEndDate] = useState<Value>(formsData.endDate);
@@ -102,6 +106,7 @@ const PayForm: React.FC<PayFormProps> = ({
   const [periodEdit, setPeriodEdit] = useState(false);
   const [startDateEdit, setstartDateEdit] = useState(false);
   const [endDateEdit, setEndDateEdit] = useState(false);
+  const regexPersianAndEnglishChar = /^[\u0600-\u06FF\uFB8A\u067E\u0686\u06AF\u200C\s]+$|^[\u0041-\u005A\u0061-\u007A\s]+$/;
 
   const { register, handleSubmit, formState: { errors }, control, reset } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = (data) => handleData(data);
@@ -132,34 +137,50 @@ const PayForm: React.FC<PayFormProps> = ({
   const [startDateError, setStartDateError] = useState(false);
   const [endDateError, setEndDateError] = useState(false);
   const [bankError, setBankError] = useState(false);
-  const [allError, setAllError] = useState(false);
+  const [allError, setAllError] = useState("");
 
   const submitHandle = () => {
+    setAllError("");
+    // const data = {
+    //   userName: formsData.number,
+    //   branchTitle: formsData.planName,
+    //   name: formsData.fName,
+    //   family: formsData.lName,
+    //   financialPeriodTitle: formsData.periodName,
+    //   startDate: formsData.ISOStartDate,
+    //   endDate: formsData.ISOEndDate,
+    //   planId: formsData.planId,
+    //   payCode: ""
+    // }
+
     const data = {
-      "userName"            : formsData.number,
-      "branchTitle"         : "string",
-      "name"                : formsData.fName,
-      "family"              : formsData.lName,
-      "financialPeriodTitle": formsData.periodName,
-      "startDate"           : formsData.ISOStartDate,
-      "endDate"             : formsData.ISOEndDate,
-      "planId"              : formsData.planId,
-      "buyPrice"            : formsData.planPrice,
-      "discountedPrice"     : formsData.planPrice,
-      "payBankId"           : +formsData.bankId,
-      "payCode"             : ""
-    }
+      "userName": formsData.number,
+      "register": {
+        "userName": formsData.number,
+        "branchTitle": formsData.planName,
+        "name": formsData.fName,
+        "family": formsData.lName,
+        "financialPeriodTitle": formsData.periodName,
+        "startDate": formsData.ISOStartDate,
+        "endDate": formsData.ISOEndDate,
+        "planId": formsData.planId,
+        "payCode": ""
+      }
+    };
 
     try {
       setLoading(true);
       axios
-        .post("http://siteapi.saminasoft.ir/SiteRegister", data, {
+        .post("http://siteapi.saminasoft.ir/ZarinpalPayment", data, {
           headers: {
             "Accept-Language": "fa-IR",
           }
         })
-        .then(() => setSectionLevel("callback"))
-        .catch(() => alert("خطا در برقراری ارتباط!"))
+        .then((res: AxiosResponse) => {
+          // setSectionLevel("callback");
+          router.push(res.data.Data);
+        })
+        .catch((error) => setAllError(error.response.data.message))
         .finally(() => setLoading(false));
     } catch (error) {
       setLoading(false);
@@ -186,6 +207,7 @@ const PayForm: React.FC<PayFormProps> = ({
       startDate: formsData.startDate,
       endDate: formsData.endDate,
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formsData])
 
   return (
@@ -208,7 +230,7 @@ const PayForm: React.FC<PayFormProps> = ({
             <div className="relative flex items-center">
               <input
                 type="text"
-                {...register("companyName", {required: errorEmpty, minLength: {value: 3, message: errorMin}, maxLength: {value: 30, message: errorMax}})} 
+                {...register("companyName", {required: errorEmpty, minLength: {value: 3, message: errorMin}, maxLength: {value: 50, message: errorMax}})} 
                 className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 disabled:bg-gray2-50 ${errors?.companyName && "border-red-500"}`}
                 disabled={!companyEdit}
                 value={formsData.company}
@@ -225,7 +247,7 @@ const PayForm: React.FC<PayFormProps> = ({
             <div className="relative flex items-center">
               <input
                 type="text"
-                {...register("firstName", {required: errorEmpty, pattern: {value: /^[\u0600-\u06FF\s]+$/ , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 18, message: errorMax}})}
+                {...register("firstName", {required: errorEmpty, pattern: {value: regexPersianAndEnglishChar , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 20, message: errorMax}})}
                 className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 disabled:bg-gray2-50 ${errors?.firstName && "border-red-500"}`}
                 disabled={!fNameEdit}
                 value={formsData.fName}
@@ -242,7 +264,7 @@ const PayForm: React.FC<PayFormProps> = ({
             <div className="relative flex items-center">
               <input
                 type="text"
-                {...register("lastName", {required: errorEmpty, pattern: {value: /^[\u0600-\u06FF\s]+$/ , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 20, message: errorMax}})} 
+                {...register("lastName", {required: errorEmpty, pattern: {value: regexPersianAndEnglishChar , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 20, message: errorMax}})} 
                 className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 disabled:bg-gray2-50 ${errors?.lastName && "border-red-500"}`}
                 disabled={!lNameEdit}
                 value={formsData.lName}
@@ -259,7 +281,7 @@ const PayForm: React.FC<PayFormProps> = ({
             <div className="relative flex items-center">
               <input
                 type="text"
-                {...register("periodName", {required: errorEmpty, minLength: {value: 5, message: errorMin}, maxLength: {value: 30, message: errorMax}})} 
+                {...register("periodName", {required: errorEmpty, minLength: {value: 5, message: errorMin}, maxLength: {value: 50, message: errorMax}})} 
                 className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md pl-8 disabled:bg-gray2-50 ${errors?.periodName && "border-red-500"}`}
                 disabled={!periodEdit}
                 value={formsData.periodName}
@@ -286,9 +308,14 @@ const PayForm: React.FC<PayFormProps> = ({
                     inputClass={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md disabled:bg-gray2-50 ${errors?.startDate && "border-red-500"}`}
                     containerClassName="w-full"
                     value={value || ""}
-                    onChange={(date) => {
-                      onChange(date);
-                      setStartDate(date);
+                    onChange={(date, { isTyping }) => {
+                      if (!isTyping) {
+                        onChange(date);
+                        setStartDate(date);
+                      }
+                      else {
+                        onChange(null);
+                      }
                     }} 
                     calendar={persian} 
                     locale={persian_fa} 
@@ -318,10 +345,15 @@ const PayForm: React.FC<PayFormProps> = ({
                     inputClass={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md disabled:bg-gray2-50 ${errors?.endDate && "border-red-500"}`}
                     containerClassName="w-full"
                     value={value || ""}
-                    onChange={(date) => {
-                      onChange(date);
-                      setEndDate(date);
-                    }} 
+                    onChange={(date, { isTyping }) => {
+                      if (!isTyping) {
+                        onChange(date);
+                        setEndDate(date);
+                      }
+                      else {
+                        onChange(null);
+                      }
+                    }}
                     calendar={persian} 
                     locale={persian_fa} 
                     disabled={!endDateEdit}
@@ -352,16 +384,16 @@ const PayForm: React.FC<PayFormProps> = ({
           </div>
 
           {/* Subscribe Start Date */}
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <h4 className="text-gray-700 text-sm font-semibold leading-6">{section6StartDate}</h4>
             <h5 className="text-gray-700 text-sm font-semibold leading-6">{formsData.startDate}</h5>
-          </div>
+          </div> */}
 
           {/* Subscribe End Date */}
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <h4 className="text-gray-700 text-sm font-semibold leading-6">{section6EndDate}</h4>
             <h5 className="text-gray-700 text-sm font-semibold leading-6">{formsData.endDate}</h5>
-          </div>
+          </div> */}
 
         </div>
 
@@ -373,29 +405,29 @@ const PayForm: React.FC<PayFormProps> = ({
           {/* Subscribe Price */}
           <div className="flex justify-between">
             <h4 className="text-gray-700 text-sm font-semibold leading-6">{section6SubscripPrice}</h4>
-            <h5 className="text-gray-700 text-sm font-semibold leading-6">{formsData.planPrice}</h5>
+            <h5 className="text-gray-700 text-sm font-semibold leading-6">{formatNumberWithCommas(formsData.planPrice)}</h5>
           </div>
 
           {/* Subscribe Tax */}
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <h4 className="text-gray-700 text-sm font-semibold leading-6">{section6Tax}</h4>
             <h5 className="text-gray-700 text-sm font-semibold leading-6">0</h5>
-          </div>
+          </div> */}
 
           {/* Discount */}
-          <div className="w-full">
+          {/* <div className="w-full">
             <h4 className={`text-sm font-semibold mb-[6px] leading-6 ${isDiscountShow ? "text-gray-700" : "text-brand-600 cursor-pointer"}`} onClick={() => setIsDiscountShow(true)}>{section6AddDiscount}</h4>
             <div className={`relative items-center ${isDiscountShow ? "flex" : "hidden"}`}>
               <input type="text" className="border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none pl-8" />
               <h3 className="text-sm font-semibold absolute left-3 cursor-pointer text-brand-600">{discountBtn}</h3>
             </div>
             <p className={`text-sm leading-6 font-semibold mt-[6px] ${discountError ? "text-success-600" : "text-red-600"}`}>{}</p>
-          </div>
+          </div> */}
 
           {/* Total Price */}
           <div className="flex justify-between">
             <h4 className="text-gray-700 text-sm font-semibold leading-6">{section6TotalPrice}</h4>
-            <h5 className="text-gray-700 text-sm font-semibold leading-6">{formsData.planPrice}</h5>
+            <h5 className="text-gray-700 text-sm font-semibold leading-6">{formatNumberWithCommas(formsData.planPrice)}</h5>
           </div>
 
         </div>
@@ -406,13 +438,14 @@ const PayForm: React.FC<PayFormProps> = ({
             {payProvider.map((item) => {
               return (
                 <label htmlFor={item.id} key={item.id} className={`md:size-[108px] size-24 bg-gray2-50 rounded-[10px] flex flex-col justify-center items-center cursor-pointer border ${formsData.bankId === item.id ? "border-brand-500" : "border-[#0000]"}`} onClick={() => setFormsData({...formsData, bankId: item.id})}>
-                  <Image src={item.img} width={52} height={44} alt={item.name} className="mb-3" />
+                  <Image src={item.img} width={52} height={44} alt={item.name} className="mb-3 w-9" />
                   <input name="pay" type="radio" id={item.id} value={item.id} />
                 </label>
               )
             })}
           </div>
           {bankError && <h6 className="text-sm text-center text-red-600 mt-5">{section6BankError}</h6>}
+          {allError && <h6 className="text-sm text-center text-red-600 mt-5">{allError}</h6>}
         </div>
 
         {/* Send Button */}

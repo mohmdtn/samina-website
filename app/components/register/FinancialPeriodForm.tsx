@@ -76,7 +76,7 @@ const FinancialPeriodForm: React.FC<FinancialPeriodFormProps> = ({
             <input 
               type="text" 
               className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${errors?.periodName && "border-red-500"}`} 
-              {...register("periodName", {required: errorEmpty, minLength: {value: 5, message: errorMin}, maxLength: {value: 30, message: errorMax}})} 
+              {...register("periodName", {required: errorEmpty, minLength: {value: 5, message: errorMin}, maxLength: {value: 50, message: errorMax}})} 
             />
             {errors?.periodName?.message && <InputErrorMessage message={errors?.periodName?.message}/>}
           </div>
@@ -97,9 +97,14 @@ const FinancialPeriodForm: React.FC<FinancialPeriodFormProps> = ({
                     inputClass={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${errors?.startDate && "border-red-500"}`}
                     containerClassName="w-full"
                     value={value || ""}
-                    onChange={(date) => {
-                      onChange(date);
-                      setStartDate(date);
+                    onChange={(date, { isTyping }) => {
+                      if (!isTyping) {
+                        onChange(date);
+                        setStartDate(date);
+                      }
+                      else {
+                        onChange(null);
+                      }
                     }} 
                     calendar={persian} 
                     locale={persian_fa} 
@@ -128,9 +133,14 @@ const FinancialPeriodForm: React.FC<FinancialPeriodFormProps> = ({
                     inputClass={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${errors?.endDate && "border-red-500"}`}
                     containerClassName="w-full"
                     value={value || ""}
-                    onChange={(date) => {
-                      onChange(date);
-                      setEndDate(date);
+                    onChange={(date, { isTyping }) => {
+                      if (!isTyping) {
+                        onChange(date);
+                        setEndDate(date);
+                      }
+                      else {
+                        onChange(null);
+                      }
                     }} 
                     calendar={persian} 
                     locale={persian_fa} 

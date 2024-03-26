@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const TeamIntroduction = () => {
   const t = useTranslations('teamIntroduction');
+  const language = useLocale();
 
   return (
     <section className="px-4 flex flex-col md:flex-row items-center gap-8 md:gap-10 lg:gap-16 mt-24 max-w-[1216px] mx-auto">
@@ -20,13 +21,13 @@ const TeamIntroduction = () => {
       {/* Team Description */}
       <div className="max-w-2xl flex-1">
         <h2 className="font-yekanBakhNumbExtraBold text-balck text-[32px] md:text-[40px] text-center md:text-start mb-6">{t("title")}</h2>
-        <div className="text-gray2-500 md:leading-7 md:text-lg">
+        <div className="text-gray2-500 text-justify md:leading-7 md:text-lg">
           <p className="mb-9">{t("firstP")}</p>
           <p>{t("secondP")}</p>
         </div>
         {/* Show More Button */}
         <div className="mt-3 md:mt-6">
-          <Link className="inline-block text-sm text-gray-700 text-center py-[9px] px-5 border border-gray2-300 rounded-lg bg-white w-full md:w-auto" href={"/"}>{t("button")}</Link>
+          <Link className="inline-block text-sm text-gray-700 text-center py-[9px] px-5 border border-gray2-300 rounded-lg bg-white w-full md:w-auto" href={`${language}/about_us`}>{t("button")}</Link>
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { SiteContext } from "@/app/context/siteContext";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -103,6 +103,7 @@ interface FormLevelsProps {
   errorMin: string;
   errorMax: string;
   errorFiled: string;
+  errorsingedInBefore: string;
   copy: string;
 }
 
@@ -193,10 +194,30 @@ const FormLevels: React.FC<FormLevelsProps> = ({
   errorMin,
   errorMax,
   errorFiled,
+  errorsingedInBefore,
 
   copy,
 }) => {
-  const { progressbarLevel, sectionLevel } = useContext(SiteContext);
+  const { progressbarLevel, sectionLevel, setSectionLevel, setFormsData } = useContext(SiteContext);
+
+  useEffect(() => {
+    setSectionLevel("number");
+    setFormsData({
+      number: "",
+      company: "",
+      fName: "",
+      lName: "",
+      periodName: "",
+      endDate: "",
+      startDate: "",
+      ISOEndDate: "",
+      ISOStartDate: "",
+      planId: "",
+      planName: "",
+      planPrice: "",
+      bankId: "",
+    });
+  }, []);
 
   return (
     <section>
@@ -230,6 +251,7 @@ const FormLevels: React.FC<FormLevelsProps> = ({
           errorEmpty={errorEmpty}
           errorPolicy={errorPolicy}
           errorFiled={errorFiled}
+          errorsingedInBefore={errorsingedInBefore}
         />
       </section>
 

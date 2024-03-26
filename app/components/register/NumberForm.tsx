@@ -2,9 +2,10 @@ import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import { SiteContext } from "@/app/context/siteContext";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import InputErrorMessage from "../shared/InputErrorMessage";
+import { convertPersianToEnglish } from "@/app/utils/convertPersianToEnglish";
 
 interface NumberFormProps {
   section1InputTitle: string;
@@ -16,6 +17,7 @@ interface NumberFormProps {
   errorPolicy: string;
   errorEmpty: string;
   errorFiled: string;
+  errorsingedInBefore: string
 }
 
 interface IFormInput {
@@ -33,24 +35,36 @@ const NumberForm: React.FC<NumberFormProps> = ({
   errorPolicy,
   errorEmpty,
   errorFiled,
+  errorsingedInBefore,
 }) => {
   const languge = useLocale();
   const { formsData, setFormsData, setSectionLevel, loading, setLoading } = useContext(SiteContext);
   const [error, setError] = useState("");
 
-  const { register, handleSubmit, formState: { errors }, } = useForm<IFormInput>();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = (data) => apiCall(data);
 
+  watch((data)=> {
+    setError("");
+  });
+
   const apiCall = (data: any) => {
-    setFormsData({...formsData, number: data.number});
+    setFormsData({...formsData, number: convertPersianToEnglish(data.number)});
     try {
       setLoading(true);
       setError("");
       axios
-        .post("http://siteapi.saminasoft.ir/SiteSendVerifyCode", { userName: data.number }, {
-          headers: { 'Accept-Language': 'fa-IR', }
+        .get("http://siteapi.saminasoft.ir/IsUserExists", {params: {
+          username: convertPersianToEnglish(data.number)
+        }})
+        .then((res: AxiosResponse) => {
+          if (res.data.Data) {
+            setError(errorsingedInBefore);
+          }
+          else {
+            setSectionLevel("code");
+          }
         })
-        .then(() => setSectionLevel("code"))
         .catch((error) => setError(error.response.data.message))
         .finally(() => setLoading(false));
     } catch (error) {
@@ -69,7 +83,7 @@ const NumberForm: React.FC<NumberFormProps> = ({
           <input 
             type="text" 
             className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${errors?.number && "border-red-500"} ${error && "border-red-500"}`}
-            {...register("number", {required: errorEmpty, pattern: {value: /^0?9[0-9]{9}$/, message: errorFiled}})}
+            {...register("number", {required: errorEmpty, pattern: {value: /^(۰|0)?(۹|9)[۰-۹0-9]{9}$|[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}/g, message: errorFiled}})}
           />
           {errors?.number?.message && <InputErrorMessage message={errors?.number?.message}/>}
           {error && <InputErrorMessage message={error}/>}
@@ -82,8 +96,8 @@ const NumberForm: React.FC<NumberFormProps> = ({
 
         {/* CheckBox */}
         <div>
-          <div className="mt-8 flex items-center">
-            <input type="checkbox" id="policy" {...register("policy", {required: errorPolicy})} /><label htmlFor="policy" className="text-sm text-gray-600 cursor-pointer ms-2"><span>{checkbox1}</span><Link href={`/${languge}/terms`} className="text-brand-600">{checkbox2}</Link><span>{checkbox3}</span></label>
+          <div className="mt-8 flex items-center font-medium">
+            <input type="checkbox" id="policy" {...register("policy", {required: errorPolicy})} /><label htmlFor="policy" className="text-sm text-gray-600 cursor-pointer ms-2"><span>{checkbox1}</span><Link href={`/${languge}/terms`} className="text-brand-600">{checkbox2}</Link><span className="text-black">{checkbox3}</span></label>
           </div>
           {errors?.policy?.message && <InputErrorMessage message={errors?.policy?.message}/>}
         </div>

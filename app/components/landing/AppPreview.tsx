@@ -15,13 +15,13 @@ interface AppPreviewProps {
 
 const AppPreview: React.FC<AppPreviewProps> = ({ item1, item2, item3, item4, item5, item6, item7 }) => {
   const items = [
-    {id: 1, name: item1},
-    {id: 2, name: item2},
-    {id: 3, name: item3},
-    {id: 4, name: item4},
-    {id: 5, name: item5},
-    {id: 6, name: item6},
-    {id: 7, name: item7},
+    {id: 1, name: item1, picture: "dashboard"},
+    {id: 2, name: item2, picture: "financialPeriod"},
+    {id: 3, name: item3, picture: "cerditSide"},
+    {id: 4, name: item4, picture: "product"},
+    {id: 5, name: item5, picture: "factor"},
+    {id: 6, name: item6, picture: "transfer"},
+    {id: 7, name: item7, picture: "accounting"},
   ];
 
   const [isActive, setIsActive] = useState(1);
@@ -32,7 +32,7 @@ const AppPreview: React.FC<AppPreviewProps> = ({ item1, item2, item3, item4, ite
         <div className="flex flex-wrap justify-center gap-3 gap-x-4 md:gap-10 text-black text-sm md:text-base font-bold">
           {items.map(item => <div key={item.id} className={`cursor-pointer whitespace-nowrap ${isActive === item.id && "text-blue-600"}`} onClick={() => setIsActive(item.id)}>{item.name}</div>)}
         </div>
-        <Image src={"/images/app-dashboard.svg"} width={1000} height={700} alt="Samina App Preview" />
+        {items.map(item => <Image className={`rounded-3xl mt-8 shadow-lg shadow-gray2-200 ${isActive === item.id ? "block" : "hidden"}`} key={item.id} src={`/images/appPreview/${item.picture}.jpg`} width={1000} height={700} alt={item.picture} />)}
       </section>
     </section>
   );

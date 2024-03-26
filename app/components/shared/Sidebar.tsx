@@ -14,9 +14,11 @@ interface SidebarProps {
   item5: string;
   loginButton: string;
   signupButton: string;
+  aboutUs: string;
+  blogs: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ item1, item2, item3, item4, item5, loginButton, signupButton }) => {
+const Sidebar: React.FC<SidebarProps> = ({ item1, item2, item3, item4, item5, loginButton, signupButton, blogs, aboutUs }) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const language = useLocale();
   
@@ -38,10 +40,12 @@ const Sidebar: React.FC<SidebarProps> = ({ item1, item2, item3, item4, item5, lo
         {/* Menu Links */}
         <div className="flex flex-col gap-6 text-black text-lg font-semibold items-start py-6">
           <Link href={"/"} onClick={() => setMenuIsOpen(false)}>{item1}</Link>
-          <Link href={"/"} onClick={() => setMenuIsOpen(false)}>{item2}</Link>
+          {/* <Link href={"/"} onClick={() => setMenuIsOpen(false)}>{item2}</Link> */}
           <Link href={`/${language}#plans`} onClick={() => setMenuIsOpen(false)}>{item3}</Link>
-          <Link href={"/"} onClick={() => setMenuIsOpen(false)}>{item4}</Link>
+          {/* <Link href={"/"} onClick={() => setMenuIsOpen(false)}>{item4}</Link> */}
           <Link href={`/${language}/contact_us`} onClick={() => setMenuIsOpen(false)}>{item5}</Link>
+          <Link href={`/${language}/about_us`} onClick={() => setMenuIsOpen(false)}>{aboutUs}</Link>
+          <Link href={`/${language}/blog`} onClick={() => setMenuIsOpen(false)}>{blogs}</Link>
         </div>
 
         {/* Register Section */}

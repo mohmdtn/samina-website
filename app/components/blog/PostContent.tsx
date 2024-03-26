@@ -57,10 +57,10 @@ const PostContent: React.FC<PostContentProps> = ({ id, time, shareButton }) => {
           </div>
 
           {/* Share Button */}
-          <button className="border rounded-lg py-[10px] px-4 text-gray2-700 flex justify-center items-center gap-2 text-sm w-full md:w-auto">
+          {/* <button className="border rounded-lg py-[10px] px-4 text-gray2-700 flex justify-center items-center gap-2 text-sm w-full md:w-auto">
             <Image src={"/icons/share.svg"} width={14} height={14} alt="Share Icon" />
             {shareButton}
-          </button>
+          </button> */}
 
         </div>
 

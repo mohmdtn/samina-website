@@ -37,8 +37,8 @@ export default function FAQPage() {
 
         {/* map Picture */}
         <section className='flex justify-center mt-12 md:mt-24 mb-10'>
-            <Image className='rounded-3xl hidden md:block' src={"/images/desktop-map.png"} width={1216} height={400} alt='Samina Location' /> 
-            <Image className='rounded-3xl block md:hidden' src={"/images/mobile-map.svg"} width={343} height={400} alt='Samina Location' /> 
+            <Image className='rounded-3xl block' src={"/images/desktop-map.png"} width={1216} height={400} alt='Samina Location' /> 
+            {/* <Image className='rounded-3xl block md:hidden' src={"/images/mobile-map.svg"} width={343} height={400} alt='Samina Location' />  */}
         </section>
 
         {/* Samina Info */}

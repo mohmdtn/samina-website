@@ -24,6 +24,7 @@ interface IFormInput {
 
 const NameForm: React.FC<NameFormProps> = ({ section3CompanyTitle, section3FirstName, section3LastName, section3Button, back, errorEmpty, errorName, errorMin, errorMax, }) => {
   const { setSectionLevel, setFormsData, formsData } = useContext(SiteContext);
+  const regexPersianAndEnglishChar = /^[\u0600-\u06FF\uFB8A\u067E\u0686\u06AF\u200C\s]+$|^[\u0041-\u005A\u0061-\u007A\s]+$/;
 
   const { register, handleSubmit, formState: { errors }, } = useForm<IFormInput>({
     defaultValues: {
@@ -49,7 +50,7 @@ const NameForm: React.FC<NameFormProps> = ({ section3CompanyTitle, section3First
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section3CompanyTitle}</h5>
             <input 
               type="text" 
-              {...register("companyName", {required: errorEmpty, minLength: {value: 3, message: errorMin}, maxLength: {value: 30, message: errorMax}})} 
+              {...register("companyName", {required: errorEmpty, minLength: {value: 3, message: errorMin}, maxLength: {value: 50, message: errorMax}})} 
               className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${errors?.companyName && "border-red-500"}`}
             />
             {errors?.companyName?.message && <InputErrorMessage message={errors?.companyName?.message}/>}
@@ -60,7 +61,7 @@ const NameForm: React.FC<NameFormProps> = ({ section3CompanyTitle, section3First
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section3FirstName}</h5>
             <input
               type="text" 
-              {...register("firstName", {required: errorEmpty, pattern: {value: /^[\u0600-\u06FF\s]+$/ , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 18, message: errorMax}})} 
+              {...register("firstName", {required: errorEmpty, pattern: {value: regexPersianAndEnglishChar , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 20, message: errorMax}})} 
               className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${errors?.firstName && "border-red-500"}`}
             />
             {errors?.firstName?.message && <InputErrorMessage message={errors?.firstName?.message}/>}
@@ -71,7 +72,7 @@ const NameForm: React.FC<NameFormProps> = ({ section3CompanyTitle, section3First
             <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{section3LastName}</h5>
             <input
               type="text" 
-              {...register("lastName", {required: errorEmpty, pattern: {value: /^[\u0600-\u06FF\s]+$/ , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 20, message: errorMax}})} 
+              {...register("lastName", {required: errorEmpty, pattern: {value: regexPersianAndEnglishChar , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 20, message: errorMax}})} 
               className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none duration-200 focus:shadow-md ${errors?.lastName && "border-red-500"}`}
             />
             {errors?.lastName?.message && <InputErrorMessage message={errors?.lastName?.message}/>}

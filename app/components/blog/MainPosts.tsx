@@ -43,7 +43,7 @@ const MainPosts: React.FC<MainPostsProps> = ({ title, option1, option2, option3 
         <h5 className="text-black text-2xl font-yekanBakhNumbBold tracking-tight">{title}</h5>
 
         {/* filter button */}
-        <div className="w-full md:w-auto relative">
+        {/* <div className="w-full md:w-auto relative">
           <button className="border rounded-lg flex justify-center items-center gap-2 p-2 px-3 text-sm leading-6 font-semibold text-gray-700 w-full md:w-auto" onClick={() => setIsFilterOpen((prev) => !prev)}>
             <Image src={"/icons/filter.svg"} width={14} height={14} alt="Filter Icon" />
             {selectedFilter}
@@ -54,7 +54,7 @@ const MainPosts: React.FC<MainPostsProps> = ({ title, option1, option2, option3 
             <div className={`w-full hover:bg-gray2-100 text-center cursor-pointer rounded-lg p-2 ${selectedFilter === option2 && "bg-gray2-100"}`} onClick={() => selectHandle(option2)}>{option2}</div>
             <div className={`w-full hover:bg-gray2-100 text-center cursor-pointer rounded-lg p-2 ${selectedFilter === option3 && "bg-gray2-100"}`} onClick={() => selectHandle(option3)}>{option3}</div>
           </div>
-        </div>
+        </div> */}
 
       </div>
 
@@ -65,20 +65,20 @@ const MainPosts: React.FC<MainPostsProps> = ({ title, option1, option2, option3 
 
       {/* Pagination */}
       <div className="flex justify-center items-center gap-4 mt-14">
-        <Link href={`/${language}/blog`} className="size-12 rounded-lg p-3 flex justify-center items-center bg-gray2-100 duration-200 hover:shadow-lg">
+        <button disabled className="size-12 rounded-lg p-3 flex justify-center items-center bg-gray2-100 duration-200 hover:shadow-lg disabled:bg-gray-300 disabled:cursor-not-allowed">
           <Image src={"/icons/angleRight.svg"} width={9} height={9} alt="Angle right Icon" />
-        </Link>
+        </button>
         <div className="flex justify-center items-center gap-2">
           <Link href={`/${language}/blog`} className="size-12 text-lg font-semibold text-white rounded-lg p-3 flex justify-center items-center bg-brand-600 duration-200 hover:shadow-lg">
             1
           </Link>
-          <Link href={`/${language}/blog`} className="size-12 text-lg font-semibold text-gray2-500 rounded-lg p-3 flex justify-center items-center bg-gray2-100 duration-200 hover:shadow-lg">
+          {/* <Link href={`/${language}/blog`} className="size-12 text-lg font-semibold text-gray2-500 rounded-lg p-3 flex justify-center items-center bg-gray2-100 duration-200 hover:shadow-lg">
             2
-          </Link>
+          </Link> */}
         </div>
-        <Link href={`/${language}/blog`} className="size-12 rounded-lg p-3 flex justify-center items-center bg-gray2-100 duration-200 hover:shadow-lg">
+        <button disabled className="size-12 rounded-lg p-3 flex justify-center items-center bg-gray2-100 duration-200 hover:shadow-lg disabled:bg-gray-300 disabled:cursor-not-allowed">
           <Image src={"/icons/angleLeft.svg"} width={9} height={9} alt="Angle Left Icon" />
-        </Link>
+        </button>
       </div>
     </section>
   );

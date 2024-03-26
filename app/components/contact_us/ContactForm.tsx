@@ -48,6 +48,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
   errorMax,
 }) => {
   const { loading, setLoading, setTicketStatus } = useContext(SiteContext);
+  const regexPersianAndEnglishChar = /^[\u0600-\u06FF\uFB8A\u067E\u0686\u06AF\u200C\s]+$|^[\u0041-\u005A\u0061-\u007A\s]+$/;
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = (data) => submitHandle(data);
@@ -93,7 +94,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             <div className="w-full">
               <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{nameInputTitle}</h5>
               <input 
-                {...register("name", {required: errorEmpty, pattern: {value: /^[\u0600-\u06FF\s]+$/ , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 18, message: errorMax}})} 
+                {...register("name", {required: errorEmpty, pattern: {value: regexPersianAndEnglishChar , message: errorName}, minLength: {value: 3, message: errorMin}, maxLength: {value: 18, message: errorMax}})} 
                 type="text" 
                 className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${errors?.name && "border-red-500"}`} 
                 placeholder={nameInputPlaceholder} 
@@ -106,7 +107,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
               <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{phoneInputTitle}</h5>
               <input
                 type="text"
-                {...register("phone", {required: errorEmpty, pattern: {value: /^0?9[0-9]{9}$/, message: errorPhone}})}
+                {...register("phone", {required: errorEmpty, pattern: {value: /^(۰|0)?(۹|9)[۰-۹0-9]{9}$/, message: errorPhone}})}
                 className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none focus:shadow-md ${errors?.phone && "border-red-500"}`}
                 placeholder={phoneInputPlaceholder}
               />
@@ -129,7 +130,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             <div>
               <h5 className="text-gray-700 text-sm font-semibold mb-[6px]">{bodyInputTitle}</h5>
               <textarea
-                {...register("desc", {required: errorEmpty, minLength: {value: 10, message: errorMin}, maxLength: {value: 300, message: errorMax}})} 
+                {...register("desc", {required: errorEmpty, maxLength: {value: 300, message: errorMax}})} 
                 className={`border rounded-lg p-3 text-sm text-gray2-500 w-full focus:outline-none min-h-[155px] focus:shadow-md resize-none ${errors?.desc && "border-red-500"}`}
                 placeholder={bodyInputPlaceholder}
               ></textarea>

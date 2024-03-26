@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { SiteContext } from "../../context/siteContext";
 import Link from "next/link";
 import { useLocale } from "next-intl";
+import { formatNumberWithCommas } from "@/app/utils/formatedWithComma";
 
 type DataObject = {
     Id: number;
@@ -147,8 +148,8 @@ const Plans: React.FC<PlansProps> = ({
                 <div className="mb-4 text-center mx-2 lg:mx-3 md:text-start mt-2">
                   <h5 className="text-lg tracking-tighter">{item.Title}</h5>
                   <div className="py-3">
-                    <h3 className="text-xl font-semibold tracking-tighter text-gray2-900">{item.DiscountedPrice} {toman}</h3>
-                    <h6 className="text-base text-gray2-900 tracking-tighter"><span className="line-through">{item.Price}</span> <span className="line-through">{toman}</span></h6>
+                    <h3 className="text-xl font-semibold tracking-tighter text-gray2-900">{formatNumberWithCommas(item.DiscountedPrice)} {toman}</h3>
+                    <h6 className="text-base text-gray2-900 tracking-tighter"><span className="line-through">{formatNumberWithCommas(item.Price)}</span> <span className="line-through">{toman}</span></h6>
                   </div>
                   {!login && <button onClick={() => setSelectedPlan(item)} className={`rounded-lg text-sm font-semibold py-2 leading-6 w-full text-center duration-200 ${selectedPlan.Id === item.Id ? "text-white bg-brand-600" : "text-brand-600 bg-brand-50"}`}>{buttonPlan}</button>}
                   {login && <Link href={`${language}/register`} className={`rounded-lg text-sm font-semibold py-2 leading-6 w-full text-center duration-200 text-brand-600 bg-brand-50 inline-block`}>{loginText}</Link>}

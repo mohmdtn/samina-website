@@ -51,16 +51,17 @@ const Footer = () => {
       <section className="flex gap-4 md:gap-14 lg:gap-36 mt-12 lg:mt-0">
         <div className="flex flex-col">
           <h4 className="text-base md:text-lg font-semibold">{t("firstColTitle")}</h4>
-          <Link className="text-sm md:text-base text-gray-600 mt-4" href={"/"}>{t("firstCol1")}</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol2")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-4" href={`/${language}/about_us`}>{t("firstCol1")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={`/${language}/about_software`}>{t("firstCol2")}</Link>
           <Link className="text-sm md:text-base text-gray-600 mt-3" href={`/${language}/contact_us`}>{t("firstCol3")}</Link>
-          <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol4")}</Link>
+          {/* <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol4")}</Link> */}
           {/* <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("firstCol5")}</Link> */}
         </div>
         <div className="flex flex-col">
           <h4 className="text-base md:text-lg font-semibold">{t("secondColTitle")}</h4>
-          <Link className="text-sm md:text-base text-gray-600 mt-4" href={"/"}>{t("secondCol1")}</Link>
+          {/* <Link className="text-sm md:text-base text-gray-600 mt-4" href={"/"}>{t("secondCol1")}</Link> */}
           <Link className="text-sm md:text-base text-gray-600 mt-3" href={`/${language}/faq`}>{t("secondCol2")}</Link>
+          <Link className="text-sm md:text-base text-gray-600 mt-3" href={`/${language}/blog`}>{t("blogs")}</Link>
           {/* <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("secondCol3")}</Link> */}
           {/* <Link className="text-sm md:text-base text-gray-600 mt-3" href={"/"}>{t("secondCol4")}</Link> */}
         </div>

@@ -17,10 +17,12 @@ const Navbar = () => {
         {/* Nav Links */}
         <div className="flex md:gap-6 lg:gap-10 text-black text-base font-semibold items-center">
           <Link href={"/"}>{t("1")}</Link>
-          <Link href={"/"}>{t("2")}</Link>
+          {/* <Link href={"/"}>{t("2")}</Link> */}
           <Link href={`/${language}#plans`}>{t("3")}</Link>
-          <Link href={"/"}>{t("4")}</Link>
+          {/* <Link href={"/"}>{t("4")}</Link> */}
           <Link href={`/${language}/contact_us`}>{t("5")}</Link>
+          <Link href={`/${language}/about_us`}>{t("aboutUs")}</Link>
+          <Link href={`/${language}/blog`}>{t("blogs")}</Link>
         </div>
       </section>
 
